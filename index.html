@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  	   <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="20332845396-pvv6j3ifeu0391esi12rdcill7tmq0u7.apps.googleusercontent.com">
+	
+	
+  <title>Dashboard ADM</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  
+    <script src="https://apis.google.com/js/platform.js" async defer>
+	 </script>
+	
+
+</head>
+
+<body>
+<script>
+    function signOut() {
+	    gapi.load('auth2', function() {
+        gapi.auth2.init();
+      });
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log('User signed out.');
+      });
+    }
+
+    function onLoad() {
+      gapi.load('auth2', function() {
+        gapi.auth2.init();
+      });
+    }
+  </script>
+  <a href="#" onclick="signOut();">Sign out</a>
+
+  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+  
+<!-- START OF NAVBAR --> 
+ <div class="navbar-fixed">
+ <nav>
+    <div class="nav-wrapper">
+   
+      <ul id="nav-mobile" class="left hide-on-med-and-down">
+        <li><a href="about.html">ADM</a></li>
+		  <li><a href="calendar.html">calendar</a></li>
+        <li><a href="collapsible.html"></a></li>
+      </ul>
+    </div>
+  </nav>
+</div>
+<!-- END OF NAVBAR -->
+
+<!-- START OF MAIN VIEW( Body) -->
+  <div class= "container">
+	<div class = "row">
+		<div class ="col s9">
+		Types of requirement[edit]
+Requirements are typically classified into types produced at different stages in a development progression, with the taxonomy depending on the overall model being used. For example, the following scheme was devised by the International Institute of Business Analysis in their Business Analysis Body of Knowledge[4] (see also FURPS and Types of requirements).
+
+Architectural requirements
+Architectural requirements explain what has to be done by identifying the necessary integration of systems structure and systems behavior, i.e., systems architecture of a system.
+In software engineering, they are called architecturally significant requirements, which is defined as those requirements that have a measurable impact on a software system’s architecture.[5]
+Business requirements
+High-level statements of the goals, objectives, or needs of an organization. They usually describe opportunities that an organization wants to realise or problems that they want to solve. Often stated in a business case.
+User (stakeholder) requirements
+Mid-level statements of the needs of a particular stakeholder or group of stakeholders. They usually describe how someone wants to interact with the intended solution. Often acting as a mid-point between the high-level business requirements and more detailed solution requirements.
+Functional (solution) requirements
+Usually detailed statements of capabilities, behaviour, and information that the solution will need. Examples include formatting text, calculating a number, modulating a signal. They are also known as capabilities.
+Quality-of-service (non-functional) requirements
+Usually detailed statements of the conditions under which the solution must remain effective, qualities that the solution must have, or constraints within which it must operate.[6] Examples include: reliability, testability, maintainability, availability. They are also known as characteristics, constraints or the ilities.
+Implementation (transition) requirements
+Usually detailed statements of capabilities or behaviour required only to enable transition from the current state of the enterprise to the desired future state, but that will thereafter no longer be required. Examples include: recruitment, role changes, education, migration of data from one system to another.
+	.	</div>
+		<div class ="col s3">
+		<h4>  deadlines in 2 weeks: </h4>
+		sample deadline 1: 
+		
+		<br>
+		sample deadline 2: 
+		</div>
+	</div>
+  </div>
+<!-- END OF MAIN VIEW (Body) -->  
+  
+  
+  
+  private void signOut() {
+    Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+            new ResultCallback<Status>() {
+                @Override
+                public void onResult(Status status) {
+                    // ...
+                }
+            });
+
+ <!-- Start of Footer -->
+  <footer class="page-footer">
+          <div class="container">
+            <div class="row">
+              <div class="col l6 s12">
+                <h5 class="white-text">Footer Content</h5>
+                <p class="grey-text text-lighten-4">You can use rows and columns here to organize your footer content.</p>
+              </div>
+              <div class="col l4 offset-l2 s12">
+                <h5 class="white-text">Links</h5>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 1</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 2</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 3</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Link 4</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+            © 2014 Copyright Text
+            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+            </div>
+          </div>
+    </footer>
+<!-- end of footer. -->		
+
+</body>
+</html>
