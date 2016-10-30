@@ -15,10 +15,6 @@ import java.sql.PreparedStatement;
 public class Query {
 	
 	/* 
-	 * Run on init:
-	 * 
-	 * Query q = new Query("root", "p@ssword", "jdbc:mysql://localhost:3306/my_db");
-	 * 
 	 * On use:
 	 * (this will auto open and close connections when in use)
 	 * ResultSet r = q.runQuery("select * from table");
@@ -27,11 +23,7 @@ public class Query {
 	 * r.close();
 	 * 
 	 * Note:
-	 * 
-	 * Query class will auto close connection during every call
-	 * 
-	 * runQuery & runInsertUpdateDelete uses prepared statement
-	 * runStatement & runStoredProcedure do not
+	 * See Javadocs for more info per method
 	 * */
 
 	private static Query instance = null;
@@ -53,8 +45,8 @@ public class Query {
 	}
 	
 	/**
-	 * Gets instance of query class
-	 * Forces singleton
+	 * Gets instance of query class </br>
+	 * Forces singleton </br></br>
 	 */
 	public static synchronized Query getInstance() throws SQLException{
 		if(instance == null)
@@ -67,17 +59,16 @@ public class Query {
 	 * 	Result set must be closed after use for security </br></br>
 	 * 
 	 * 	Cannot run update/insert/delete queries </br>
-	 * 	Use instead: {@link #runInsertUpdateDelete()}</br>
+	 * 	Use instead: {@link #runInsertUpdateDelete()}</br></br>
 	 * 
 	 * @param query - query to be run
 	 * 
 	 */
 	public ResultSet runQuery(String query) throws SQLException{
-		connect(username, password, url);
-		
-		pstmt= con.prepareStatement(query);
-		rs = pstmt.executeQuery();
-		
+		if(connect(username, password, url)){
+			pstmt= con.prepareStatement(query);
+			rs = pstmt.executeQuery();
+			}
 		return rs;
 	}
 	
@@ -86,46 +77,44 @@ public class Query {
 	 * 	Result set must be closed after use for security </br></br>
 	 * 
 	 *  Uses array list of objects as its input but can be set to null if no input is needed. </br> 
-	 *  Arraylist of input should be ordered by the '?' in the query </br> </br>
+	 *  Arraylist of input should be ordered by the '?' in the query </br></br>
 	 *  Query: </br></br>
 	 *  
 	 *  SELECT * FROM table WHERE text = ? AND int = ?; </br></br>
-	 *  Code:</br></br>
+	 *  Input Array:</br></br>
 	 *  input[0] = "text"; // String </br>
 	 *  input[1] = 5; // int </br></br>
 	 * 	Cannot run update/insert/delete queries </br>
 	 * 	Use instead: {@link #runInsertUpdateDelete()}</br></br>
 	 * 
 	 * @param query - query to be run
-	 * @param input - An ArrayList of objects
+	 * @param input - An ArrayList of objects. Can contain: String, int, float & etc.
 	 * 
 	 */
 	public ResultSet runQuery(String query, ArrayList<Object> input) throws SQLException{
-		connect(username, password, url);
-		
-		pstmt = con.prepareStatement(query);
-		if(input != null)
-		for(int i = 0; i < input.size(); i++){
-
-			if(input.get(i) instanceof String)
-				pstmt.setString(i + 1,(String) input.get(i));
-			else if(input.get(i) instanceof Integer)
-				pstmt.setInt(i + 1,(Integer) input.get(i));
-			else if(input.get(i) instanceof Float)
-				pstmt.setFloat(i + 1,(Float) input.get(i));
-			else if(input.get(i) instanceof Double)
-				pstmt.setDouble(i + 1,(Double) input.get(i));
-			else if(input.get(i) instanceof Long)
-				pstmt.setLong(i + 1, (Long)input.get(i));
-			else if(input.get(i) instanceof Boolean)
-				pstmt.setBoolean(i + 1, (Boolean)input.get(i));
-			else if(input.get(i) instanceof Enum)
-				pstmt.setString(i + 1,(String) input.get(i));
-			else if(input.get(i) instanceof Calendar)
-				pstmt.setDate(i + 1,(Date) ((Calendar) input.get(i)).getTime());
-		}
-		rs = pstmt.executeQuery();
-		
+		if(connect(username, password, url)){
+			pstmt = con.prepareStatement(query);
+			if(input != null)
+				for(int i = 0; i < input.size(); i++){
+					if(input.get(i) instanceof String)
+						pstmt.setString(i + 1,(String) input.get(i));
+					else if(input.get(i) instanceof Integer)
+						pstmt.setInt(i + 1,(Integer) input.get(i));
+					else if(input.get(i) instanceof Float)
+						pstmt.setFloat(i + 1,(Float) input.get(i));
+					else if(input.get(i) instanceof Double)
+						pstmt.setDouble(i + 1,(Double) input.get(i));
+					else if(input.get(i) instanceof Long)
+						pstmt.setLong(i + 1, (Long)input.get(i));
+					else if(input.get(i) instanceof Boolean)
+						pstmt.setBoolean(i + 1, (Boolean)input.get(i));
+					else if(input.get(i) instanceof Enum)
+						pstmt.setString(i + 1,(String) input.get(i));
+					else if(input.get(i) instanceof Calendar)
+						pstmt.setDate(i + 1,(Date) ((Calendar) input.get(i)).getTime());
+					}
+			rs = pstmt.executeQuery();
+			}
 		return rs;
 		
 	}
@@ -137,7 +126,7 @@ public class Query {
 	 *  Query: </br></br>
 	 *  
 	 *  UPDATE table SET name = ?, age = ? WHERE name = ?; </br></br>
-	 *  Code:</br></br>
+	 *  Input Array:</br></br>
 	 *  input[0] = "name"; // String </br>
 	 *  input[1] = 5; // int </br></br>
 	 *  input[2] = "name"; // String </br>
@@ -145,35 +134,34 @@ public class Query {
 	 * 	Use instead: {@link #runQuery()}</br></br>
 	 * 
 	 * @param query - query to be run
-	 * @param input - An ArrayList of objects
+	 * @param input - An ArrayList of objects. Can contain: String, int, float & etc.
 	 * 
 	 */
 	public boolean runInsertUpdateDelete(String query, ArrayList<Object> input) throws SQLException{
-		connect(username, password, url);
-		boolean result = false;
+		boolean result = connect(username, password, url);
+		if(result){
 			pstmt = con.prepareStatement(query);
-		if(input != null)
-		for(int i = 0; i < input.size(); i++){
-	
-			if(input.get(i) instanceof String)
-				pstmt.setString(i + 1,(String) input.get(i));
-			else if(input.get(i) instanceof Integer)
-				pstmt.setInt(i + 1,(Integer) input.get(i));
-			else if(input.get(i) instanceof Float)
-				pstmt.setFloat(i + 1,(Float) input.get(i));
-			else if(input.get(i) instanceof Double)
-				pstmt.setDouble(i + 1,(Double) input.get(i));
-			else if(input.get(i) instanceof Long)
-				pstmt.setLong(i + 1, (Long)input.get(i));
-			else if(input.get(i) instanceof Boolean)
-				pstmt.setBoolean(i + 1, (Boolean)input.get(i));
-			else if(input.get(i) instanceof Enum)
-				pstmt.setString(i + 1,(String) input.get(i));
-			else if(input.get(i) instanceof Calendar)
-				pstmt.setDate(i + 1,(Date) ((Calendar) input.get(i)).getTime());
-		}
-		result = pstmt.execute();
-		
+			if(input != null)
+				for(int i = 0; i < input.size(); i++){
+					if(input.get(i) instanceof String)
+						pstmt.setString(i + 1,(String) input.get(i));
+					else if(input.get(i) instanceof Integer)
+						pstmt.setInt(i + 1,(Integer) input.get(i));
+					else if(input.get(i) instanceof Float)
+						pstmt.setFloat(i + 1,(Float) input.get(i));
+					else if(input.get(i) instanceof Double)
+						pstmt.setDouble(i + 1,(Double) input.get(i));
+					else if(input.get(i) instanceof Long)
+						pstmt.setLong(i + 1, (Long)input.get(i));
+					else if(input.get(i) instanceof Boolean)
+						pstmt.setBoolean(i + 1, (Boolean)input.get(i));
+					else if(input.get(i) instanceof Enum)
+						pstmt.setString(i + 1,(String) input.get(i));
+					else if(input.get(i) instanceof Calendar)
+						pstmt.setDate(i + 1,(Date) ((Calendar) input.get(i)).getTime());
+					}
+			result = pstmt.execute();
+			}
 		return result;
 		
 	}
@@ -187,42 +175,40 @@ public class Query {
 	 *  Call: </br></br>
 	 *  
 	 *  CALL procedureName (?, ?) </br></br>
-	 *  Code:</br></br>
+	 *  Input Array:</br></br>
 	 *  input[0] = "text"; // String </br>
 	 *  input[1] = 5; // int </br></br>
 	 * 	Cannot run queries </br>
 	 * 	Use instead: {@link #runQuery()} or {@link #runInsertUpdateDelete()}</br></br>
 	 * 
-	 * @param query - query to be run
-	 * @param input - An ArrayList of objects
+	 * @param procedure - procedure to be run
+	 * @param input - An ArrayList of objects. Can contain: String, int, float & etc.
 	 * 
 	 */
-	public ResultSet runStoredProcedure(String query, ArrayList<Object> input) throws SQLException{
-		connect(username, password, url);
-		ResultSet rs = null;
-		
-		cstmt = con.prepareCall (query);
+	public ResultSet runStoredProcedure(String procedure, ArrayList<Object> input) throws SQLException{
+		if(connect(username, password, url)){
+			cstmt = con.prepareCall (procedure);
 		if(input != null)
-		for(int i = 0; i < input.size(); i++){
-			if(input.get(i) instanceof String)
-				cstmt.setString(i + 1,(String) input.get(i));
-			else if(input.get(i) instanceof Integer)
-				cstmt.setInt(i + 1,(Integer) input.get(i));
-			else if(input.get(i) instanceof Float)
-				cstmt.setFloat(i + 1,(Float) input.get(i));
-			else if(input.get(i) instanceof Double)
-				cstmt.setDouble(i + 1,(Double) input.get(i));
-			else if(input.get(i) instanceof Long)
-				cstmt.setLong(i + 1, (Long)input.get(i));
-			else if(input.get(i) instanceof Boolean)
-				cstmt.setBoolean(i + 1, (Boolean)input.get(i));
-			else if(input.get(i) instanceof Enum)
-				cstmt.setString(i + 1,(String) input.get(i));
-			else if(input.get(i) instanceof Calendar)
-				cstmt.setDate(i + 1,(Date) ((Calendar) input.get(i)).getTime());
+			for(int i = 0; i < input.size(); i++){
+				if(input.get(i) instanceof String)
+					cstmt.setString(i + 1,(String) input.get(i));
+				else if(input.get(i) instanceof Integer)
+					cstmt.setInt(i + 1,(Integer) input.get(i));
+				else if(input.get(i) instanceof Float)
+					cstmt.setFloat(i + 1,(Float) input.get(i));
+				else if(input.get(i) instanceof Double)
+					cstmt.setDouble(i + 1,(Double) input.get(i));
+				else if(input.get(i) instanceof Long)
+					cstmt.setLong(i + 1, (Long)input.get(i));
+				else if(input.get(i) instanceof Boolean)
+					cstmt.setBoolean(i + 1, (Boolean)input.get(i));
+				else if(input.get(i) instanceof Enum)
+					cstmt.setString(i + 1,(String) input.get(i));
+				else if(input.get(i) instanceof Calendar)
+					cstmt.setDate(i + 1,(Date) ((Calendar) input.get(i)).getTime());
+				}
+			rs = cstmt.executeQuery();
 			}
-		rs = cstmt.executeQuery();
-		
 		return rs;
 	}
 
@@ -231,51 +217,63 @@ public class Query {
 	 * 
 	 * @deprecated  Does not make use of prepared statements and is insecure </br>
 	 *              Only use with scripts that cannot be run on prepared statements </br>
-	 *              Else use {@link #runQuery()} instead.
+	 *              Else use {@link #runQuery()}, {@link #runInsertUpdateDelete()} or {@link #runStoredProcedure()} instead. </br></br>
 	 * 
 	 */
 	@Deprecated
 	public boolean runStatement(String query) throws SQLException{
-		connect(username, password, url);
-		boolean result = false;
-		stmt = con.createStatement();
-			
-		result = stmt.execute(query);
-
+		boolean result = connect(username, password, url);
+		if(result){
+			stmt = con.createStatement();
+			result = stmt.execute(query);
+		}
 		return result;
 	}
 	
 	/**
 	 * Used for closing connection. </br>
-	 * It should be manually call after every method call.
+	 * It should be manually call after every method call. </br></br>
 	 */
 	public void close() throws SQLException{
-		if(con != null)
-			con.close();
-		con = null;
-		if(cstmt != null)
-			cstmt.close();
-		if(stmt != null)
-			stmt.close();
-		if(pstmt != null)
-			pstmt.close();
-		if(rs != null)
+		if(rs != null){
 			rs.close();
-	}
-	
-	/*
-	 * Sets connection of the db
-	 * Also only used within the this before execution of a query
-	 * */
-	private boolean connect(String username, String password, String url) throws SQLException{
-		close();
-		con = DriverManager.getConnection(url,username,password);
-		return con != null;
+			rs = null;
+			}
+		if(pstmt != null){
+			pstmt.close();
+			pstmt = null;
+			}
+		if(cstmt != null){
+			cstmt.close();
+			cstmt = null;
+			}
+		if(stmt != null){
+			stmt.close();
+			stmt = null;
+			}
+		if(con != null){
+			con.close();
+			con = null;
+			}
 	}
 	
 	/**
-	 * Sets connection parameters of this class
-	 * Does not actually connect to database by itself
+	 * Sets connection of the database </br>
+	 * Must be used in the beginning of every method that accesses the database </br></br>
+	 * 
+	 * @param username - username in database
+	 * @param password - password of database
+	 * @param url - connection url of database
+	 */
+	private boolean connect(String username, String password, String url) throws SQLException{
+		close();
+		con = DriverManager.getConnection(url,username,password);
+		return con != null && !con.isClosed();
+	}
+	
+	/**
+	 * Sets connection parameters of this class </br>
+	 * Does not actually connect to database by itself </br></br>
 	 * 
 	 * @param username - username in database
 	 * @param password - password of database
@@ -286,6 +284,15 @@ public class Query {
 		setUsername(username);
 		setPassword(password);
 		setUrl(url);
+	}
+	
+	/**
+	 * Returns true if database connection is closed 
+	 */
+	public boolean isDisconnected() throws SQLException {
+		if(con != null)
+			return con.isClosed();
+		return true;
 	}
 	
 	/*
@@ -302,9 +309,5 @@ public class Query {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	
-	public boolean isConnected() {
-		return con != null;
 	}
 }
