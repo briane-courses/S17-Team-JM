@@ -15,21 +15,20 @@ public class UserService {
 	
 	public static User searchUser(String email) {
 		User user = null;
-		
-		String query = 
-				"SELECT * FROM " + User.TABLE_NAME +
-				" WHERE "+User.COL_EMAIL+" =  ? ;";
+		Query q = null;
+		ResultSet r = null;
 		
 		ArrayList<Object> input = new ArrayList<Object>();
 		
 		input.add(email);
 		
-		Query q = Query.getInstance("root", "p@ssword", "jdbc:mysql://localhost:3306/adm_db");
-		ResultSet r = null;
-		
-		
 		try {
-			r = q.runQuery(query, input);
+			
+			q = Query.getInstance();
+			r = q.runQuery(
+					"SELECT * FROM " + User.TABLE_NAME +
+					" WHERE "+User.COL_EMAIL+" =  ? ;"
+					, input);
 			
 			if(r.next()) {
 				user = new User();
@@ -39,11 +38,13 @@ public class UserService {
 			}
 			
 		} catch (SQLException e) {
+			System.err.println("Error in getting [Class:Query] instance");
 			e.printStackTrace();
 		} finally {
 			try {
 				q.close();
 			} catch (SQLException e) {
+				System.err.println("Error in closing [Class:Query] instance");
 				e.printStackTrace();
 			}
 		}

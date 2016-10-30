@@ -13,8 +13,6 @@ import java.util.Calendar;
 import java.sql.PreparedStatement;
 
 public class Query {
-
-	private static Query instance = null;
 	
 	/* 
 	 * Run on init:
@@ -35,6 +33,12 @@ public class Query {
 	 * runQuery & runInsertUpdateDelete uses prepared statement
 	 * runStatement & runStoredProcedure do not
 	 * */
+
+	private static Query instance = null;
+	
+	private static final String USER = "root";
+	private static final String PASS = "p@ssword";
+	private static final String URL = "jdbc:mysql://localhost:3306/adm_db";
 	
 	private String username, password, url;
 	private Connection con = null;
@@ -44,22 +48,13 @@ public class Query {
 	private CallableStatement cstmt = null;
 	private Statement stmt = null;
 
-	private Query(String username, String password, String url){
-		try {
+	private Query(String username, String password, String url) throws SQLException{
 			setConnection(username, password, url);
-		} catch (SQLException e) {
-			// shouldnt ever error unless user / pass / url is wrong
-			e.printStackTrace();
-		}
 	}
 	
-	public static synchronized Query getInstance(String username, String password, String url){
+	public static synchronized Query getInstance() throws SQLException{
 		if(instance == null)
-			instance = new Query(username, password, url);
-		return instance;
-	}
-	
-	public static synchronized Query getInstance(){
+			instance = new Query(USER, PASS, URL);
 		return instance;
 	}
 	
@@ -75,25 +70,21 @@ public class Query {
 		
 		pstmt= con.prepareStatement(query);
 		rs = pstmt.executeQuery();
-		/*
-		int numColumns = rs.getMetaData().getColumnCount();
-		ArrayList<String> columns = new ArrayList<>();
-		
-		for ( int i = 1 ; i <= numColumns ; i++ )
-			columns.add(rs.getMetaData().getColumnLabel(i));
-		
-		result = new QueryResult(columns);
-		
-		while(rs.next()){
-	            for ( int i = 1 ; i <= numColumns ; i++ ) {
-	               result.addCell(rs.getObject(i));
-	            }
-			}
-			*/
 		
 		return rs;
 	}
 	
+	/*
+	 * Same as above but gets an array list of objects
+	 * as its input.
+	 * 
+	 * Arraylist of input should be ordered by the '?' in the query
+	 * Ex:
+	 * 
+	 * select * from table where text = ? and int = ?;
+	 * input[0] = "text"; // String
+	 * input[1] = 5; // int
+	 * */
 	public ResultSet runQuery(String query, ArrayList<Object> input) throws SQLException{
 		connect(username, password, url);
 		
@@ -109,6 +100,10 @@ public class Query {
 				pstmt.setFloat(i + 1,(Float) input.get(i));
 			else if(input.get(i) instanceof Double)
 				pstmt.setDouble(i + 1,(Double) input.get(i));
+			else if(input.get(i) instanceof Long)
+				pstmt.setLong(i + 1, (Long)input.get(i));
+			else if(input.get(i) instanceof Boolean)
+				pstmt.setBoolean(i + 1, (Boolean)input.get(i));
 			else if(input.get(i) instanceof Enum)
 				pstmt.setString(i + 1,(String) input.get(i));
 			else if(input.get(i) instanceof Calendar)
@@ -141,6 +136,10 @@ public class Query {
 				pstmt.setFloat(i + 1,(Float) input.get(i));
 			else if(input.get(i) instanceof Double)
 				pstmt.setDouble(i + 1,(Double) input.get(i));
+			else if(input.get(i) instanceof Long)
+				pstmt.setLong(i + 1, (Long)input.get(i));
+			else if(input.get(i) instanceof Boolean)
+				pstmt.setBoolean(i + 1, (Boolean)input.get(i));
 			else if(input.get(i) instanceof Enum)
 				pstmt.setString(i + 1,(String) input.get(i));
 			else if(input.get(i) instanceof Calendar)
@@ -160,39 +159,27 @@ public class Query {
 		connect(username, password, url);
 		ResultSet rs = null;
 		
-			cstmt = con.prepareCall (query);
-			if(input != null)
-			for(int i = 0; i < input.size(); i++){
-				
-				if(input.get(i) instanceof String)
-					cstmt.setString(i + 1,(String) input.get(i));
-				else if(input.get(i) instanceof Integer)
-					cstmt.setInt(i + 1,(Integer) input.get(i));
-				else if(input.get(i) instanceof Float)
-					cstmt.setFloat(i + 1,(Float) input.get(i));
-				else if(input.get(i) instanceof Double)
-					cstmt.setDouble(i + 1,(Double) input.get(i));
-				else if(input.get(i) instanceof Enum)
-					cstmt.setString(i + 1,(String) input.get(i));
-				else if(input.get(i) instanceof Calendar)
-					cstmt.setDate(i + 1,(Date) ((Calendar) input.get(i)).getTime());
+		cstmt = con.prepareCall (query);
+		if(input != null)
+		for(int i = 0; i < input.size(); i++){
+			if(input.get(i) instanceof String)
+				cstmt.setString(i + 1,(String) input.get(i));
+			else if(input.get(i) instanceof Integer)
+				cstmt.setInt(i + 1,(Integer) input.get(i));
+			else if(input.get(i) instanceof Float)
+				cstmt.setFloat(i + 1,(Float) input.get(i));
+			else if(input.get(i) instanceof Double)
+				cstmt.setDouble(i + 1,(Double) input.get(i));
+			else if(input.get(i) instanceof Long)
+				cstmt.setLong(i + 1, (Long)input.get(i));
+			else if(input.get(i) instanceof Boolean)
+				cstmt.setBoolean(i + 1, (Boolean)input.get(i));
+			else if(input.get(i) instanceof Enum)
+				cstmt.setString(i + 1,(String) input.get(i));
+			else if(input.get(i) instanceof Calendar)
+				cstmt.setDate(i + 1,(Date) ((Calendar) input.get(i)).getTime());
 			}
-			rs = cstmt.executeQuery();
-			/*
-			int numColumns = rs.getMetaData().getColumnCount();
-			ArrayList<String> columns = new ArrayList<>();
-			
-			for ( int i = 1 ; i <= numColumns ; i++ )
-				columns.add(rs.getMetaData().getColumnLabel(i));
-			
-			result = new QueryResult(columns);
-			
-			while(rs.next()){
-		            for ( int i = 1 ; i <= numColumns ; i++ ) {
-		               result.addCell(rs.getObject(i));
-		            }
-				}
-				*/
+		rs = cstmt.executeQuery();
 		
 		return rs;
 	}
