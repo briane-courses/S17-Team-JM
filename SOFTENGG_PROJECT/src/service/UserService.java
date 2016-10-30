@@ -21,10 +21,10 @@ public class UserService {
 		ArrayList<Object> input = new ArrayList<Object>();
 		
 		input.add(email);
-		
 		try {
 			
 			q = Query.getInstance();
+
 			r = q.runQuery(
 					"SELECT * FROM " + User.TABLE_NAME +
 					" WHERE "+User.COL_EMAIL+" =  ? ;"

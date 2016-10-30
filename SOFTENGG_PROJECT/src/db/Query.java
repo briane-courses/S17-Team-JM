@@ -58,13 +58,16 @@ public class Query {
 		return instance;
 	}
 	
-	/*
-	 * Runs a query and returns a result set
-	 * Result set must be closed after use for security
+	/**
+	 * 	Runs a query and returns a result set </br>
+	 * 	Result set must be closed after use for security </br></br>
 	 * 
-	 * CANNOT run update/insert/delete queries
-	 * use method: runInsertUpdateDelete()
-	 * */
+	 * 	Cannot run update/insert/delete queries </br>
+	 * 	Use instead: {@link #runInsertUpdateDelete()}</br>
+	 * 
+	 * @param query - query to be run
+	 * 
+	 */
 	public ResultSet runQuery(String query) throws SQLException{
 		connect(username, password, url);
 		
@@ -74,17 +77,25 @@ public class Query {
 		return rs;
 	}
 	
-	/*
-	 * Same as above but gets an array list of objects
-	 * as its input.
+	/**
+	 * 	Runs a query and returns a result set </br>
+	 * 	Result set must be closed after use for security </br></br>
 	 * 
-	 * Arraylist of input should be ordered by the '?' in the query
-	 * Ex:
+	 *  Uses array list of objects as its input but can be set to null if no input is needed. </br> 
+	 *  Arraylist of input should be ordered by the '?' in the query </br> </br>
+	 *  Query: </br></br>
+	 *  
+	 *  SELECT * FROM table WHERE text = ? AND int = ?; </br></br>
+	 *  Code:</br></br>
+	 *  input[0] = "text"; // String </br>
+	 *  input[1] = 5; // int </br></br>
+	 * 	Cannot run update/insert/delete queries </br>
+	 * 	Use instead: {@link #runInsertUpdateDelete()}</br></br>
 	 * 
-	 * select * from table where text = ? and int = ?;
-	 * input[0] = "text"; // String
-	 * input[1] = 5; // int
-	 * */
+	 * @param query - query to be run
+	 * 		  input - An ArrayList of objects
+	 * 
+	 */
 	public ResultSet runQuery(String query, ArrayList<Object> input) throws SQLException{
 		connect(username, password, url);
 		
@@ -114,13 +125,25 @@ public class Query {
 		return rs;
 		
 	}
-
-	/*
-	 * Runs a query and returns true or false depending it query was a success
+	/**
+	 * 	Runs a query and returns true or false depending it query was a success </br></br>
 	 * 
-	 * CANNOT run queries that returns a ResultSet
-	 * use method: runQuery()
-	 * */
+	 *  Uses array list of objects as its input but can be set to null if no input is needed. </br> 
+	 *  Arraylist of input should be ordered by the '?' in the query </br> </br>
+	 *  Query: </br></br>
+	 *  
+	 *  UPDATE table SET name = ?, age = ? WHERE name = ?; </br></br>
+	 *  Code:</br></br>
+	 *  input[0] = "name"; // String </br>
+	 *  input[1] = 5; // int </br></br>
+	 *  input[2] = "name"; // String </br>
+	 * 	Cannot run queries that returns a ResultSet / Table </br>
+	 * 	Use instead: {@link #runQuery()}</br></br>
+	 * 
+	 * @param query - query to be run
+	 * 		  input - An ArrayList of objects
+	 * 
+	 */
 	public boolean runInsertUpdateDelete(String query, ArrayList<Object> input) throws SQLException{
 		connect(username, password, url);
 		boolean result = false;
@@ -151,10 +174,25 @@ public class Query {
 		
 	}
 	
-	/*
-	 * To be used with stored procedures in the db
-	 * Cannot run standard queries
-	 * */
+	/**
+	 * 	Runs a stored procedure and returns a result set </br>
+	 * 	Result set must be closed after use for security </br></br>
+	 * 
+	 *  Uses array list of objects as its input but can be set to null if no input is needed. </br> 
+	 *  Arraylist of input should be ordered by the '?' in the query </br> </br>
+	 *  Call: </br></br>
+	 *  
+	 *  CALL procedureName (?, ?) </br></br>
+	 *  Code:</br></br>
+	 *  input[0] = "text"; // String </br>
+	 *  input[1] = 5; // int </br></br>
+	 * 	Cannot run queries </br>
+	 * 	Use instead: {@link #runQuery()} or {@link #runInsertUpdateDelete()}</br></br>
+	 * 
+	 * @param query - query to be run
+	 * 		  input - An ArrayList of objects
+	 * 
+	 */
 	public ResultSet runStoredProcedure(String query, ArrayList<Object> input) throws SQLException{
 		connect(username, password, url);
 		ResultSet rs = null;
@@ -184,12 +222,15 @@ public class Query {
 		return rs;
 	}
 
-	/*
-	 * DO NOT USE / FOR TESTING ONLY
-	 * Does not make use of prepared statements and is insecure :(
+	/**
+	 * @param query - query to be run
 	 * 
-	 * Its only here because some scripts cannot be run on prepared statements
-	 * */
+	 * @deprecated  Does not make use of prepared statements and is insecure </br>
+	 *              Only use with scripts that cannot be run on prepared statements </br>
+	 *              Else use {@link #runQuery()} instead.
+	 * 
+	 */
+	@Deprecated
 	public boolean runStatement(String query) throws SQLException{
 		connect(username, password, url);
 		boolean result = false;
@@ -200,10 +241,10 @@ public class Query {
 		return result;
 	}
 	
-	/*
-	 * Used for closing connection
-	 * It should be manually call after every method call
-	 * */
+	/**
+	 * Used for closing connection. </br>
+	 * It should be manually call after every method call.
+	 */
 	public void close() throws SQLException{
 		if(con != null)
 			con.close();
