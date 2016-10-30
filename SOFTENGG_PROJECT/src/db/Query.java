@@ -19,7 +19,7 @@ public class Query {
 	 * (this will auto open and close connections when in use)
 	 * ResultSet r = q.runQuery("select * from table");
 	 * 
-	 * Close after use:
+	 * always close after use:
 	 * r.close();
 	 * 
 	 * Note:
