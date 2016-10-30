@@ -52,6 +52,10 @@ public class Query {
 			setConnection(username, password, url);
 	}
 	
+	/**
+	 * Gets instance of query class
+	 * Forces singleton
+	 */
 	public static synchronized Query getInstance() throws SQLException{
 		if(instance == null)
 			instance = new Query(USER, PASS, URL);
@@ -93,7 +97,7 @@ public class Query {
 	 * 	Use instead: {@link #runInsertUpdateDelete()}</br></br>
 	 * 
 	 * @param query - query to be run
-	 * 		  input - An ArrayList of objects
+	 * @param input - An ArrayList of objects
 	 * 
 	 */
 	public ResultSet runQuery(String query, ArrayList<Object> input) throws SQLException{
@@ -141,7 +145,7 @@ public class Query {
 	 * 	Use instead: {@link #runQuery()}</br></br>
 	 * 
 	 * @param query - query to be run
-	 * 		  input - An ArrayList of objects
+	 * @param input - An ArrayList of objects
 	 * 
 	 */
 	public boolean runInsertUpdateDelete(String query, ArrayList<Object> input) throws SQLException{
@@ -190,7 +194,7 @@ public class Query {
 	 * 	Use instead: {@link #runQuery()} or {@link #runInsertUpdateDelete()}</br></br>
 	 * 
 	 * @param query - query to be run
-	 * 		  input - An ArrayList of objects
+	 * @param input - An ArrayList of objects
 	 * 
 	 */
 	public ResultSet runStoredProcedure(String query, ArrayList<Object> input) throws SQLException{
@@ -269,10 +273,14 @@ public class Query {
 		return con != null;
 	}
 	
-	/*
-	 * Changes connection parameters of this class
-	 * Does not actually connect by itself
-	 * */
+	/**
+	 * Sets connection parameters of this class
+	 * Does not actually connect to database by itself
+	 * 
+	 * @param username - username in database
+	 * @param password - password of database
+	 * @param url - connection url of database
+	 */
 	public void setConnection(String username, String password, String url) throws SQLException{
 		close();
 		setUsername(username);
