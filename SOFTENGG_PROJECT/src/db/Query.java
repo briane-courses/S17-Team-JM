@@ -55,13 +55,13 @@ public class Query {
 	}
 	
 	/**
-	 * 	Runs a query and returns a result set </br>
-	 * 	Result set must be closed after use for security </br></br>
+	 * 	Runs a query and returns a result set. </br>
+	 * 	Result set must be closed after use for security. </br></br>
 	 * 
-	 * 	Cannot run update/insert/delete queries </br>
-	 * 	Use instead: {@link #runInsertUpdateDelete()}</br></br>
+	 * 	Cannot run update/insert/delete queries. </br>
+	 * 	Use instead: {@link #runInsertUpdateDelete()}.</br></br>
 	 * 
-	 * @param query - query to be run
+	 * @param query - Query to be run.
 	 * 
 	 */
 	public ResultSet runQuery(String query) throws SQLException{
@@ -73,21 +73,23 @@ public class Query {
 	}
 	
 	/**
-	 * 	Runs a query and returns a result set </br>
-	 * 	Result set must be closed after use for security </br></br>
-	 * 
+	 * 	Runs a query and returns a result set. </br>
+	 * 	Result set must be closed after use for security. </br>
 	 *  Uses array list of objects as its input but can be set to null if no input is needed. </br> 
-	 *  Arraylist of input should be ordered by the '?' in the query </br></br>
-	 *  Query: </br></br>
-	 *  
+	 *  Arraylist of input should be ordered by the '?' in the query. Example: </br></br>
+	 *  Query: </br>
+	 *  <i>
 	 *  SELECT * FROM table WHERE text = ? AND int = ?; </br></br>
-	 *  Input Array:</br></br>
+	 *  </i>
+	 *  Input Array:</br>
+	 *  <i>
 	 *  input[0] = "text"; // String </br>
 	 *  input[1] = 5; // int </br></br>
-	 * 	Cannot run update/insert/delete queries </br>
-	 * 	Use instead: {@link #runInsertUpdateDelete()}</br></br>
+	 *  </i>
+	 * 	Cannot run update/insert/delete queries. </br>
+	 * 	Use instead: {@link #runInsertUpdateDelete()}.</br></br>
 	 * 
-	 * @param query - query to be run
+	 * @param query - Query to be run.
 	 * @param input - An ArrayList of objects. Can contain: String, int, float & etc.
 	 * 
 	 */
@@ -119,21 +121,23 @@ public class Query {
 		
 	}
 	/**
-	 * 	Runs a query and returns true or false depending it query was a success </br></br>
-	 * 
-	 *  Uses array list of objects as its input but can be set to null if no input is needed. </br> 
-	 *  Arraylist of input should be ordered by the '?' in the query </br> </br>
-	 *  Query: </br></br>
-	 *  
+	 * 	Runs a query and returns true or false depending on whether query was a success. </br>
+	 *  Uses array list of objects as its input but can be set to null if no input is needed.</br> 
+	 *  Arraylist of input should be ordered by the '?' in the query. Example: </br></br>
+	 *  Query: </br>
+	 *  <i>
 	 *  UPDATE table SET name = ?, age = ? WHERE name = ?; </br></br>
-	 *  Input Array:</br></br>
+	 *  </i>
+	 *  Input Array:</br>
+	 *  <i>
 	 *  input[0] = "name"; // String </br>
 	 *  input[1] = 5; // int </br></br>
 	 *  input[2] = "name"; // String </br>
-	 * 	Cannot run queries that returns a ResultSet / Table </br>
-	 * 	Use instead: {@link #runQuery()}</br></br>
+	 *  </i>
+	 * 	Cannot run queries that returns a ResultSet / Table. </br>
+	 * 	Use instead: {@link #runQuery()}.</br></br>
 	 * 
-	 * @param query - query to be run
+	 * @param query - query to be run.
 	 * @param input - An ArrayList of objects. Can contain: String, int, float & etc.
 	 * 
 	 */
@@ -167,21 +171,23 @@ public class Query {
 	}
 	
 	/**
-	 * 	Runs a stored procedure and returns a result set </br>
-	 * 	Result set must be closed after use for security </br></br>
-	 * 
+	 * 	Runs a stored procedure and returns a result set. </br>
+	 * 	Result set must be closed after use for security. </br>
 	 *  Uses array list of objects as its input but can be set to null if no input is needed. </br> 
-	 *  Arraylist of input should be ordered by the '?' in the query </br> </br>
-	 *  Call: </br></br>
-	 *  
+	 *  Arraylist of input should be ordered by the '?' in the query. Example: </br></br>
+	 *  Call: </br>
+	 *  <i>
 	 *  CALL procedureName (?, ?) </br></br>
-	 *  Input Array:</br></br>
+	 *  </i>
+	 *  Input Array:</br>
+	 *  <i>
 	 *  input[0] = "text"; // String </br>
 	 *  input[1] = 5; // int </br></br>
-	 * 	Cannot run queries </br>
-	 * 	Use instead: {@link #runQuery()} or {@link #runInsertUpdateDelete()}</br></br>
+	 *  </i>
+	 * 	Cannot run queries. </br>
+	 * 	Use instead: {@link #runQuery()} or {@link #runInsertUpdateDelete()}.</br></br>
 	 * 
-	 * @param procedure - procedure to be run
+	 * @param procedure - procedure to be run.
 	 * @param input - An ArrayList of objects. Can contain: String, int, float & etc.
 	 * 
 	 */
@@ -213,10 +219,10 @@ public class Query {
 	}
 
 	/**
-	 * @param query - query to be run
+	 * @param query - query to be run.
 	 * 
-	 * @deprecated  Does not make use of prepared statements and is insecure </br>
-	 *              Only use with scripts that cannot be run on prepared statements </br>
+	 * @deprecated  Does not make use of prepared statements and is insecure.</br>
+	 *              Only use with scripts that cannot be run on prepared statements.</br>
 	 *              Else use {@link #runQuery()}, {@link #runInsertUpdateDelete()} or {@link #runStoredProcedure()} instead. </br></br>
 	 * 
 	 */
@@ -258,8 +264,8 @@ public class Query {
 	}
 	
 	/**
-	 * Sets connection of the database </br>
-	 * Must be used in the beginning of every method that accesses the database </br></br>
+	 * Sets connection of the database. </br>
+	 * Must be used in the beginning of every method that accesses the database. </br></br>
 	 * 
 	 * @param username - username in database
 	 * @param password - password of database
@@ -272,8 +278,8 @@ public class Query {
 	}
 	
 	/**
-	 * Sets connection parameters of this class </br>
-	 * Does not actually connect to database by itself </br></br>
+	 * Sets connection parameters of this class. </br>
+	 * Does not actually connect to database by itself. </br></br>
 	 * 
 	 * @param username - username in database
 	 * @param password - password of database
@@ -287,7 +293,7 @@ public class Query {
 	}
 	
 	/**
-	 * Returns true if database connection is closed 
+	 * Returns true if database connection is closed. </br>
 	 */
 	public boolean isDisconnected() throws SQLException {
 		if(con != null)
