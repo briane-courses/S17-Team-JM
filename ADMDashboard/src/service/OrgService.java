@@ -20,7 +20,7 @@ public class OrgService {
 		
 		input.add(userID);
 		
-		Query q = Query.getInstance("root", "root", "jdbc:mysql://localhost:3306/adm");
+		Query q = Query.getInstance();
 		ResultSet r = null;
 		
 		try {

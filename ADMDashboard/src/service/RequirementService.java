@@ -19,7 +19,7 @@ public class RequirementService {
 					Requirement.TABLE_NAME + " NATURAL JOIN " + EventType_Requirements.TABLE_NAME +
 					" WHERE " + EventType_Requirements.COL_EVENTTYPEID + " = ?";
 		
-		Query q = Query.getInstance("root", "root", "jdbc:mysql://localhost:3306/adm");
+		Query q = Query.getInstance();
 		ResultSet r = null;
 		
 		input.add(eventTypeID);

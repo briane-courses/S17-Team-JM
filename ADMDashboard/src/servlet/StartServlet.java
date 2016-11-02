@@ -29,7 +29,7 @@ public class StartServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		// load login page
-		request.getRequestDispatcher("index.jsp").forward(request, response);
+		request.getRequestDispatcher("login.jsp").forward(request, response);
 	}
 
 	/**

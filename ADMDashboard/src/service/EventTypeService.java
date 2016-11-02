@@ -15,7 +15,7 @@ public class EventTypeService {
 		
 		String query = "SELECT * FROM " + EventType.TABLE_NAME;
 		
-		Query q = Query.getInstance("root", "root!", "jdbc:mysql://localhost:3306/adm");
+		Query q = Query.getInstance();
 		ResultSet r = null;
 		
 		try {

@@ -25,7 +25,7 @@ public class UserService {
 		
 		input.add(email);
 		
-		Query q = Query.getInstance("root", "root", "jdbc:mysql://localhost:3306/adm");
+		Query q = Query.getInstance();
 		ResultSet r = null;
 		
 		try {
@@ -61,7 +61,7 @@ public class UserService {
 		
 		input.add(userID);
 		
-		Query q = Query.getInstance("sofengg", "sofenggADM!", "jdbc:mysql://localhost:3306/adm");
+		Query q = Query.getInstance();
 		ResultSet r = null;
 		
 		try {
@@ -97,7 +97,7 @@ public class UserService {
 		
 		input.add(userType);
 		
-		Query q = Query.getInstance("sofengg", "sofenggADM!", "jdbc:mysql://localhost:3306/adm");
+		Query q = Query.getInstance();
 		ResultSet r = null;
 		
 		try {

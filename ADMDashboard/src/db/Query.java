@@ -4,13 +4,12 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
-
-import java.sql.PreparedStatement;
 
 public class Query {
 
@@ -36,7 +35,10 @@ public class Query {
 	 * runStatement & runStoredProcedure do not
 	 * */
 
-	private String username, password, url;
+	private static String username = "sofengg";
+	private static String password = "sofengADM!";
+	private static String url = "jdbc:mysql://localhost:3306/adm";
+	
 	private Connection con = null;
 
 	private PreparedStatement pstmt = null;
@@ -46,8 +48,9 @@ public class Query {
 
 	private Query(String username, String password, String url){
 		try {
+			Class.forName("com.mysql.jdbc.Driver");
 			setConnection(username, password, url);
-		} catch (SQLException e) {
+		} catch (SQLException | ClassNotFoundException e) {
 			// shouldnt ever error unless user / pass / url is wrong
 			e.printStackTrace();
 		}
@@ -60,6 +63,8 @@ public class Query {
 	}
 
 	public static synchronized Query getInstance(){
+		if(instance == null)
+			instance = new Query(username, password, url);
 		return instance;
 	}
 
@@ -237,7 +242,7 @@ public class Query {
 	 * */
 	private boolean connect(String username, String password, String url) throws SQLException{
 		close();
-		con = DriverManager.getConnection(url,username,password);
+		con = DriverManager.getConnection("jdbc:mysql://localhost:3306/adm",username,password);
 		return con != null;
 	}
 

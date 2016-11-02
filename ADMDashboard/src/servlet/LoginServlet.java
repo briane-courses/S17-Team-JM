@@ -49,6 +49,7 @@ public class LoginServlet extends HttpServlet {
 		
 		// match attributes to the db
 		User user = UserService.searchUser(email);
+		System.out.println(user);
 		
 		// if user exists, go to admin/orgrep servlet
 		if(user != null) {
@@ -67,6 +68,8 @@ public class LoginServlet extends HttpServlet {
 			
 		} else {
 			// if user does not exist, make error via ajax
+			
+			System.out.println("USER UNAUTHORIZED");
 			
 			// for now, let's go back to start servlet
 			request.getRequestDispatcher("StartServlet").forward(request, response);
