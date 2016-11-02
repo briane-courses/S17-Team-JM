@@ -75,7 +75,7 @@ public class MasterServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		return;
 	}
 	
 }
