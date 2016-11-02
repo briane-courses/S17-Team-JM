@@ -1,4 +1,4 @@
-package servlet;
+package servlet.sub;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -18,28 +18,19 @@ import service.EventTypeService;
 import service.OrgService;
 import service.RequirementService;
 import service.UserService;
+import servlet.MasterServlet;
 
 /**
  * Servlet implementation class HomeOrgRepServlet
  */
-@WebServlet("/HomeOrgRepServlet")
-public class HomeOrgRepServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public HomeOrgRepServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+public class HomeOrgRepServlet {
+	
+	public static final String URL = "/HomeOrgRepServlet";
+	
+    private HomeOrgRepServlet() { }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		
+	private static void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		Org org = null;
 		User user = null;
 		
@@ -70,12 +61,17 @@ public class HomeOrgRepServlet extends HttpServlet {
 		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private static void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+		
 	}
+	
+	public static void process(HttpServletRequest request, HttpServletResponse response, int type) throws ServletException, IOException{
+		if(type == MasterServlet.TYPE_GET)
+			doGet(request, response);
+		doPost(request, response);
+	}
+
 
 }
