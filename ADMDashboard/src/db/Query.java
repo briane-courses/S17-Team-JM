@@ -32,6 +32,8 @@ public class Query {
 	private static final String PASS = "p@ssword";
 	private static final String URL = "jdbc:mysql://localhost:3306/adm_db";
 	
+	private static final String DRIVER = "com.mysql.jdbc.Driver";
+	
 	private String username, password, url;
 	private Connection con = null;
 	
@@ -41,12 +43,11 @@ public class Query {
 	private Statement stmt = null;
 
 	private Query(String username, String password, String url){
-			try {
-				Class.forName("com.mysql.jdbc.Driver");
-				setConnection(username, password, url);
-			} catch (SQLException | ClassNotFoundException e) {
-				e.printStackTrace();
-			}
+				try {
+					setConnection(username, password, url);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 	}
 	
 	/**
@@ -278,6 +279,11 @@ public class Query {
 	 */
 	private boolean connect(String username, String password, String url) throws SQLException{
 		close();
+		try {
+			Class.forName(DRIVER);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
 		con = DriverManager.getConnection(url,username,password);
 		return con != null && !con.isClosed();
 	}
