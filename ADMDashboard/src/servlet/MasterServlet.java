@@ -23,6 +23,7 @@ import servlet.sub.StartServlet;
 		RequirementsServlet.URL,
 		StartServlet.URL
 		})
+		
 public class MasterServlet extends HttpServlet {
 	
 	public static int TYPE_GET = 0;
