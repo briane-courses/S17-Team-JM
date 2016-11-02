@@ -23,7 +23,8 @@ public class Query {
 	 * r.close();
 	 * 
 	 * Note:
-	 * See Javadocs for more info per method
+	 * See comments for more info per method
+	 * Comments are viewable as tool-tips when auto completing method names
 	 * */
 
 	private static Query instance = null;
@@ -34,7 +35,7 @@ public class Query {
 	
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
 	
-	private String username, password, url;
+	private String username, password, url, driver;
 	private Connection con = null;
 	
 	private PreparedStatement pstmt = null;
@@ -44,7 +45,7 @@ public class Query {
 
 	private Query(String username, String password, String url){
 				try {
-					setConnection(username, password, url);
+					setConnection(username, password, url, DRIVER);
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -225,6 +226,8 @@ public class Query {
 	}
 
 	/**
+	 * Runs a query</br></br>
+	 * 
 	 * @param query - query to be run.
 	 * 
 	 * @deprecated  Does not make use of prepared statements and is insecure.</br>
@@ -272,7 +275,7 @@ public class Query {
 	/**
 	 * Sets connection of the database. </br>
 	 * Must be used in the beginning of every method that accesses the database. </br></br>
-	 * 
+	 * <i>Driver URL may be changed by using setDriver<i> </br></br>
 	 * @param username - username in database
 	 * @param password - password of database
 	 * @param url - connection url of database
@@ -280,7 +283,7 @@ public class Query {
 	private boolean connect(String username, String password, String url) throws SQLException{
 		close();
 		try {
-			Class.forName(DRIVER);
+			Class.forName(driver);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -302,7 +305,22 @@ public class Query {
 		setPassword(password);
 		setUrl(url);
 	}
-	
+	/**
+	 * Sets connection parameters of this class. </br>
+	 * Does not actually connect to database by itself. </br></br>
+	 * 
+	 * @param username - username in database
+	 * @param password - password of database
+	 * @param url - connection url of database
+	 * @param driver - url of driver
+	 */
+	public void setConnection(String username, String password, String url, String driver) throws SQLException{
+		close();
+		setUsername(username);
+		setPassword(password);
+		setUrl(url);
+		setDriver(driver);
+	}
 	/**
 	 * Returns true if database connection is closed. </br>
 	 */
@@ -326,5 +344,13 @@ public class Query {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getDriver() {
+		return driver;
+	}
+
+	public void setDriver(String driver) {
+		this.driver = driver;
 	}
 }
