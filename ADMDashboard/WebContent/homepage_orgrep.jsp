@@ -73,8 +73,8 @@
 			<li><div class="userView">
 			  <img class="background" src="images/office.jpg">
 			  <a href="#!user"><img class="circle" src="images/cso.jpg"></a>
-			  <a href="#!name"><span class="white-text name">ORG NAME(org image above) </span></a>
-			  <a href="#!email"><span class="white-text email">orgname@gmail.com</span></a>
+			  <a href="#!name"><span class="white-text name">${orgcode } </span></a>
+			  <a href="#!email"><span class="white-text email">${email }</span></a>
 			</div></li>
 			<li><a href="homepage.html"><i class="material-icons">dashboard</i>Dashboard</a></li>
 						<li><div class="divider"></div></li>
@@ -117,33 +117,6 @@
 	                  		<option value = "${e.eventtypeID }" id = "${e.eventtypeID }">${e.eventtype }</option>
 	                  </c:forEach>
 	                  
-	                  <!-- 
-	                  <option value="1">Acquaintance Party (On-Campus)</option>
-	                  <option value="2">Concerts</option>
-	                  <option value="3">Contests</option>
-	                  <option value="4">Food Fest</option>
-	                  <option value="5">Fund-Raising Activity (Nature Dependent)</option>
-	                  <option value="6">Meidcal/Dental Mission</option>
-	                  <option value="7">Novelty Item Selling</option>
-	                  <option value="8">OCCS-Sponsored Seminar</option>
-	                  <option value="9">Outreach</option>
-	                  <option value="10">Participation in Contest/Seminars/Variety Shows</option>
-	                  <option value="11">Party</option>
-	                  <option value="12">Press Conference</option>
-	                  <option value="13">Radio/Press/TV coverage of an Event</option>
-	                  <option value="14">Raffles</option>
-	                  <option value="15">Recollection/Retreat (Off-Campus)</option>
-	                  <option value="16">Scholarship Grant</option>
-	                  <option value="17">Solicitations</option>
-	                  <option value="18">Sport's Fest/Tournament (Off-Campus)</option>
-	                  <option value="19">Teambuilding (Off-Campus)</option>
-	                  <option value="20">Ticket Selling</option>
-	                  <option value="21">TV Interview</option>
-	                  <option value="22">TV/Radio Guesting</option>
-	                  <option value="23">Generic Off-Campus Activity (Nature Dependent)</option>
-	                  <option value="24">Generic Tie-Up Activity (Nature Dependent)</option>
-               
-                		-->
                </select>
    </div>
 
@@ -151,11 +124,16 @@
    <div class ="col s8">
       <h5> Post-Activity Requirements</h5>
       <ol>
-        <li>Pre-Activity Requirements</li>
+      	<c:forEach items = "${reqList }" var = "r">
+      		<li>${r.reqName }</li>
+      	</c:forEach>
+      
+        <!-- <li>Pre-Activity Requirements</li>
         <li>General Attendance Log-Sheet</li>
         <li>List of Expenses</li>
         <li>List of Pictures</li>
         <li>Activity Report</li>
+         -->
       </ol>
    </div>
    <div class ="col s8">

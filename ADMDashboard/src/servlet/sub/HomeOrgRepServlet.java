@@ -29,21 +29,23 @@ public class HomeOrgRepServlet {
 
 	private static void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		System.out.println("HOMEORGREP SERVLET");
+		
 		Org org = null;
 		User user = null;
 		
 		// get cookies for userID; assume orgrep exists
-//		Cookie[] cookies = request.getCookies();
-//		for(int i = 0; i < cookies.length; i ++) {
-//			if(cookies[i].getName().equals(User.COL_IDNUMBER)) {
-//				org = OrgService.searchOrg(Integer.parseInt(cookies[i].getValue()));
-//				user = UserService.searchUser(Integer.parseInt(cookies[i].getValue()));
-//			}
-//		}
+		Cookie[] cookies = request.getCookies();
+		for(int i = 0; i < cookies.length; i ++) {
+			if(cookies[i].getName().equals(User.COL_IDNUMBER)) {
+				org = OrgService.searchOrg(Integer.parseInt(cookies[i].getValue()));
+				user = UserService.searchUser(Integer.parseInt(cookies[i].getValue()));
+			}
+		}
 		
 		// FUCKING TEMPORARY
-		org = OrgService.searchOrg(1);
-		user = UserService.searchUser(1);
+//		org = OrgService.searchOrg(1);
+//		user = UserService.searchUser(1);
 		
 		// for side bar menu
 		request.getSession().setAttribute(Org.COL_LOGOURL, org.getLogoURL());	// logo
@@ -57,8 +59,8 @@ public class HomeOrgRepServlet {
 		request.getSession().setAttribute("eventTypeList", eventTypeList);
 		
 		// for initial requirements of activity (will change using ajax in RequirementsServlet)
-//		ArrayList<Requirement> reqList = RequirementService.getRequirements(eventTypeList.get(0).getEventtypeID());
-//		request.getSession().setAttribute("reqList", reqList);
+		ArrayList<Requirement> reqList = RequirementService.getRequirements(eventTypeList.get(0).getEventtypeID());
+		request.getSession().setAttribute("reqList", reqList);
 			
 		// send request to jsp
 		request.getRequestDispatcher("/homepage_orgrep.jsp").forward(request, response);
