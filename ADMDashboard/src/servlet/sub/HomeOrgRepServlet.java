@@ -54,6 +54,7 @@ public class HomeOrgRepServlet {
 		
 		// for upcoming deadlines
 		
+		
 		// for activity drop down
 		ArrayList<EventType> eventTypeList = EventTypeService.getAllEventType();
 		request.getSession().setAttribute("eventTypeList", eventTypeList);
