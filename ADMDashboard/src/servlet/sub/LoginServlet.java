@@ -37,12 +37,9 @@ public class LoginServlet {
 		// match attributes to the db
 		User user = UserService.searchUser(email);
 		System.out.println(user);
-		System.out.println("FUCKING SHIT");
 		
 		// if user exists, go to admin/orgrep servlet
 		if(user != null) {
-			
-			System.out.println("USER IS FUCKING NOT NULL");
 			
 			// CREATE COOKIE
 			Cookie userIDcookie = new Cookie(User.COL_IDNUMBER, user.getUserID() + "");
@@ -51,10 +48,8 @@ public class LoginServlet {
 			
 			// REDIRECT
 			if(user.getUserType().toString().equals(UserType.ORGREP + "")) {
-				System.out.println("I AM A FUCKING ORGREP");
 				request.getRequestDispatcher("HomeOrgRepServlet").forward(request, response);
 			} else if(user.getUserType().toString().equals(UserType.ADMIN + "")) {
-				System.out.println("I AM A FUCKING ADMIN");
 				request.getRequestDispatcher("HomeAdminServlet").forward(request, response); 
 			}
 			

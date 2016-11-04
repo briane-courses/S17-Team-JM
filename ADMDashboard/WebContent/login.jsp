@@ -106,13 +106,6 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 <script>
 
-	$(document).ready(function() {
-		var auth2 = gapi.auth2.getAuthInstance();
-	    auth2.signOut().then(function () {
-	        console.log('User signed out.');
-	    });
-	});
-
       function onSignIn(googleUser) {
 	  
 	  /*window.location.href = "homepage.html";*/
@@ -128,8 +121,6 @@
         // The ID token you need to pass to your backend:
         var id_token = googleUser.getAuthResponse().id_token;
         console.log("ID Token: " + id_token);
-		
-		
 		
 		$("#email").val(profile.getEmail());
 		$("#loginform").submit();

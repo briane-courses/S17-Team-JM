@@ -32,6 +32,8 @@ public class RequirementsServlet {
 
 	private static void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		
+		System.out.println("REUIREMENTS SERVLET");
 		// for ajax
 		PrintWriter pw = response.getWriter();
 
