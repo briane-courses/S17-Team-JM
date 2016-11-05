@@ -146,9 +146,7 @@
    <div class ="col s8">
       <h5> Post-Activity Requirements</h5>
       <ol id = "reqList_jsp">
-      	<c:forEach items = "${reqList }" var = "r">
-      		<li>${r.reqName }</li>
-      	</c:forEach>
+      	<label>Select a Type of Activity first</label>
       	
       </ol>
    </div>
