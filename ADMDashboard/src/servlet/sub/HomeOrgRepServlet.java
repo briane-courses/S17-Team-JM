@@ -48,7 +48,7 @@ public class HomeOrgRepServlet {
 //		user = UserService.searchUser(1);
 		
 		// for side bar menu
-		request.getSession().setAttribute(Org.COL_LOGOURL, org.getLogoURL());	// logo
+		// request.getSession().setAttribute(Org.COL_LOGOURL, org.getLogoURL());	// logo
 		request.getSession().setAttribute(Org.COL_ORGCODE, org.getOrgcode());	// orgcode
 		request.getSession().setAttribute(User.COL_EMAIL, user.getEmail());		// email
 		
@@ -58,10 +58,6 @@ public class HomeOrgRepServlet {
 		// for activity drop down
 		ArrayList<EventType> eventTypeList = EventTypeService.getAllEventType();
 		request.getSession().setAttribute("eventTypeList", eventTypeList);
-		
-		// for initial requirements of activity (will change using ajax in RequirementsServlet)
-		ArrayList<Requirement> reqList = RequirementService.getRequirements(eventTypeList.get(0).getEventtypeID());
-		request.getSession().setAttribute("reqList", reqList);
 			
 		// send request to jsp
 		request.getRequestDispatcher("/homepage_orgrep.jsp").forward(request, response);
