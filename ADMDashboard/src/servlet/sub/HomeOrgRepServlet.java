@@ -10,11 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.EventType;
 import model.Org;
-import model.Requirement;
 import model.User;
 import service.EventTypeService;
 import service.OrgService;
-import service.RequirementService;
 import service.UserService;
 import servlet.MasterServlet;
 
@@ -33,22 +31,29 @@ public class HomeOrgRepServlet {
 		
 		Org org = null;
 		User user = null;
+		String logoURL = "";
 		
 		// get cookies for userID; assume orgrep exists
 		Cookie[] cookies = request.getCookies();
+		
+		System.out.println("cookies: " + cookies.length);
+		
 		for(int i = 0; i < cookies.length; i ++) {
 			if(cookies[i].getName().equals(User.COL_IDNUMBER)) {
 				org = OrgService.searchOrg(Integer.parseInt(cookies[i].getValue()));
 				user = UserService.searchUser(Integer.parseInt(cookies[i].getValue()));
 			}
+			else if(cookies[i].getName().equals("logoURL")) {
+				logoURL = cookies[i].getValue();
+			}
 		}
 		
-		// FUCKING TEMPORARY
-//		org = OrgService.searchOrg(1);
-//		user = UserService.searchUser(1);
+		System.out.println("logoURL : " + logoURL);
+		System.out.println("orgcode : " + org.getOrgcode());
+		System.out.println("email : " + user.getEmail());
 		
 		// for side bar menu
-		// request.getSession().setAttribute(Org.COL_LOGOURL, org.getLogoURL());	// logo
+		request.getSession().setAttribute("logoURL", logoURL);	// logo
 		request.getSession().setAttribute(Org.COL_ORGCODE, org.getOrgcode());	// orgcode
 		request.getSession().setAttribute(User.COL_EMAIL, user.getEmail());		// email
 		

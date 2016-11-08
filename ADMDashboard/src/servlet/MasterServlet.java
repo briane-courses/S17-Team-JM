@@ -12,6 +12,7 @@ import servlet.sub.CalendarOrgRepServlet;
 import servlet.sub.HomeAdminServlet;
 import servlet.sub.HomeOrgRepServlet;
 import servlet.sub.LoginServlet;
+import servlet.sub.LogoutServlet;
 import servlet.sub.RequirementsServlet;
 import servlet.sub.StartServlet;
 
@@ -20,6 +21,7 @@ import servlet.sub.StartServlet;
 		HomeAdminServlet.URL,
 		HomeOrgRepServlet.URL,
 		LoginServlet.URL,
+		LogoutServlet.URL,
 		RequirementsServlet.URL,
 		StartServlet.URL
 		})
@@ -61,6 +63,9 @@ public class MasterServlet extends HttpServlet {
 					break;
 				case LoginServlet.URL:
 					LoginServlet.process(request, response, type);
+					break;
+				case LogoutServlet.URL:
+					LogoutServlet.process(request, response, type);
 					break;
 				case RequirementsServlet.URL:
 					RequirementsServlet.process(request, response, type);
