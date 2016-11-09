@@ -44,13 +44,16 @@ public class MasterServlet extends HttpServlet {
 		}
 		
 	private void process(HttpServletRequest request, HttpServletResponse response, int type) {
+		AbstractServlet servlet;
+		
 		try {
-			AbstractServlet servlet = ServletManager.getInstance().getServlet(request.getServletPath());
-			if(servlet != null){
+			
+			servlet = ServletManager.getInstance().getServlet(request.getServletPath());
+			
+			if(servlet != null)
 				servlet.process(request, response, type);
-			} else {
-				System.err.println("ERROR: Servlet not implemented!");
-			}
+			else System.err.println("ERROR: Servlet not implemented!");
+			
 		} catch (ServletException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
