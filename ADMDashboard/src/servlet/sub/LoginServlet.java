@@ -33,6 +33,7 @@ public class LoginServlet {
 		
 		// retrieve attributes from index.jsp
 		String email = request.getParameter(User.COL_EMAIL);
+		String logoURL = request.getParameter("logoURL");
 		
 		// match attributes to the db
 		User user = UserService.searchUser(email);
@@ -43,8 +44,10 @@ public class LoginServlet {
 			
 			// CREATE COOKIE
 			Cookie userIDcookie = new Cookie(User.COL_IDNUMBER, user.getUserID() + "");
-			userIDcookie.setMaxAge(60 * 60 * 24); 	// set age of cookie to 1 day
-			response.addCookie(userIDcookie); 		// add cookie to list of cookies
+			Cookie logoURLcookie = new Cookie("logoURL", logoURL);
+			
+			response.addCookie(logoURLcookie);		// add cookie to list of cookies
+			response.addCookie(userIDcookie); 		
 			
 			// REDIRECT
 			if(user.getUserType().toString().equals(UserType.ORGREP + "")) {
