@@ -1,7 +1,9 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
    
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -34,8 +36,8 @@
 			<div class="g-signin2" data-onsuccess="onSignIn">Sign in</div><div class="section"></div> 
 		</div>
 		<form id="loginform" action="LoginServlet" method="POST">
+			<input type="hidden" name="ACTION" value="LOGIN"/>
 			<input type="hidden" name="email" id="email" />
-			<input type="hidden" name="logoURL" id="logoURL" />
 		</form>
 		<h5 class="indigo-text">What is ADM?</h5>
 	<h6 class = "center flow-text"> The Activity Documentations and Management Team is the executive team of the Council of Student Organizations that takes charge of the documentation of the post-activity requirements of all accredited organizations. </h6>
@@ -124,7 +126,6 @@
         console.log("ID Token: " + id_token);
 		
 		$("#email").val(profile.getEmail());
-		$("#logoURL").val(profile.getImageUrl());
 		$("#loginform").submit();
 		
       };

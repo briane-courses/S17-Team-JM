@@ -4,8 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import db.Query;
 import model.EventType;
+import utils.db.Query;
 
 public class EventTypeService {
 	

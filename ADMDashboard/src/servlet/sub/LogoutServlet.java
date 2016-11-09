@@ -7,18 +7,17 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import servlet.AbstractServlet;
 import servlet.MasterServlet;
 
 /**
  * Servlet implementation class LogoutServlet
  */
-public class LogoutServlet {
+public class LogoutServlet  extends AbstractServlet{
 	
 	public static final String URL = "/LogoutServlet";
-	
-	public LogoutServlet() {}
-	
-	private static void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("LOGOUT SERVLET");
 
@@ -44,15 +43,11 @@ public class LogoutServlet {
 		
 	}
 	
-	private static void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 	
-	public static void process(HttpServletRequest request, HttpServletResponse response, int type) throws ServletException, IOException{
-		if(type == MasterServlet.TYPE_GET)
-			doGet(request, response);
-		doPost(request, response);
-	}
 
 }
