@@ -19,6 +19,8 @@ public enum ServletUrl {
 	Start(StartServlet.URL, 
 			new StartServlet());
 	
+	/* ---- Do not change beyond this point ---- */
+	
 	private String url;
 	private AbstractServlet servlet;
 	
