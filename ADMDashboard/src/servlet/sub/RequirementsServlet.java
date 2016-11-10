@@ -46,6 +46,11 @@ public class RequirementsServlet  extends AbstractServlet{
 				
 		pw.write(json);
 	}
+
+	@Override
+	public String getUrl() {
+		return URL;
+	}
 	
 
 }

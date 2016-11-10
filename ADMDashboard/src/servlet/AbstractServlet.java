@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 
 public abstract class AbstractServlet {
 
+	public abstract String getUrl();
+	
 	protected abstract void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
 	
 	protected abstract void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;

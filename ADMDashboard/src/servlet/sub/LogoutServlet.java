@@ -48,6 +48,11 @@ public class LogoutServlet  extends AbstractServlet{
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
+
+	@Override
+	public String getUrl() {
+		return URL;
+	}
 	
 
 }

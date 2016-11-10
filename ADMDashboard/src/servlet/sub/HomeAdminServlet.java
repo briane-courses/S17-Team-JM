@@ -29,4 +29,9 @@ public class HomeAdminServlet extends AbstractServlet{
 		
 	}
 
+	@Override
+	public String getUrl() {
+		return URL;
+	}
+
 }
