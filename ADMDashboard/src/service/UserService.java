@@ -9,7 +9,7 @@ import model.UserType;
 import utils.db.Query;
 
 public class UserService {
-	
+
 	private UserService(){
 		
 	}
@@ -123,5 +123,4 @@ public class UserService {
 		}
 		return orgReps;
 	}
-
 }

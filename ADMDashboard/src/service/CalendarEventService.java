@@ -3,12 +3,8 @@ package service;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import model.CalendarEvent;
-import model.Event;
-import model.Status;
-import utils.converter.DatatypeConverter;
 import utils.db.Query;
 
 public class CalendarEventService {

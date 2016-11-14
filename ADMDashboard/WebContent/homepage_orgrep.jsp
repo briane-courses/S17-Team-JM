@@ -92,7 +92,7 @@
  <ul id="slide-out" class="side-nav fixed">
 			<li><div class="userView">
 			  <img class="background" src="images/office.jpg">
-			  <a href="#!user"><img class="circle" src="images/cso.jpg"></a>
+			  <a href="#!user"><img class="circle" src="${logoURL }"></a>
 			  <a href="#!name"><span class="white-text name">${orgcode } </span></a>
 			  <a href="#!email"><span class="white-text email">${email }</span></a>
 			</div></li>

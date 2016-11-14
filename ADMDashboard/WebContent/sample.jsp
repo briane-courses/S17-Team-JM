@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -23,11 +22,11 @@
 	  gapi.load('auth2', function () {
 		   var auth2 = gapi.auth2.init({
 		       client_id: '20332845396-pvv6j3ifeu0391esi12rdcill7tmq0u7.apps.googleusercontent.com',
-
+		       cookie_policy: 'single_host_origin'
 		   });
 		   auth2.then(function(){
 		        // this get called right after token manager is started
-		        auth2.signOut().then(function () {
+		        auth2.disconnect().then(function () {
 		            console.log('User signed out.');
 		    		window.location.href = "login.jsp";
 		          });
