@@ -16,16 +16,13 @@
   
     <script src="https://apis.google.com/js/platform.js" async defer>
 	 </script>
-	
+
 
 </head>
 
 <body>
 
-  <!--  Scripts-->
-  <!--Import jQuery before materialize.js-->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="js/materialize.js"></script>
+
   <script>
     function signOut() {
 	    gapi.load('auth2', function() {
@@ -34,7 +31,7 @@
       var auth2 = gapi.auth2.getAuthInstance();
       auth2.signOut().then(function () {
         console.log('User signed out.');
-		window.location.href = "index.html";
+		window.location.href = "LogoutServlet";
       });
     }
 
@@ -43,28 +40,32 @@
         gapi.auth2.init();
       });
     }
-         $(document).ready(function() {
-         $('select').material_select();
-      });
+
      
 
      
   </script>
-
+<!-- CHANGES START HERE --> 
+  	  <!--  Scripts-->
+  <!--Import jQuery before materialize.js-->
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+       <script type="text/javascript" src="js/materialize.min.js"></script>
+	   
+	   
   <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
-  
 <!-- START OF NAVBAR --> 
  <div class="navbar-fixed">
  <nav class = "green">
     <div class="nav-wrapper">
-   
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li> <a href="#" onclick="signOut();"><i class="material-icons">settings</i>Settings/Sign Out</a></li>
-		  <li><a href="#"><i class="material-icons">add_alert</i>Notification Icon</a></li>
+	     <!-- Modal Trigger -->
+        <li> <a href="#modal1" class="modal-trigger"><i class= "material-icons">settings</i>Settings/Sign Out</a></li>
+		
       </ul>
     </div>
   </nav>
 </div>
+<!-- end of NAVBAR -->
 
  <ul id="slide-out" class="side-nav fixed">
 			<li><div class="userView">
@@ -76,9 +77,13 @@
 			<li><a href="homepage.html"><i class="material-icons">dashboard</i>Dashboard</a></li>
 						<li><div class="divider"></div></li>
 			<li><a href="calendar.html"><i class="material-icons">today</i>Calendar of special deadlines</a></li>
+			<li><div class="divider"></div></li>
+      <li><a href="CSO1617_Activity Report.docx" download = "CSO1617_Activity Report.docx"> <i class="material-icons">get_app</i>Download Post-Activity Form</a></li>
 		  </ul>
 		  
   <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+
+
         <!-- END OF NAVBAR -->
 <!-- START OF MAIN VIEW( Body) -->
 
@@ -89,22 +94,7 @@
 		<div class ="col s9">
 		<div class ="row">
 			<div class = "col s8">
-	 <div class = "col s8 card-panel white hoverable">
-    <div class ="col s8">
-      <label>Nature of the Activity</label>
-               <select>
-                  <option value="" disabled selected>Select Nature of Activity</option>
-                  <option value="1">Academic</option>
-                  <option value="2">Special Interest</option>
-                  <option value="3">Departmental Initiative</option>
-                  <option value="4">Fundraising</option>
-                  <option value="5">Community Engagement</option>
-                  <option value="6">Organizational Development</option>
-                  <option value="7">Issue Advocacy</option>
-                  <option value="8">Lasallian Formation/Spiritual Growth</option>
-                  <option value="9">Outreach</option>
-               </select>
-   </div>
+	 <div class = "col s12 card-panel white hoverable">  
     <div class ="col s8">
       <label>Type of Activity</label>
                <select>
@@ -138,6 +128,8 @@
 
 
    <div class ="col s8">
+   
+<a class="waves-effect waves-light btn" href="#modal1">Modal</a>
       <h5> Post-Activity Requirements</h5>
       <ol>
         <li>Pre-Activity Requirements</li>
@@ -147,18 +139,48 @@
         <li>Activity Report</li>
       </ol>
    </div>
-   <div class ="col s8">
-    <h5> Downloadable Form(s)</h5>   
-     <a href="sample.pdf" download = "">Click to Download!</a>
-     <br>
-   </div> 
+   
    </div>
 		  </div>
 			 <div class = "col s4">
     <div class="card-panel white hoverable">
       <h5>  Upcoming Deadlines</h5>
-        <ul>
-          <li>10/27/2016 | Event Name</li>
+        <ul class="collapsible" data-collapsible="accordion">
+          <li>
+            <div class="collapsible-header" style = "color:red"><i class="material-icons">warning</i>Due in 1 week</div>
+            <div class="collapsible-body">
+              <ul style = "margin: 20px">
+                <li>Date due | Event #1</li>
+                <li>Date due | Event #2</li>
+                <li>Date due | Event #3</li>
+                <li>Date due | Event #4</li>
+                <li>Date due | Event #5</li>
+              </ul>
+          </li>
+          <li>
+            <div class="collapsible-header" style = "color:orange"><i class="material-icons">info_outline</i>Due in 2 weeks</div>
+            <div class="collapsible-body">
+              <ul style = "margin: 20px">
+                <li>Date due | Event #1</li>
+                <li>Date due | Event #2</li>
+                <li>Date due | Event #3</li>
+                <li>Date due | Event #4</li>
+                <li>Date due | Event #5</li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <div class="collapsible-header" style = "color:green"><i class="material-icons">thumb_up</i>Due in 3 weeks</div>
+            <div class="collapsible-body">
+              <ul style = "margin: 20px">
+                <li>Date due | Event #1</li>
+                <li>Date due | Event #2</li>
+                <li>Date due | Event #3</li>
+                <li>Date due | Event #4</li>
+                <li>Date due | Event #5</li>
+              </ul>
+            </div>
+          </li>
         </ul>
     </div>
   </div>
@@ -166,13 +188,31 @@
 	
 	</div>
   </div>
+  <!-- Modal Structure -->
+
+</div>
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <hp>Are you sure you want to sign out? </p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" onclick="signOut(); "class=" modal-action modal-close waves-effect waves-green btn-flat">Log out </a>
+    </div>
+  </div> 
+          
+
 <!-- END OF MAIN VIEW (Body) -->  
  <script>
  // Initialize collapse button
   $(".button-collapse").sideNav();
+         $(document).ready(function() {
+	   $('.modal-trigger').leanModal();	
+		 
+         $('select').material_select();
+      });
   // Initialize collapsible (uncomment the line below if you use the dropdown variation)
   //$('.collapsible').collapsible();
 </script>
-
+<!-- CHANGES END HERE. -->
 </body>
 </html>
