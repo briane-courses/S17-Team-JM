@@ -73,7 +73,7 @@ public class CalendarEventService {
 		ResultSet r = null;
 		
 		try {
-			r = q.runQuery(query);
+			r = q.runQuery(query, input);
 			
 			while(r.next()) {
 				event = new CalendarEvent();
