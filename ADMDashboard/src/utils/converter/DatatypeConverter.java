@@ -9,6 +9,10 @@ public class DatatypeConverter {
 
 	private DatatypeConverter(){}
 	
+	public static String toString(Date date){
+		return date.toString();
+	}
+	
 	public static Calendar toCalendar(Date date){
 		Calendar result = Calendar.getInstance();
 		result.setTime(date);

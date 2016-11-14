@@ -29,8 +29,11 @@ public class Query {
 
 	private static Query instance = null;
 	
-	private static final String USER = "sofengg";
-	private static final String PASS = "sofenggADM!";
+	public static final String[] ACCESS1 = {"sofengg","sofenggADM!"};
+	public static final String[] ACCESS2 = {"root","p@ssword"};
+	
+	private static final String USER = ACCESS2[0];
+	private static final String PASS = ACCESS2[1];
 	private static final String URL = "jdbc:mysql://localhost:3306/adm";
 	
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
@@ -118,7 +121,7 @@ public class Query {
 					else if(input.get(i) instanceof Boolean)
 						pstmt.setBoolean(i + 1, (Boolean)input.get(i));
 					else if(input.get(i) instanceof Enum)
-						pstmt.setString(i + 1,(String) input.get(i));
+						pstmt.setString(i + 1,((Enum) input.get(i)).toString());
 					else if(input.get(i) instanceof Calendar)
 						pstmt.setDate(i + 1,(Date) ((Calendar) input.get(i)).getTime());
 					}
@@ -167,7 +170,7 @@ public class Query {
 					else if(input.get(i) instanceof Boolean)
 						pstmt.setBoolean(i + 1, (Boolean)input.get(i));
 					else if(input.get(i) instanceof Enum)
-						pstmt.setString(i + 1,(String) input.get(i));
+						pstmt.setString(i + 1,((Enum) input.get(i)).toString());
 					else if(input.get(i) instanceof Calendar)
 						pstmt.setDate(i + 1,(Date) ((Calendar) input.get(i)).getTime());
 					}
@@ -216,7 +219,7 @@ public class Query {
 				else if(input.get(i) instanceof Boolean)
 					cstmt.setBoolean(i + 1, (Boolean)input.get(i));
 				else if(input.get(i) instanceof Enum)
-					cstmt.setString(i + 1,(String) input.get(i));
+					pstmt.setString(i + 1,((Enum) input.get(i)).toString());
 				else if(input.get(i) instanceof Calendar)
 					cstmt.setDate(i + 1,(Date) ((Calendar) input.get(i)).getTime());
 				}

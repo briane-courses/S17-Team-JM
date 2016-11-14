@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import servlet.sub.*;
 
 @WebServlet(urlPatterns = {
+		AjaxUserCalendarServlet.URL,
 		CalendarOrgRepServlet.URL,
 		HomeAdminServlet.URL,
 		HomeOrgRepServlet.URL,

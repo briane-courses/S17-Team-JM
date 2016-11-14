@@ -4,7 +4,8 @@ import servlet.AbstractServlet;
 import servlet.sub.*;
 
 public enum ServletDef {
-
+	
+	AjaxUserCalendar(new AjaxUserCalendarServlet()),
 	CalendarOrgRep(new CalendarOrgRepServlet()),
 	HomeAdmin(new HomeAdminServlet()),
 	HomeOrgRep(new HomeOrgRepServlet()),
@@ -12,7 +13,7 @@ public enum ServletDef {
 	Logout(new LogoutServlet()),
 	Requirements(new RequirementsServlet()),
 	Start(new StartServlet());
-	
+			
 	/* ---- Do not change beyond this point ---- */
 	
 	private AbstractServlet servlet;
@@ -31,4 +32,5 @@ public enum ServletDef {
 		  }
 		return null;
 	}
+	
 }
