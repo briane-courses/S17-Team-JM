@@ -1,24 +1,18 @@
 /*
 // Google api console clientID and apiKey 
-
  var clientId = '20332845396-276a6b44nm93v7rtdlqqt8m88bbtvsvk.apps.googleusercontent.com';
  var apiKey = 'AIzaSyB3cFVU08CzydxKzUcHiZZ9vLdSjC1v11w';
-
  // enter the scope of current project (this API must be turned on in the Google console)
    var scopes = 'http://localhost:8080/ADMDashboard/';
-
-
 // OAuth2 functions
      function handleClientLoad() {
            gapi.client.setApiKey(apiKey);
            window.setTimeout(checkAuth, 1);
         }
-
 //To authenticate
   function checkAuth() {
     gapi.auth.authorize({ client_id: clientId, scope: scopes, immediate: true }, handleAuthResult);
         }
-
 var today = new Date();
 var twoHoursLater = new Date();
 twoHoursLater.setHours(today.getHours()+2);
@@ -60,13 +54,11 @@ var resource = {
             }
             ],
         };
-
 function makeApiCall(){
 gapi.client.load('calendar', 'v3', function () { // load the calendar api (version 3)
                 var request = gapi.client.calendar.events.insert({
                     'calendarId': 'dlsu.edu.ph_r6jgffm9cce9velrt7p30adj64@group.calendar.google.com', 
 // calendar ID which id of Google Calendar where you are creating events. this can be copied from your Google Calendar user view.
-
                     "resource": resource 	// above resource will be passed here
                 });                
 });

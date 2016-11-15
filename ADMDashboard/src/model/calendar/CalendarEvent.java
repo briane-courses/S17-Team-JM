@@ -1,9 +1,12 @@
-package model;
+package model.calendar;
 
 import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
+import model.Event;
+import model.EventDate;
+import model.Org;
 import model.Status;
 
 public class CalendarEvent implements Serializable{
@@ -27,24 +30,21 @@ public class CalendarEvent implements Serializable{
 	private int id;
 	private String title;
 	private String start;
-	private String end;
 	private String color;
 
 	public CalendarEvent(){}
 
-	public CalendarEvent(int id, String title, String start, String end, String color) {
+	public CalendarEvent(int id, String title, String start, String color) {
 		this.id = id;
 		this.title = title;
 		this.start = start;
-		this.end = end;
 		this.color = color;
 	}
 	
-	public void setEverything(int id, String title, String start, String end, String color) {
+	public void setEverything(int id, String title, String start, String color) {
 		this.id = id;
 		this.title = title;
 		this.start = start;
-		this.end = end;
 		this.color = color;
 	}
 
@@ -70,14 +70,6 @@ public class CalendarEvent implements Serializable{
 
 	public void setStart(String start) {
 		this.start = start;
-	}
-
-	public String getEnd() {
-		return end;
-	}
-
-	public void setEnd(String end) {
-		this.end = end;
 	}
 
 	public String getColor() {

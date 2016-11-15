@@ -2,6 +2,7 @@ package servlet.sub;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -9,9 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import model.CalendarEvent;
 import model.Event;
 import model.User;
+import model.calendar.CalendarEvent;
 import service.CalendarEventService;
 import servlet.MasterServlet;
 
@@ -45,7 +46,7 @@ public class AjaxUserCalendarServlet{
 		String json = new Gson().toJson(events);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		System.out.println(json);
+		//System.out.println(json);
 		response.getWriter().write(json);
 	}
 	
