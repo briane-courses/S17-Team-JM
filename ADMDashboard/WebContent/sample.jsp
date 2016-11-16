@@ -22,11 +22,11 @@
 	  gapi.load('auth2', function () {
 		   var auth2 = gapi.auth2.init({
 		       client_id: '20332845396-pvv6j3ifeu0391esi12rdcill7tmq0u7.apps.googleusercontent.com',
-		       cookie_policy: 'single_host_origin'
+
 		   });
 		   auth2.then(function(){
 		        // this get called right after token manager is started
-		        auth2.disconnect().then(function () {
+		        auth2.signOut().then(function () {
 		            console.log('User signed out.');
 		    		window.location.href = "login.jsp";
 		          });

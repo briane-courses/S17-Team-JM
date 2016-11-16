@@ -4,8 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import db.Query;
 import model.Org;
-import utils.db.Query;
 
 public class OrgService {
 	

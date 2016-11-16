@@ -33,26 +33,28 @@ public class LoginServlet {
 		
 		// retrieve attributes from index.jsp
 		String email = request.getParameter(User.COL_EMAIL);
-		String logoURL = request.getParameter("logoURL");
 		
 		// match attributes to the db
 		User user = UserService.searchUser(email);
 		System.out.println(user);
+		System.out.println("FUCKING SHIT");
 		
 		// if user exists, go to admin/orgrep servlet
 		if(user != null) {
 			
+			System.out.println("USER IS FUCKING NOT NULL");
+			
 			// CREATE COOKIE
 			Cookie userIDcookie = new Cookie(User.COL_IDNUMBER, user.getUserID() + "");
-			Cookie logoURLcookie = new Cookie("logoURL", logoURL);
-			
-			response.addCookie(logoURLcookie);		// add cookie to list of cookies
-			response.addCookie(userIDcookie); 		
+			userIDcookie.setMaxAge(60 * 60 * 24); 	// set age of cookie to 1 day
+			response.addCookie(userIDcookie); 		// add cookie to list of cookies
 			
 			// REDIRECT
 			if(user.getUserType().toString().equals(UserType.ORGREP + "")) {
+				System.out.println("I AM A FUCKING ORGREP");
 				request.getRequestDispatcher("HomeOrgRepServlet").forward(request, response);
 			} else if(user.getUserType().toString().equals(UserType.ADMIN + "")) {
+				System.out.println("I AM A FUCKING ADMIN");
 				request.getRequestDispatcher("HomeAdminServlet").forward(request, response); 
 			}
 			
