@@ -30,7 +30,9 @@
   <!--Import jQuery before materialize.js-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
-  
+
+		<form id="logoutform" action="LogoutServlet" method="POST">
+		</form>
   <script>
    
 			function signOut() {
@@ -40,7 +42,8 @@
 				var auth2 = gapi.auth2.getAuthInstance();
 				auth2.signOut().then(function() {
 					console.log('User signed out.');
-					window.location.href = "login.jsp";
+
+					$("#logoutform").submit();
 				});
 			}
 
@@ -84,7 +87,8 @@
     <div class="nav-wrapper">
    
       <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li> <a href="#" onclick="signOut();"><i class="material-icons">settings</i>Settings/Sign Out</a></li>
+        <!-- Modal Trigger -->
+        <li> <a href="#modal1" class="modal-trigger"><i class= "material-icons">settings</i>Settings/Sign Out</a></li>
 		
       </ul>
     </div>
@@ -100,8 +104,8 @@
 			</div></li>
 			<li><a href="homepage_orgrep.jsp"><i class="material-icons">dashboard</i>Dashboard</a></li>
 						<li><div class="divider"></div></li>
-			<li><a href="calendar.html"><i class="material-icons">today</i>Calendar of special deadlines</a></li>
-      <li><a href="sample.pdf" download = ""> <i class="material-icons">get_app</i>Download Post-Activity Form</a></li>
+			<li><a href="calendar.jsp"><i class="material-icons">today</i>Calendar of special deadlines</a></li>
+      <li><a href="" download = "CSO1617_Activity_Report"> <i class="material-icons">get_app</i>Download Post-Activity Form</a></li>
 		  </ul>
 		  
   <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
@@ -143,11 +147,6 @@
       	
       </ol>
    </div>
-   <div class ="col s8">
-    <h5> Downloadable Form(s)</h5>   
-     <a href="sample.pdf" download = "">Click to Download!</a>
-     <br>
-   </div> 
    </div>
 	</div>
 	
@@ -205,10 +204,25 @@
 	
 	</div>
   </div>
-<!-- END OF MAIN VIEW (Body) -->  
+<!-- END OF MAIN VIEW (Body) --> 
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal">
+    <div class="modal-content">
+      <p>Are you sure you want to sign out? </p>
+    </div>
+    <div class="modal-footer">
+      <a href="#!" onclick="signOut(); "class=" modal-action modal-close waves-effect waves-green btn-flat">Log out </a>
+    </div>
+  </div> 
+  <!--  end of modal structure. --> 
  <script>
  // Initialize collapse button
   $(".button-collapse").sideNav();
+  $(document).ready(function() {
+	   $('.modal-trigger').leanModal();	
+		 
+        $('select').material_select();
+     });
   // Initialize collapsible (uncomment the line below if you use the dropdown variation)
   //$('.collapsible').collapsible();
 </script>

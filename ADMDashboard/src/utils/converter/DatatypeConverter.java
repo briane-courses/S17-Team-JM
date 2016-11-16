@@ -7,20 +7,21 @@ import model.Status;
 
 public class DatatypeConverter {
 
-	private DatatypeConverter(){}
-	
-	public static String toString(Date date){
+	private DatatypeConverter() {
+	}
+
+	public static String toString(Date date) {
 		return date.toString();
 	}
-	
-	public static Calendar toCalendar(Date date){
+
+	public static Calendar toCalendar(Date date) {
 		Calendar result = Calendar.getInstance();
 		result.setTime(date);
 		return result;
 	}
-	
-	public static Status toStatus(String value){
-		return Status.getUserType(value);
+
+	public static Status toStatus(String value) {
+		return Status.getStatus(value);
 	}
-	
+
 }
