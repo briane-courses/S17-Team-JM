@@ -17,8 +17,8 @@
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
  
   
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script type="text/javascript" src = "js/jquery-3.0.0.min.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer>
+	 </script>
 	
 
 </head>
@@ -30,49 +30,29 @@
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
   <script>
-   
-			function signOut() {
-				gapi.load('auth2', function() {
-					gapi.auth2.init();
-				});
-				var auth2 = gapi.auth2.getAuthInstance();
-				auth2.signOut().then(function() {
-					console.log('User signed out.');
-					window.location.href = "login.jsp";
-				});
-			}
+    function signOut() {
+	    gapi.load('auth2', function() {
+        gapi.auth2.init();
+      });
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log('User signed out.');
+		window.location.href = "login.jsp";
+      });
+    }
 
-			function onLoad() {
-				gapi.load('auth2', function() {
-					gapi.auth2.init();
-				});
-			}
-			$(document).ready(function() {
-				$('select').material_select();
-			});
-			
-			// for ajax
-			function changed_activity_type() {
-				var id = $("#activity_type").find(":selected").val();
-				$.ajax({
-					url: "RequirementsServlet",
-					method: "post",
-					data: {
-						eventtypeID : id
-					},
-					dataType: "json",
-					success: function(json) {
-						console.log(json);
-						$("#reqList_jsp").empty();
-						for(var i = 0; i < json.length; i ++) {
-							console.log(json[i].reqName);
-							$("#reqList_jsp").append("<li>" + json[i].reqName + "</li>");
-						}
-					}
-				});
-			}
-			
-		</script>
+    function onLoad() {
+      gapi.load('auth2', function() {
+        gapi.auth2.init();
+      });
+    }
+         $(document).ready(function() {
+         $('select').material_select();
+      });
+     
+
+     
+  </script>
 
   <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
   
@@ -92,7 +72,7 @@
  <ul id="slide-out" class="side-nav fixed">
 			<li><div class="userView">
 			  <img class="background" src="images/office.jpg">
-			  <a href="#!user"><img class="circle" src="${logoURL }"></a>
+			  <a href="#!user"><img class="circle" src="images/cso.jpg"></a>
 			  <a href="#!name"><span class="white-text name">${orgcode } </span></a>
 			  <a href="#!email"><span class="white-text email">${email }</span></a>
 			</div></li>
@@ -114,7 +94,6 @@
 			<div class = "col s8">
 	 <div class = "col s8 card-panel white hoverable">
     <div class ="col s8">
-    <br>
       <label>Nature of the Activity</label>
                <select>
                   <option value="" disabled selected>Select Nature of Activity</option>
@@ -130,9 +109,8 @@
                </select>
    </div>
     <div class ="col s8">
-    <br>
       <label>Type of Activity</label>
-               <select id = "activity_type" onchange = "changed_activity_type()">
+               <select>
 	                  <option value="" disabled selected>Select Type of Activity</option>
 	                  
 	                  <c:forEach items = "${eventTypeList }" var = "e">
@@ -145,11 +123,17 @@
 
    <div class ="col s8">
       <h5> Post-Activity Requirements</h5>
-      <ol id = "reqList_jsp">
+      <ol>
       	<c:forEach items = "${reqList }" var = "r">
       		<li>${r.reqName }</li>
       	</c:forEach>
-      	
+      
+        <!-- <li>Pre-Activity Requirements</li>
+        <li>General Attendance Log-Sheet</li>
+        <li>List of Expenses</li>
+        <li>List of Pictures</li>
+        <li>Activity Report</li>
+         -->
       </ol>
    </div>
    <div class ="col s8">

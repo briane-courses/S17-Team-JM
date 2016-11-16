@@ -1,6 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -13,38 +11,13 @@
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
-  
-	<link href='css/fullcalendar.css' rel='stylesheet' />
-	<link href='css/fullcalendar.print.css' rel='stylesheet' media='print' />
-	<script src='js/moment.min.js'></script>
-  <script src="js/jquery-3.0.0.min.js"></script>
-	<script src='js/fullcalendar.min.js'></script>
-	<script src='js/calendar.js'></script>
-	
-  <!--  Scripts-->
-  <!--Import jQuery before materialize.js-->
-  <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
-  <script src="js/materialize.js"></script>
-  
-  <style>
-
-	#calendar {
-		max-width: 900px;
-		margin: 0 auto;
-	}
-	
-	#loading {
-		display: none;
-		position: absolute;
-		top: 10px;
-		right: 10px;
-	}
-
-</style>
-  
 </head>
 
 <body>
+  <!--  Scripts-->
+  <!--Import jQuery before materialize.js-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
   <script>
     function signOut() {
 	    gapi.load('auth2', function() {
@@ -105,15 +78,12 @@
 	</div>
 	<div class ="col s9">
 <div class = "container">
-<div id='loading'>loading...</div>
-<div id='calendar'></div>
-
+<iframe src="https://calendar.google.com/calendar/embed?height=600&amp;wkst=1&amp;bgcolor=%23FFFFFF&amp;src=dlsu.edu.ph_r6jgffm9cce9velrt7p30adj64%40group.calendar.google.com&amp;color=%23853104&amp;ctz=Asia%2FManila" style="border-width:0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
 </div>
 	</div>
 </div>
 <!-- END OF MAIN VIEW (Body) -->  
 
  
-<script src="js/calendar.js"></script>
 </body>
 </html>

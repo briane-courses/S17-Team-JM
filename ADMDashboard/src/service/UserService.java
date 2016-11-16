@@ -4,12 +4,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import db.Query;
 import model.User;
 import model.UserType;
-import utils.db.Query;
 
 public class UserService {
-
+	
 	private UserService(){
 		
 	}
@@ -123,4 +123,5 @@ public class UserService {
 		}
 		return orgReps;
 	}
+
 }
