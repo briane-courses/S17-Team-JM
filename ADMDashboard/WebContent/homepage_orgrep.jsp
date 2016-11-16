@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
    <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
@@ -29,6 +30,7 @@
   <!--Import jQuery before materialize.js-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
+  
   <script>
    
 			function signOut() {
@@ -83,7 +85,7 @@
    
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li> <a href="#" onclick="signOut();"><i class="material-icons">settings</i>Settings/Sign Out</a></li>
-		  <li><a href="#"><i class="material-icons">add_alert</i>Notification Icon</a></li>
+		
       </ul>
     </div>
   </nav>
@@ -92,13 +94,14 @@
  <ul id="slide-out" class="side-nav fixed">
 			<li><div class="userView">
 			  <img class="background" src="images/office.jpg">
-			  <a href="#!user"><img class="circle" src="${logoURL }"></a>
-			  <a href="#!name"><span class="white-text name">${orgcode } </span></a>
-			  <a href="#!email"><span class="white-text email">${email }</span></a>
+			  <a href="#!user"><img class="circle" src="images/cso.jpg"></a>
+			  <a href="#!name"><span class="white-text name">ORG NAME(org image above) </span></a>
+			  <a href="#!email"><span class="white-text email">orgname@gmail.com</span></a>
 			</div></li>
-			<li><a href="homepage.html"><i class="material-icons">dashboard</i>Dashboard</a></li>
+			<li><a href="homepage_orgrep.jsp"><i class="material-icons">dashboard</i>Dashboard</a></li>
 						<li><div class="divider"></div></li>
 			<li><a href="calendar.html"><i class="material-icons">today</i>Calendar of special deadlines</a></li>
+      <li><a href="sample.pdf" download = ""> <i class="material-icons">get_app</i>Download Post-Activity Form</a></li>
 		  </ul>
 		  
   <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
@@ -112,22 +115,10 @@
 		<div class ="col s9">
 		<div class ="row">
 			<div class = "col s8">
-	 <div class = "col s8 card-panel white hoverable">
+	 <div class = "col s12 card-panel white hoverable">
     <div class ="col s8">
     <br>
-      <label>Nature of the Activity</label>
-               <select>
-                  <option value="" disabled selected>Select Nature of Activity</option>
-                  <option value="1">Academic</option>
-                  <option value="2">Special Interest</option>
-                  <option value="3">Departmental Initiative</option>
-                  <option value="4">Fundraising</option>
-                  <option value="5">Community Engagement</option>
-                  <option value="6">Organizational Development</option>
-                  <option value="7">Issue Advocacy</option>
-                  <option value="8">Lasallian Formation/Spiritual Growth</option>
-                  <option value="9">Outreach</option>
-               </select>
+      
    </div>
     <div class ="col s8">
     <br>
@@ -158,16 +149,59 @@
      <br>
    </div> 
    </div>
-		  </div>
-			 <div class = "col s4">
-    <div class="card-panel white hoverable">
-      <h5>  Upcoming Deadlines</h5>
-        <ul>
-          <li>10/27/2016 | Event Name</li>
-        </ul>
-    </div>
-  </div>
-	.	</div>
+	</div>
+	
+	<div class="col s4">
+		<div class="card-panel white hoverable">
+			
+
+			<ul class="collapsible" data-collapsible="accordion">
+	          <li>
+	            <div class="collapsible-header" style = "color:red"><i class="material-icons">warning</i>Overdue</div>
+	            <div class="collapsible-body">
+	              <ul id="overDueList" style = "color:red">
+					<c:forEach items="${overdueDeadlines}" var="o" varStatus="status">
+						<li>${overdueList[status.index]} | ${o.eventname}</li>
+					</c:forEach>
+        			<h9>${noOverdueDeadlines}</h9>
+				</ul>
+	          </li>
+	          <li>
+	            <div class="collapsible-header" style = "color:orange"><i class="material-icons">error_outline</i>Due in 1 week</div>
+	            <div class="collapsible-body">
+	              <ul id="deadlineList1" style = "color:orange">
+					<c:forEach items="${pendingPostActList1}" var="p" varStatus="status">
+						<li>${due1DateList[status.index]} | ${p.eventname}</li>
+					</c:forEach>
+					<h9>${noPendingPostActList1}</h9>
+				</ul>
+	            </div>
+	          </li>
+	          <li>
+	            <div class="collapsible-header" ><i class="material-icons">info_outline</i>Due in 2 weeks</div>
+	            <div class="collapsible-body">
+	              <ul id="deadlineList2">
+					<c:forEach items="${pendingPostActList2}" var="q" varStatus="status">
+						<li>${due2DateList[status.index]} | ${q.eventname}</li>
+					</c:forEach>
+					 <h9>${noPendingPostActList2}</h9>
+				</ul>
+	            </div>
+	          </li>
+	          <li>
+	            <div class="collapsible-header" style = "color:green"><i class="material-icons">thumb_up</i>Others</div>
+	            <div class="collapsible-body">
+	              <ul id="otherdeadlineList">
+					<c:forEach items="${otherDeadlines}" var="r" varStatus="status">
+						<li>${otherDueDateList[status.index]} | ${r.eventname}</li>
+					</c:forEach>
+				</ul>
+	            </div>
+	          </li>
+	        </ul>
+	</div>
+	</div>
+	</div>
 	
 	</div>
   </div>
