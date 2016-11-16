@@ -2,12 +2,12 @@ package model;
 
 public enum Status {
 
-	PENDING, DONE;
+	PENDING, FINISHED;
 	
-	public static Status getStatus(String value) {
+	public static Status getUserType(String value) {
 		switch(value) {
 		case "PENDING": return PENDING;
-		case "DONE": return DONE;
+		case "FINISHED": return FINISHED;
 		}
 
 		return null;
