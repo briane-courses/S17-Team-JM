@@ -4,11 +4,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import db.Query;
 import model.EventType_Requirements;
 import model.Requirement;
+import utils.db.Query;
 
 public class RequirementService {
+
 	
 	public static ArrayList<Requirement> getRequirements(int eventTypeID) {
 		ArrayList<Requirement> reqList = new ArrayList<Requirement>();
