@@ -10,6 +10,7 @@ public class User implements Serializable {
 	public static final String COL_IDNUMBER = "userID";
 	public static final String COL_EMAIL = "email";
 	public static final String COL_USERTYPE = "usertype";
+	public static final String COL_ORGCODE = "orgcode";
 	
 	private int userID;
 	private String email;
