@@ -52,7 +52,7 @@ public class AjaxUserCalendarServlet{
 		if(org != null)
 			events = CalendarEventService.getEventsByOrg(org.getOrgcode(), Status.FINISHED);
 		else
-			events = CalendarEventService.getAllEvents();
+			events = CalendarEventService.getAllEvents(Status.FINISHED);
 			
 
 		//events = CalendarEventService.getEventsByOrg(orgcode);

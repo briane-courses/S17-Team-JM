@@ -13,22 +13,24 @@ import utils.generator.RandomHexGenerator;
 
 public class CalendarEventService {
 	
-	public static ArrayList<CalendarEvent> getAllEvents(){
+	public static ArrayList<CalendarEvent> getAllEvents(Status status){
 		ArrayList<CalendarEvent> result = new ArrayList<>();
+		ArrayList<Object> input = new ArrayList<>();
 		CalendarEvent event = null;
 		
 		String query = "select *"
 				+ " from"
 				+ " " + CalendarEvent.TABLE_EVENT
-				+ " inner join " + CalendarEvent.TABLE_EVENTDATE
-				+ " on "+CalendarEvent.TABLE_EVENT+"."+CalendarEvent.COL_EVENTID+" = "+CalendarEvent.TABLE_EVENTDATE+"."+CalendarEvent.COL_EVENTID
+				+ " natural join " + CalendarEvent.TABLE_EVENTDATE
+				+ " where "+CalendarEvent.COL_POSTACTSTATUS+"= ? " 
 				+ " ORDER BY "+CalendarEvent.COL_POSTACTDEADLINE+";";
-		
+
+		input.add(status);
 		Query q = Query.getInstance();
 		ResultSet r = null;
 		
 		try {
-			r = q.runQuery(query);
+			r = q.runQuery(query, input);
 			
 			while(r.next()) {
 				/*
