@@ -101,7 +101,7 @@
 			<li><a href="homepage_orgrep.jsp"><i class="material-icons">dashboard</i>Dashboard</a></li>
 						<li><div class="divider"></div></li>
 			<li><a href="calendar.html"><i class="material-icons">today</i>Calendar of special deadlines</a></li>
-      <li><a href="sample.pdf" download = ""> <i class="material-icons">get_app</i>Download Post-Activity Form</a></li>
+      
 		  </ul>
 		  
   <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
@@ -121,8 +121,7 @@
       
    </div>
     <div class ="col s8">
-    <br>
-      <label>Type of Activity</label>
+    <h5>Type of Activity</h5>
                <select id = "activity_type" onchange = "changed_activity_type()">
 	                  <option value="" disabled selected>Select Type of Activity</option>
 	                  
@@ -139,7 +138,11 @@
       <ol id = "reqList_jsp">
       	<label>Please select a type of activity first.</label>
       </ol>
+      
    </div>
+   
+   <a class="waves-effect waves-light btn deadlineList" href = "sample.pdf"><i class="material-icons left" >get_app</i>Download Form</a>
+   	
   
    </div>
 	</div>
@@ -147,6 +150,7 @@
 	<div class="col s4">
 		<div class="card-panel white hoverable">
 			<h4>Deadlines</h4>
+			<label>Click the deadlines to see the list of events</label>
 			<ul class="collapsible" data-collapsible="accordion">
 	          <li>
 	            <div class="collapsible-header overdue" ><i class="material-icons">warning</i>Overdue</div>
@@ -195,7 +199,10 @@
 	        </ul>
 	</div>
 	</div>
-	</div>
+	
+		
+
+	
 	
 	</div>
   </div>
