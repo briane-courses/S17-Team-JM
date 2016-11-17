@@ -13,12 +13,14 @@ import servlet.MasterServlet;
  * Servlet implementation class LogoutServlet
  */
 public class LogoutServlet {
-	
+
 	public static final String URL = "/LogoutServlet";
-	
-	public LogoutServlet() {}
-	
-	private static void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	public LogoutServlet() {
+	}
+
+	private static void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("LOGOUT SERVLET");
 
@@ -29,28 +31,38 @@ public class LogoutServlet {
 		if (cookies != null) {
 			for (int i = 0; i < cookies.length; i++) {
 				cookies[i].setValue("");
-	            cookies[i].setPath("/");
+				cookies[i].setPath("/");
 				cookies[i].setMaxAge(0);
 				response.addCookie(cookies[i]);
 				System.out.println("Killing Cookie");
 			}
 		}
-		
+
 		// kill session
-		request.getSession().invalidate();
-		
+		// request.getSession().invalidate();
+
 		// go back to login page
-		request.getRequestDispatcher("StartServlet").forward(request, response);
-		
+		if (cookies == null) {
+			System.out.println("returning... if");
+			request.getRequestDispatcher("StartServlet").forward(request, response);
+			return;
+		} else {
+			System.out.println("returning...");
+			request.getRequestDispatcher("login.jsp").forward(request, response);
+			return;
+		}
+
 	}
-	
-	private static void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+	private static void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-	
-	public static void process(HttpServletRequest request, HttpServletResponse response, int type) throws ServletException, IOException{
-		if(type == MasterServlet.TYPE_GET)
+
+	public static void process(HttpServletRequest request, HttpServletResponse response, int type)
+			throws ServletException, IOException {
+		if (type == MasterServlet.TYPE_GET)
 			doGet(request, response);
 		doPost(request, response);
 	}

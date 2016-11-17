@@ -15,7 +15,7 @@ public class WholeDayEvent extends CalendarEvent{
 		setId(id);
 		setTitle(title);
 		setStart(start);
-		this.end = end;
+		setEnd(end);
 		setColor(color);
 	}
 	
@@ -23,7 +23,7 @@ public class WholeDayEvent extends CalendarEvent{
 		setId(id);
 		setTitle(title);
 		setStart(start);
-		this.end = end;
+		setEnd(end);
 		setColor(color);
 	}
 	

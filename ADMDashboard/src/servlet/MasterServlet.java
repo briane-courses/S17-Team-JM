@@ -53,6 +53,7 @@ public class MasterServlet extends HttpServlet {
 		
 	private void process(HttpServletRequest request, HttpServletResponse response, int type) {
 		try {
+			
 			switch(request.getServletPath()){
 				case AjaxUserCalendarServlet.URL:
 					AjaxUserCalendarServlet.process(request, response, type);

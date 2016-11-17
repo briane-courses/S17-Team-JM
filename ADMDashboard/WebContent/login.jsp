@@ -35,7 +35,6 @@
 		</div>
 		<form id="loginform" action="LoginServlet" method="POST">
 			<input type="hidden" name="email" id="email" />
-			<input type="hidden" name="logoURL" id="logoURL" />
 		</form>
 		<h5 class="indigo-text">What is ADM?</h5>
 	<h6 class = "center flow-text"> The Activity Documentations and Management Team is the executive team of the Council of Student Organizations that takes charge of the documentation of the post-activity requirements of all accredited organizations. </h6>
@@ -107,6 +106,13 @@
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js"></script>
 <script>
 
+	$(document).ready(function() {
+		var auth2 = gapi.auth2.getAuthInstance();
+	    auth2.signOut().then(function () {
+	        console.log('User signed out.');
+	    });
+	});
+
       function onSignIn(googleUser) {
 	  
 	  /*window.location.href = "homepage.html";*/
@@ -123,8 +129,9 @@
         var id_token = googleUser.getAuthResponse().id_token;
         console.log("ID Token: " + id_token);
 		
+		
+		
 		$("#email").val(profile.getEmail());
-		$("#logoURL").val(profile.getImageUrl());
 		$("#loginform").submit();
 		
       };
