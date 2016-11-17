@@ -153,7 +153,7 @@
 			<label>Click the deadlines to see the list of events</label>
 			<ul class="collapsible" data-collapsible="accordion">
 	          <li>
-	            <div class="collapsible-header overdue" ><i class="material-icons">warning</i>Overdue</div>
+	            <div class="collapsible-header red-text" ><i class="material-icons">warning</i>Overdue</div>
 	            <div class="collapsible-body">
 	            
 	              <ul id="overDueList" class = "deadlineList">
@@ -164,7 +164,7 @@
 				</ul>
 	          </li>
 	          <li>
-	            <div class="collapsible-header week1" ><i class="material-icons">error_outline</i>Due in 1 week</div>
+	            <div class="collapsible-header orange-text" ><i class="material-icons">error_outline</i>Due in 1 week</div>
 	            <div class="collapsible-body">
 	              <ul id="deadlineList1" class = "deadlineList">
 					<c:forEach items="${pendingPostActList1}" var="p" varStatus="status">
@@ -175,7 +175,7 @@
 	            </div>
 	          </li>
 	          <li>
-	            <div class="collapsible-header week2" ><i class="material-icons">info_outline</i>Due in 2 weeks</div>
+	            <div class="collapsible-header" ><i class="material-icons">info_outline</i>Due in 2 weeks</div>
 	            <div class="collapsible-body">
 	              <ul id="deadlineList2" class = "deadlineList">
 					<c:forEach items="${pendingPostActList2}" var="q" varStatus="status">
@@ -186,7 +186,7 @@
 	            </div>
 	          </li>
 	          <li>
-	            <div class="collapsible-header other-week" ><i class="material-icons">thumb_up</i>Others</div>
+	            <div class="collapsible-header grey-text" ><i class="material-icons">list</i>Others</div>
 	            <div class="collapsible-body">
 	              <ul id="otherdeadlineList" class = "deadlineList">
 					<c:forEach items="${otherDeadlines}" var="r" varStatus="status">
