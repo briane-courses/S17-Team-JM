@@ -43,6 +43,7 @@ public class UserService {
 				user.setEmail(r.getString(User.COL_EMAIL));
 				user.setUserID(r.getInt(User.COL_IDNUMBER));
 				user.setUserType(UserType.getUserType(r.getString(User.COL_USERTYPE)));
+				user.setOrgcode(r.getString(Org.COL_ORGCODE));
 			}
 			
 		} catch (SQLException e) {

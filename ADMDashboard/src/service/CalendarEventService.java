@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import factory.CalendarEventFactory;
+import model.Status;
 import model.calendar.CalendarEvent;
 import utils.db.Query;
 import utils.generator.RandomHexGenerator;
@@ -59,7 +60,7 @@ public class CalendarEventService {
 		return result;
 	}
 	
-	public static ArrayList<CalendarEvent> getEventsByOrg(String orgcode){
+	public static ArrayList<CalendarEvent> getEventsByOrg(String orgcode, Status status){
 		ArrayList<CalendarEvent> result = new ArrayList<>();
 		ArrayList<Object> input = new ArrayList<>();
 		CalendarEvent event = null;
@@ -67,13 +68,13 @@ public class CalendarEventService {
 		String query = "select *"
 				+ " from"
 				+ " " + CalendarEvent.TABLE_EVENT
-				+ " inner join " + CalendarEvent.TABLE_EVENTDATE
-				+ " on "+CalendarEvent.TABLE_EVENT+"."+CalendarEvent.COL_EVENTID+" = "+CalendarEvent.TABLE_EVENTDATE+"."+CalendarEvent.COL_EVENTID
+				+ " natural join " + CalendarEvent.TABLE_EVENTDATE
 				+ " where "+CalendarEvent.COL_ORGCODE+"= ? "
 				+ " and "+CalendarEvent.COL_POSTACTSTATUS+"= ? " 
 				+ " ORDER BY "+CalendarEvent.COL_POSTACTDEADLINE+";";
 		
 		input.add(orgcode);
+		input.add(status);
 		
 		Query q = Query.getInstance();
 		ResultSet r = null;

@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 
 import model.Event;
 import model.Org;
+import model.Status;
 import model.User;
 import model.calendar.CalendarEvent;
 import service.CalendarEventService;
@@ -49,7 +50,7 @@ public class AjaxUserCalendarServlet{
 		
 		// needs orgcode of logged in user to be stored at log in
 		if(org != null)
-			events = CalendarEventService.getEventsByOrg(org.getOrgcode());
+			events = CalendarEventService.getEventsByOrg(org.getOrgcode(), Status.FINISHED);
 		else
 			events = CalendarEventService.getAllEvents();
 			
