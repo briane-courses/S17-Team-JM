@@ -36,12 +36,15 @@ public class HomeOrgRepServlet {
 		// get cookies for userID; assume orgrep exists
 		Cookie[] cookies = request.getCookies();
 		
+		Cookie orgcodeCookie = null;
+		
 		System.out.println("cookies: " + cookies.length);
 		
 		for(int i = 0; i < cookies.length; i ++) {
 			if(cookies[i].getName().equals(User.COL_IDNUMBER)) {
 				org = OrgService.searchOrg(Integer.parseInt(cookies[i].getValue()));
 				user = UserService.searchUser(Integer.parseInt(cookies[i].getValue()));
+				orgcodeCookie = new Cookie(Org.COL_ORGCODE, org.getOrgcode());
 			}
 			else if(cookies[i].getName().equals("logoURL")) {
 				logoURL = cookies[i].getValue();
