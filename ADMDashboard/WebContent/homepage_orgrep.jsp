@@ -141,7 +141,7 @@
       
    </div>
    
-   <a class="waves-effect waves-light btn deadlineList" href = "sample.pdf"><i class="material-icons left" >get_app</i>Download Form</a>
+   <a class="waves-effect waves-light btn deadlineList" href = "sample.pdf" download = ""><i class="material-icons left" >get_app</i>Download Form</a>
    	
   
    </div>
