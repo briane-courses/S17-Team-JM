@@ -3,6 +3,8 @@ package utils.generator;
 import java.awt.Color;
 import java.util.Random;
 
+import utils.converter.DatatypeConverter;
+
 public class RandomHexGenerator {
 	
 	private static long seed = System.nanoTime();
@@ -21,8 +23,7 @@ public class RandomHexGenerator {
 		//to get rainbow, pastel colors
 		color = Color.getHSBColor(hue, saturation, luminance);
 		
-		return "#"+Integer.toHexString(color.getRed()) 
-		+ Integer.toHexString(color.getGreen()) 
-		+ Integer.toHexString(color.getBlue()) ;	
+		return DatatypeConverter.toHex(color.getRed(),color.getGreen(), color.getBlue());
+		
 	}
 }

@@ -3,31 +3,36 @@ package service;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import factory.CalendarEventFactory;
+import model.Status;
 import model.calendar.CalendarEvent;
+import utils.converter.DatatypeConverter;
 import utils.db.Query;
 import utils.generator.RandomHexGenerator;
 
 public class CalendarEventService {
 	
-	public static ArrayList<CalendarEvent> getAllEvents(){
+	public static ArrayList<CalendarEvent> getAllEvents(Status status){
 		ArrayList<CalendarEvent> result = new ArrayList<>();
+		ArrayList<Object> input = new ArrayList<>();
 		CalendarEvent event = null;
 		
 		String query = "select *"
 				+ " from"
 				+ " " + CalendarEvent.TABLE_EVENT
-				+ " inner join " + CalendarEvent.TABLE_EVENTDATE
-				+ " on "+CalendarEvent.TABLE_EVENT+"."+CalendarEvent.COL_EVENTID+" = "+CalendarEvent.TABLE_EVENTDATE+"."+CalendarEvent.COL_EVENTID
+				+ " natural join " + CalendarEvent.TABLE_EVENTDATE
+				+ " where "+CalendarEvent.COL_POSTACTSTATUS+"= ? " 
 				+ " ORDER BY "+CalendarEvent.COL_POSTACTDEADLINE+";";
-		
+
+		input.add(status);
 		Query q = Query.getInstance();
 		ResultSet r = null;
 		
 		try {
-			r = q.runQuery(query);
+			r = q.runQuery(query, input);
 			
 			while(r.next()) {
 				/*
@@ -59,20 +64,23 @@ public class CalendarEventService {
 		return result;
 	}
 	
-	public static ArrayList<CalendarEvent> getEventsByOrg(String orgcode){
+	public static ArrayList<CalendarEvent> getEventsByOrg(String orgcode, Status status){
 		ArrayList<CalendarEvent> result = new ArrayList<>();
 		ArrayList<Object> input = new ArrayList<>();
 		CalendarEvent event = null;
-		
+		Calendar temp = null;
 		String query = "select *"
 				+ " from"
 				+ " " + CalendarEvent.TABLE_EVENT
-				+ " inner join " + CalendarEvent.TABLE_EVENTDATE
-				+ " on "+CalendarEvent.TABLE_EVENT+"."+CalendarEvent.COL_EVENTID+" = "+CalendarEvent.TABLE_EVENTDATE+"."+CalendarEvent.COL_EVENTID
-				+ " where "+CalendarEvent.COL_ORGCODE+"= ? " 
+				+ " natural join " + CalendarEvent.TABLE_EVENTDATE
+				+ " where "+CalendarEvent.COL_ORGCODE+" = ? "
+				+ " and "+CalendarEvent.COL_POSTACTSTATUS+" = ? " 
 				+ " ORDER BY "+CalendarEvent.COL_POSTACTDEADLINE+";";
 		
+		//System.out.println(query);
+		
 		input.add(orgcode);
+		input.add(status);
 		
 		Query q = Query.getInstance();
 		ResultSet r = null;
@@ -120,8 +128,7 @@ public class CalendarEventService {
 		String query = "select *"
 				+ " from"
 				+ " " + CalendarEvent.TABLE_EVENT
-				+ " inner join " + CalendarEvent.TABLE_EVENTDATE
-				+ " on "+CalendarEvent.TABLE_EVENT+"."+CalendarEvent.COL_EVENTID+" = "+CalendarEvent.TABLE_EVENTDATE+"."+CalendarEvent.COL_EVENTID
+				+ " natural join " + CalendarEvent.TABLE_EVENTDATE
 				+ " where "+CalendarEvent.COL_ORGCODE+"= ? " 
 				+ " ORDER BY "+CalendarEvent.COL_POSTACTDEADLINE+";";
 		
