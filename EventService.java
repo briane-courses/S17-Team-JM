@@ -22,7 +22,7 @@ public class EventService {
 		ArrayList<Object> input = new ArrayList<Object>(); 
 		Event event = null;
 		String query = "SELECT * FROM " + Event.TABLE_NAME  
-						+ " WHERE " + Event.COL_POSTACTDEADLINE + " > curdate()"
+						+ " WHERE " + Event.COL_POSTACTDEADLINE + " >= curdate()"
 						+ "	AND " + Event.COL_POSTACTDEADLINE + " < date_add(CURDATE(), INTERVAL ? DAY)"
 						+ "	AND " + Event.COL_POSTACTDEADLINE + " > date_add(CURDATE(), INTERVAL ? DAY)"
 						+ " AND " + Event.COL_ORGCODE + " = ? "
@@ -30,6 +30,8 @@ public class EventService {
 						+ " ORDER BY " + Event.COL_POSTACTDEADLINE;
 
 		input.add(maxDays);
+		if (maxDays == 8)
+			minDays--;
 		input.add(minDays);
 		input.add(orgcode);
 		input.add(Status.PENDING);
