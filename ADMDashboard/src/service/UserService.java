@@ -4,6 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import model.Org;
 import model.User;
 import model.UserType;
 import utils.db.Query;
@@ -18,8 +19,14 @@ public class UserService {
 		User user = null;
 		
 		String query = 
-				"SELECT * FROM " + User.TABLE_NAME +
-				" WHERE " + User.COL_EMAIL+" =  ? ;";
+				"SELECT " + User.COL_EMAIL + ", "
+						+ User.COL_IDNUMBER+ ", "
+						+ User.COL_USERTYPE+ ", "
+						+ User.COL_USERTYPE+ ", "
+						+ Org.COL_ORGCODE
+				+ " FROM " + User.TABLE_NAME
+				+ " natural join " + Org.TABLE_NAME
+				+ " WHERE " + User.COL_EMAIL+" =  ? ;";
 		
 		ArrayList<Object> input = new ArrayList<Object>();
 		

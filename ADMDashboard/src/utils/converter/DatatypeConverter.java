@@ -9,6 +9,11 @@ public class DatatypeConverter {
 
 	private DatatypeConverter(){}
 	
+	public static String toHex(int r, int g, int b){return "#"+Integer.toHexString(r) 
+	+ Integer.toHexString(g) 
+	+ Integer.toHexString(b);
+	}
+	
 	public static String toString(Date date){
 		return date.toString();
 	}
@@ -20,7 +25,7 @@ public class DatatypeConverter {
 	}
 	
 	public static Status toStatus(String value){
-		return Status.getUserType(value);
+		return Status.getStatus(value);
 	}
 	
 }

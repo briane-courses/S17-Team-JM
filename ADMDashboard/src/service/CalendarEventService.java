@@ -69,7 +69,8 @@ public class CalendarEventService {
 				+ " " + CalendarEvent.TABLE_EVENT
 				+ " inner join " + CalendarEvent.TABLE_EVENTDATE
 				+ " on "+CalendarEvent.TABLE_EVENT+"."+CalendarEvent.COL_EVENTID+" = "+CalendarEvent.TABLE_EVENTDATE+"."+CalendarEvent.COL_EVENTID
-				+ " where "+CalendarEvent.COL_ORGCODE+"= ? " 
+				+ " where "+CalendarEvent.COL_ORGCODE+"= ? "
+				+ " and "+CalendarEvent.COL_POSTACTSTATUS+"= ? " 
 				+ " ORDER BY "+CalendarEvent.COL_POSTACTDEADLINE+";";
 		
 		input.add(orgcode);
@@ -120,8 +121,7 @@ public class CalendarEventService {
 		String query = "select *"
 				+ " from"
 				+ " " + CalendarEvent.TABLE_EVENT
-				+ " inner join " + CalendarEvent.TABLE_EVENTDATE
-				+ " on "+CalendarEvent.TABLE_EVENT+"."+CalendarEvent.COL_EVENTID+" = "+CalendarEvent.TABLE_EVENTDATE+"."+CalendarEvent.COL_EVENTID
+				+ " natural join " + CalendarEvent.TABLE_EVENTDATE
 				+ " where "+CalendarEvent.COL_ORGCODE+"= ? " 
 				+ " ORDER BY "+CalendarEvent.COL_POSTACTDEADLINE+";";
 		
