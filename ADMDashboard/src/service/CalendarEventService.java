@@ -3,11 +3,13 @@ package service;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 import factory.CalendarEventFactory;
 import model.Status;
 import model.calendar.CalendarEvent;
+import utils.converter.DatatypeConverter;
 import utils.db.Query;
 import utils.generator.RandomHexGenerator;
 
@@ -66,14 +68,16 @@ public class CalendarEventService {
 		ArrayList<CalendarEvent> result = new ArrayList<>();
 		ArrayList<Object> input = new ArrayList<>();
 		CalendarEvent event = null;
-		
+		Calendar temp = null;
 		String query = "select *"
 				+ " from"
 				+ " " + CalendarEvent.TABLE_EVENT
 				+ " natural join " + CalendarEvent.TABLE_EVENTDATE
-				+ " where "+CalendarEvent.COL_ORGCODE+"= ? "
-				+ " and "+CalendarEvent.COL_POSTACTSTATUS+"= ? " 
+				+ " where "+CalendarEvent.COL_ORGCODE+" = ? "
+				+ " and "+CalendarEvent.COL_POSTACTSTATUS+" = ? " 
 				+ " ORDER BY "+CalendarEvent.COL_POSTACTDEADLINE+";";
+		
+		//System.out.println(query);
 		
 		input.add(orgcode);
 		input.add(status);
