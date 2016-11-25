@@ -82,30 +82,41 @@
   <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
   
 <!-- START OF NAVBAR --> 
- <div class="navbar-fixed">
- <nav class = "green">
+<div class = "navbar-fixed">
+ 	<nav class = "top-nav green right">
     <div class="nav-wrapper">
-   
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
+   		<a href="#" class="brand-logo center">Logo</a>
+      	<ul id="nav-mobile" class="right hide-on-med-and-down">
         <!-- Modal Trigger -->
-        <li> <a href="#modal1" class="modal-trigger"><i class= "material-icons">settings</i>Settings/Sign Out</a></li>
+        	<li></li>
 		
       </ul>
     </div>
   </nav>
-</div>
+ </div>
+ 
+
 
  <ul id="slide-out" class="side-nav fixed">
-			<li><div class="userView">
-			  <img class="background" src="images/office.jpg">
-			  <a href="#!user"><img class="circle" src="images/cso.jpg"></a>
-			  <a href="#!name"><span class="white-text name">ORG NAME(org image above) </span></a>
-			  <a href="#!email"><span class="white-text email">orgname@gmail.com</span></a>
-			</div></li>
-			<li><a href="homepage_orgrep.jsp"><i class="material-icons">dashboard</i>Dashboard</a></li>
-						<li><div class="divider"></div></li>
-			<li><a href="calendar.jsp"><i class="material-icons">today</i>Calendar of special deadlines</a></li>
-      <li><a href="" download = "CSO1617_Activity_Report"> <i class="material-icons">get_app</i>Download Post-Activity Form</a></li>
+			<li>
+				<div class="userView">
+				  <img class="background" src="images/office.jpg">
+				  <a href="#!user"><img class="circle" src="${logoURL }"></a>
+				  <a href="#!name"><span class="white-text name">${orgcode }</span></a>
+				  <a href="#!email"><span class="white-text email">${email }</span></a>
+				</div>
+			</li>
+			<li>
+				<a href="homepage_orgrep.jsp"><i class="material-icons">dashboard</i>Dashboard</a>
+			</li>
+			<li>
+				<a href="calendar.jsp"><i class="material-icons">today</i>Calendar of special deadlines</a></li>
+      		<li>
+				<div class="divider"></div>
+			</li>
+			<li>
+      			 <a href="#modal1" class="modal-trigger"><i class= "material-icons">settings</i>Sign Out</a>
+      		</li>
 		  </ul>
 		  
   <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
@@ -125,38 +136,65 @@
       
    </div>
     <div class ="col s8">
-    <br>
-      <label>Type of Activity</label>
-               <select id = "activity_type" onchange = "changed_activity_type()">
-	                  <option value="" disabled selected>Select Type of Activity</option>
-	                  
-	                  <c:forEach items = "${eventTypeList }" var = "e">
-	                  		<option value = "${e.eventtypeID }" id = "${e.eventtypeID }">${e.eventtype }</option>
-	                  </c:forEach>
-	                  
-               </select>
-   </div>
-
-
-   <div class ="col s8">
-      <h5> Post-Activity Requirements</h5>
-      <ol id = "reqList_jsp">
-	      <label> Please select a type of activity first.</label>
-      	
-      </ol>
+    	<h5>
+    		Post-Activity Requirements
+    	</h5>
+    	<a class="waves-effect waves-light btn" href="" download = "CSO1617_Activity_Report"> <i class="material-icons left">get_app</i>Download Post-Acts Form</a>
+   		<br>
+   		<br>
+   		<h6>Other requirements per activity</h6>
+   		<label>Click to see the list of other requirements per type of activity</label>
+      	<ul class="collapsible" data-collapsible="accordion">
+          	<li>
+            	<div class="collapsible-header">Acquaintance Party (On-Campus)</div>
+            	<div class="collapsible-body">
+              		<ul class = "deadlineList">
+			        	<li>Requirement #1</li>
+			        	<li>Requirement #2</li>
+			        	<li>Requirement #3</li>
+			        	<li>Requirement #4</li>
+			        	<li>Requirement #5</li>
+              		</ul>
+          	</li>
+          	<li>
+            	<div class="collapsible-header">Concerts</div>
+            	<div class="collapsible-body">
+		        	<ul class = "deadlineList">
+		            	<li>Requirement #1</li>
+			            <li>Requirement #2</li>
+			            <li>Requirement #3</li>
+			            <li>Requirement #4</li>
+			            <li>Requirement #5</li>
+		            </ul>
+            	</div>
+          	</li>
+          	<li>
+		    	<div class="collapsible-header" >Contests</div>
+		        <div class="collapsible-body">
+		        	<ul class = "deadlineList">
+		            	<li>Requirement #1</li>
+			            <li>Requirement #2</li>
+			            <li>Requirement #3</li>
+			            <li>Requirement #4</li>
+			            <li>Requirement #5</li>
+		            </ul>
+            	</div>
+          	</li>
+   		</ul>
    </div>
    </div>
 	</div>
 	
 	<div class="col s4">
 		<div class="card-panel white hoverable">
-			
+			<h5>Deadlines</h5>
+			<label>Click to see the list of events</label>
 
 			<ul class="collapsible" data-collapsible="accordion">
 	          <li>
-	            <div class="collapsible-header" style = "color:red"><i class="material-icons">warning</i>Overdue</div>
+	            <div class="collapsible-header red-text"><i class="material-icons">warning</i>Overdue</div>
 	            <div class="collapsible-body">
-	              <ul id="overDueList" style = "color:red">
+	              <ul class = "deadlineList" id="overDueList">
 					<c:forEach items="${overdueDeadlines}" var="o" varStatus="status">
 						<li>${overdueList[status.index]} | ${o.eventname}</li>
 					</c:forEach>
@@ -164,9 +202,9 @@
 				</ul>
 	          </li>
 	          <li>
-	            <div class="collapsible-header" style = "color:orange"><i class="material-icons">error_outline</i>Due in 1 week</div>
+	            <div class="collapsible-header orange-text"><i class="material-icons">error_outline</i>Due in 1 week</div>
 	            <div class="collapsible-body">
-	              <ul id="deadlineList1" style = "color:orange">
+	              <ul class = "deadlineList" id="deadlineList1">
 					<c:forEach items="${pendingPostActList1}" var="p" varStatus="status">
 						<li>${due1DateList[status.index]} | ${p.eventname}</li>
 					</c:forEach>
@@ -177,7 +215,7 @@
 	          <li>
 	            <div class="collapsible-header" ><i class="material-icons">info_outline</i>Due in 2 weeks</div>
 	            <div class="collapsible-body">
-	              <ul id="deadlineList2">
+	              <ul class = "deadlineList" id="deadlineList2">
 					<c:forEach items="${pendingPostActList2}" var="q" varStatus="status">
 						<li>${due2DateList[status.index]} | ${q.eventname}</li>
 					</c:forEach>
@@ -186,9 +224,9 @@
 	            </div>
 	          </li>
 	          <li>
-	            <div class="collapsible-header" style = "color:green"><i class="material-icons">thumb_up</i>Others</div>
+	            <div class="collapsible-header grey-text"><i class="material-icons">list</i>Others</div>
 	            <div class="collapsible-body">
-	              <ul id="otherdeadlineList">
+	              <ul class = "deadlineList" id="otherdeadlineList">
 					<c:forEach items="${otherDeadlines}" var="r" varStatus="status">
 						<li>${otherDueDateList[status.index]} | ${r.eventname}</li>
 					</c:forEach>
