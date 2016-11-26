@@ -1,5 +1,4 @@
 /factory/
-/model/
-/service/
-/servlet/
 /utils/
+/model/
+/servlet/

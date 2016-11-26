@@ -8,13 +8,18 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import model.Event;
 import model.EventType;
 import model.Org;
+import model.Requirement;
 import model.User;
+import service.EventService;
 import service.EventTypeService;
 import service.OrgService;
+import service.RequirementService;
 import service.UserService;
 import servlet.MasterServlet;
+import utils.session.SessionManager;
 
 /**
  * Servlet implementation class HomeOrgRepServlet
@@ -29,6 +34,7 @@ public class HomeOrgRepServlet {
 
 		System.out.println("HOMEORGREP SERVLET");
 		
+		/*
 		Org org = null;
 		User user = null;
 		String logoURL = "";
@@ -47,55 +53,58 @@ public class HomeOrgRepServlet {
 				logoURL = cookies[i].getValue();
 			}
 		}
-		
-		System.out.println("logoURL : " + logoURL);
-		System.out.println("orgcode : " + org.getOrgcode());
-		System.out.println("email : " + user.getEmail());
+		*/
+		System.out.println("logoURL : " + SessionManager.getAttribute(request, "logoURL"));
+		System.out.println("orgcode : " + SessionManager.getAttribute(request, User.COL_ORGCODE));
+		System.out.println("email : " + SessionManager.getAttribute(request, User.COL_EMAIL));
 		
 		// for side bar menu
+		/*
 		request.getSession().setAttribute(Org.COL_LOGOURL, org.getLogoURL());	// logo
 		request.getSession().setAttribute(Org.COL_ORGCODE, org.getOrgcode());	// orgcode
 		request.getSession().setAttribute(User.COL_EMAIL, user.getEmail());		// email
+		*/
+		// these are set at log in -Kenji
 		
 		//for overdue deadlines
 		ArrayList<Event> overdueDeadlines = EventService.getOverdueDeadlines("imes"); //replace with orgcode
-		request.getSession().setAttribute("overdueDeadlines", overdueDeadlines);
+		SessionManager.setAttribute(request, "overdueDeadlines", overdueDeadlines);
 		ArrayList<String> overdueList = EventService.convertDates( overdueDeadlines);
-		request.getSession().setAttribute("overdueList", overdueList);
+		SessionManager.setAttribute(request, "overdueList", overdueList);
 		if(overdueDeadlines.size() == 0)
-			request.getSession().setAttribute("noOverdueDeadlines", "No overdue deadlines.");
+			SessionManager.setAttribute(request, "noOverdueDeadlines", "No overdue deadlines.");
 		System.out.println(overdueDeadlines);
 		
 		// for due in 2 weeks 
 		ArrayList<Event> pendingPostActList2 = EventService.getUpcomingDeadlines("imes",7, 14); //replace with orgcode
-		request.getSession().setAttribute("pendingPostActList2", pendingPostActList2);
+		SessionManager.setAttribute(request, "pendingPostActList2", pendingPostActList2);
 		ArrayList<String> due2DateList = EventService.convertDates( pendingPostActList2);
-		request.getSession().setAttribute("due2DateList", due2DateList);
+		SessionManager.setAttribute(request, "due2DateList", due2DateList);
 		if(pendingPostActList2.size() == 0)
-			request.getSession().setAttribute("noPendingPostActList2", "No deadlines due in 2 weeks.");
+			SessionManager.setAttribute(request, "noPendingPostActList2", "No deadlines due in 2 weeks.");
 		
 		//for due in 1 week
 		ArrayList<Event> pendingPostActList1 = EventService.getUpcomingDeadlines("imes", 0, 8); //replace with orgcode
-		request.getSession().setAttribute("pendingPostActList1", pendingPostActList1);		
+		SessionManager.setAttribute(request, "pendingPostActList1", pendingPostActList1);		
 		ArrayList<String> due1DateList = EventService.convertDates( pendingPostActList1);
-		request.getSession().setAttribute("due1DateList", due1DateList);
+		SessionManager.setAttribute(request, "due1DateList", due1DateList);
 		if(pendingPostActList1.size() == 0)
-			request.getSession().setAttribute("noPendingPostActList1", "No deadlines due in 1 week.");
+			SessionManager.setAttribute(request, "noPendingPostActList1", "No deadlines due in 1 week.");
 		
 		//Other Deadlines
 		ArrayList<Event> otherDeadlines = EventService.getOtherDeadlines("imes"); //replace with orgcode
-		request.getSession().setAttribute("otherDeadlines", otherDeadlines);		
+		SessionManager.setAttribute(request, "otherDeadlines", otherDeadlines);		
 		ArrayList<String> otherDueDateList = EventService.convertDates(otherDeadlines);
-		request.getSession().setAttribute("otherDueDateList", otherDueDateList);
+		SessionManager.setAttribute(request, "otherDueDateList", otherDueDateList);
 		
 		
 		// for activity drop down
 		ArrayList<EventType> eventTypeList = EventTypeService.getAllEventType();
-		request.getSession().setAttribute("eventTypeList", eventTypeList);
+		SessionManager.setAttribute(request, "eventTypeList", eventTypeList);
 		
 		// for initial requirements of activity (will change using ajax in RequirementsServlet)
 		ArrayList<Requirement> reqList = RequirementService.getRequirements(eventTypeList.get(0).getEventtypeID());
-		request.getSession().setAttribute("reqList", reqList);
+		SessionManager.setAttribute(request, "reqList", reqList);
 			
 		// send request to jsp
 		request.getRequestDispatcher("/homepage_orgrep.jsp").forward(request, response);

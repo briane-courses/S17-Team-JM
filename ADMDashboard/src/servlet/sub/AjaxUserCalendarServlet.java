@@ -17,6 +17,7 @@ import model.calendar.CalendarEvent;
 import service.CalendarEventService;
 import service.OrgService;
 import servlet.MasterServlet;
+import utils.session.SessionManager;
 
 public class AjaxUserCalendarServlet{
 
@@ -33,22 +34,14 @@ public class AjaxUserCalendarServlet{
 
 	private static void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		ArrayList<CalendarEvent> events;
-
-		Cookie[] cookies = request.getCookies();
+		ArrayList<CalendarEvent> events = new ArrayList<>();
 		
-		Org org = null;
-		
-		for(int i = 0; i < cookies.length; i ++) {
-			if(cookies[i].getName().equals(User.COL_IDNUMBER)) {
-				org = OrgService.searchOrg(Integer.parseInt(cookies[i].getValue()));
-			}
-		}
+		String orgCode = (String) SessionManager.getAttribute(request, Org.COL_ORGCODE);
 		
 		// needs orgcode of logged in user to be stored at log in
 		
-		if(org != null)
-			events = CalendarEventService.getEventsByOrg(org.getOrgcode(), Status.DONE);
+		if(orgCode != null)
+			events = CalendarEventService.getEventsByOrg(orgCode, Status.DONE);
 		else
 			events = CalendarEventService.getAllEvents(Status.DONE);
 		

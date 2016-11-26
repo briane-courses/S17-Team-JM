@@ -18,14 +18,13 @@ public class StartServlet{
 
     private static void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub	
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		doPost(request, response);
 		
 	}
 
 	private static void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
-		
+		request.getRequestDispatcher("login.jsp").forward(request, response);
 	}
 	
 	public static void process(HttpServletRequest request, HttpServletResponse response, int type) throws ServletException, IOException{
