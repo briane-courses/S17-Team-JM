@@ -21,31 +21,37 @@ import servlet.MasterServlet;
 public class RequirementsServlet {
 
 	public static final String URL = "/RequirementsServlet";
-	
-	private RequirementsServlet() { }
 
-	private static void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub	
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-		
+	private RequirementsServlet() {
 	}
 
-	private static void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private static void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+
+	}
+
+	private static void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Auto-generated method stub
+
+		System.out.println("REQUIREMENTS SERVLET");
 		// for ajax
 		PrintWriter pw = response.getWriter();
 
 		int eventTypeID = Integer.parseInt(request.getParameter(EventType.COL_EVENTTYPEID));
 		ArrayList<Requirement> reqList = RequirementService.getRequirements(eventTypeID);
-				
+
 		Gson gson = new Gson();
 		String json = gson.toJson(reqList);
-				
+
 		pw.write(json);
 	}
-	
-	public static void process(HttpServletRequest request, HttpServletResponse response, int type) throws ServletException, IOException{
-		if(type == MasterServlet.TYPE_GET)
+
+	public static void process(HttpServletRequest request, HttpServletResponse response, int type)
+			throws ServletException, IOException {
+		if (type == MasterServlet.TYPE_GET)
 			doGet(request, response);
 		doPost(request, response);
 	}
