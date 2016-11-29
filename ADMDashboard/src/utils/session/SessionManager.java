@@ -1,8 +1,6 @@
 package utils.session;
 
-import java.util.Collections;
 import java.util.Enumeration;
-import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
