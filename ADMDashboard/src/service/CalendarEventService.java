@@ -9,11 +9,59 @@ import java.util.Date;
 import factory.CalendarEventFactory;
 import model.Status;
 import model.calendar.CalendarEvent;
+import model.datetime.SimpleDate;
 import utils.converter.DatatypeConverter;
 import utils.db.Query;
 import utils.generator.RandomHexGenerator;
 
 public class CalendarEventService {
+	
+	public static ArrayList<CalendarEvent> getAllEvents(){
+		ArrayList<CalendarEvent> result = new ArrayList<>();
+		CalendarEvent event = null;
+		
+		String query = "select *"
+				+ " from"
+				+ " " + CalendarEvent.TABLE_EVENT
+				+ " natural join " + CalendarEvent.TABLE_EVENTDATE
+				+ " ORDER BY "+CalendarEvent.COL_POSTACTDEADLINE+";";
+
+		Query q = Query.getInstance();
+		ResultSet r = null;
+		
+		try {
+			r = q.runQuery(query);
+			
+			while(r.next()) {
+				/*
+				event = CalendarEventFactory.getInstance().createEvent(
+						r.getInt(CalendarEvent.COL_EVENTID), 
+						r.getString(CalendarEvent.COL_EVENTNAME),
+						r.getDate(CalendarEvent.COL_DATE).toString(), 
+						r.getDate(CalendarEvent.COL_POSTACTDEADLINE).toString(), 
+						RandomHexGenerator.newHex());
+				*/
+				event = CalendarEventFactory.getInstance().createEvent(
+						r.getInt(CalendarEvent.COL_EVENTID), 
+						r.getString(CalendarEvent.COL_EVENTNAME),
+						r.getDate(CalendarEvent.COL_POSTACTDEADLINE).toString(), 
+						null, 
+						RandomHexGenerator.newHex());
+				result.add(event);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				q.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
 	
 	public static ArrayList<CalendarEvent> getAllEvents(Status status){
 		ArrayList<CalendarEvent> result = new ArrayList<>();
@@ -64,7 +112,7 @@ public class CalendarEventService {
 		return result;
 	}
 	
-	public static ArrayList<CalendarEvent> getEventsByOrg(String orgcode, Status status){
+	public static ArrayList<CalendarEvent> getEvents(String orgcode, Status status){
 		ArrayList<CalendarEvent> result = new ArrayList<>();
 		ArrayList<Object> input = new ArrayList<>();
 		CalendarEvent event = null;
@@ -119,7 +167,7 @@ public class CalendarEventService {
 		return result;
 	}
 	
-	public static ArrayList<CalendarEvent> getEventsByOrg(String orgcode, Date date){
+	public static ArrayList<CalendarEvent> geEventsByMonth(String orgcode, SimpleDate date){
 		//TODO: implement date
 		ArrayList<CalendarEvent> result = new ArrayList<>();
 		ArrayList<Object> input = new ArrayList<>();
@@ -129,10 +177,14 @@ public class CalendarEventService {
 				+ " from"
 				+ " " + CalendarEvent.TABLE_EVENT
 				+ " natural join " + CalendarEvent.TABLE_EVENTDATE
-				+ " where "+CalendarEvent.COL_ORGCODE+"= ? " 
+				+ " where "+CalendarEvent.COL_ORGCODE+"= ? "
+				+ " month("+CalendarEvent.COL_POSTACTDEADLINE+") = ? " 
+				+ " year("+CalendarEvent.COL_POSTACTDEADLINE+") = ? " 
 				+ " ORDER BY "+CalendarEvent.COL_POSTACTDEADLINE+";";
 		
 		input.add(orgcode);
+		input.add(date.getMonth());
+		input.add(date.getYear());
 		
 		Query q = Query.getInstance();
 		ResultSet r = null;

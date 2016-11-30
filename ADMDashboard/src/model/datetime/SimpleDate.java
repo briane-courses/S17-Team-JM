@@ -24,7 +24,7 @@ public class SimpleDate {
 	public void setMonth(int month) {
 		if(month > 12)
 			setYear(getYear() + 1);
-		this.month %= 12;
+		this.month = month % 12;
 	}
 	public int getDay() {
 		return day;
@@ -32,7 +32,7 @@ public class SimpleDate {
 	public void setDay(int day) {
 		if(day > new GregorianCalendar(getYear(), getMonth(), 1).getActualMaximum(GregorianCalendar.DAY_OF_MONTH) + 1)
 			setMonth(getMonth() + 1);
-		this.day %= (new GregorianCalendar(getYear(), getMonth(), 1).getActualMaximum(GregorianCalendar.DAY_OF_MONTH) + 1);
+		this.day = day % (new GregorianCalendar(getYear(), getMonth(), 1).getActualMaximum(GregorianCalendar.DAY_OF_MONTH) + 1);
 	}
 	
 	public Calendar getCalendar() {

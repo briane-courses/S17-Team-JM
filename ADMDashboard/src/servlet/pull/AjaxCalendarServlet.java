@@ -1,10 +1,9 @@
-package servlet.sub;
+package servlet.pull;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,19 +11,18 @@ import com.google.gson.Gson;
 
 import model.Org;
 import model.Status;
-import model.User;
 import model.calendar.CalendarEvent;
+import model.datetime.SimpleDate;
 import service.CalendarEventService;
-import service.OrgService;
 import servlet.MasterServlet;
 import utils.session.SessionManager;
 
-public class AjaxUserCalendarServlet{
+public class AjaxCalendarServlet{
 
 
-	public static final String URL = "/AjaxUserCalendar";
+	public static final String URL = "/PullAjaxCalendar";
 	
-	private AjaxUserCalendarServlet() {}
+	private AjaxCalendarServlet() {}
 
 	private static void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -35,15 +33,35 @@ public class AjaxUserCalendarServlet{
 	private static void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		ArrayList<CalendarEvent> events = new ArrayList<>();
-		
-		String orgCode = (String) SessionManager.getAttribute(request, Org.COL_ORGCODE);
+		String type = null;
+		String orgCode = null;
+		String tempDate = null;
+		String arrDate[] = null;
+		SimpleDate date = null;
 		
 		// needs orgcode of logged in user to be stored at log in
-		
-		if(orgCode != null)
-			events = CalendarEventService.getEventsByOrg(orgCode, Status.DONE);
-		else
+		type = request.getParameter("type");
+		tempDate = request.getParameter("date");
+		arrDate = tempDate.substring(0,10).split("-");
+		date = new SimpleDate(
+				Integer.parseInt(arrDate[0]), 
+				Integer.parseInt(arrDate[1]), 
+				Integer.parseInt(arrDate[2])
+				);
+		switch(type){
+		case "admin":
+			orgCode = (String) SessionManager.getAttribute(request, Org.COL_ORGCODE);
+			if(orgCode != null)
+				events = CalendarEventService.getAllEvents(Status.DONE);
+			break;
+		case "user":
+			orgCode = (String) SessionManager.getAttribute(request, Org.COL_ORGCODE);
+			if(orgCode != null)
+				events = CalendarEventService.getEvents(orgCode, Status.DONE);
+			break;
+		default:
 			events = CalendarEventService.getAllEvents(Status.DONE);
+		}
 		
 
 		//events = CalendarEventService.getEventsByOrg("imes", Status.DONE);

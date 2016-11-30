@@ -39,7 +39,7 @@ public class LoginServlet {
 		
 		// match attributes to the db
 		User user = SessionManager.beginSession(request, response, email, logoURL);
-		System.out.println(user);
+		//System.out.println(user);
 		
 		// if user exists, go to admin/orgrep servlet
 		if(user != null) {

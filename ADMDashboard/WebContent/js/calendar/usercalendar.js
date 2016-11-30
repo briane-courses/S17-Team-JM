@@ -66,6 +66,8 @@ gapi.client.load('calendar', 'v3', function () { // load the calendar api (versi
 */
 $(document).ready(function() {
 		
+	
+	
 		$('#calendar').fullCalendar({
 			header: {
 				left: 'prev,next today',
@@ -78,11 +80,13 @@ $(document).ready(function() {
 			eventLimit: true, // allow "more" link when too many events
 			selectable: false, // allow click and drag 
 			events: {
-		        url: 'AjaxUserCalendar',
+		        url: 'PullAjaxCalendar',
 		        type: 'POST',
-		        data: {
-		            orgcode: 'something'
-		        },
+		        data: function() { // a function that returns an object
+		        	return {
+		                type: 'user',
+		                date: $('#calendar').fullCalendar('getDate').format()
+		        };},
 		        error: function() {
 		            alert('there was an error while fetching events!');
 		        },
