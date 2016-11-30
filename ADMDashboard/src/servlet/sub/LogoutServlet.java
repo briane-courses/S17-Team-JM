@@ -8,7 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import servlet.MasterServlet;
+<<<<<<< HEAD
 import utils.session.SessionManager;
+=======
+>>>>>>> refs/remotes/origin/US10
 
 /**
  * Servlet implementation class LogoutServlet
@@ -25,12 +28,33 @@ public class LogoutServlet {
 		// TODO Auto-generated method stub
 		System.out.println("LOGOUT SERVLET");
 
+<<<<<<< HEAD
 		// kill session
 		SessionManager.endSession(request, response);
 		request.getRequestDispatcher("StartServlet").forward(request, response);
 
 		// go back to login page
 		/*
+=======
+		// get cookies
+		Cookie[] cookies = request.getCookies();
+
+		// if cookies exist, kill them
+		if (cookies != null) {
+			for (int i = 0; i < cookies.length; i++) {
+				cookies[i].setValue("");
+				cookies[i].setPath("/");
+				cookies[i].setMaxAge(0);
+				response.addCookie(cookies[i]);
+				System.out.println("Killing Cookie");
+			}
+		}
+
+		// kill session
+		// request.getSession().invalidate();
+
+		// go back to login page
+>>>>>>> refs/remotes/origin/US10
 		if (cookies == null) {
 			System.out.println("returning... if");
 			request.getRequestDispatcher("StartServlet").forward(request, response);
@@ -40,7 +64,10 @@ public class LogoutServlet {
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 			return;
 		}
+<<<<<<< HEAD
 		*/
+=======
+>>>>>>> refs/remotes/origin/US10
 
 	}
 

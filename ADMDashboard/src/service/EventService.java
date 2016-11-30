@@ -2,6 +2,7 @@ package service;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+<<<<<<< HEAD
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,6 +11,15 @@ import java.util.Calendar;
 
 import model.Event;
 import model.Status;
+=======
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
+import model.Event;
+import model.EventType;
+import model.Status;
+import utils.converter.DatatypeConverter;
+>>>>>>> refs/remotes/origin/US10
 import utils.db.Query;
 
 public class EventService {
@@ -30,17 +40,24 @@ public class EventService {
 		input.add(Status.PENDING);
 		Query q = Query.getInstance();
 		ResultSet r = null;
+<<<<<<< HEAD
 		DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
 		Calendar cal = Calendar.getInstance();
+=======
+>>>>>>> refs/remotes/origin/US10
 		try {
 			r = q.runQuery(query, input);
 			while (r.next()) {
 				event = new Event();
+<<<<<<< HEAD
 				cal = Calendar.getInstance();
+=======
+>>>>>>> refs/remotes/origin/US10
 				event.setEventID(r.getInt(Event.COL_EVENTID));
 				event.setEventname(r.getString(Event.COL_EVENTNAME));
 				event.setOrgcode(r.getString(Event.COL_ORGCODE));
 				event.setEventdesc(r.getString(Event.COL_EVENTDESC));
+<<<<<<< HEAD
 				cal.setTime(df.parse(r.getString(Event.COL_POSTACTDEADLINE)));// converts
 																				// date
 																				// string
@@ -49,13 +66,19 @@ public class EventService {
 																				// calendar
 																				// object
 				event.setPostact_deadline(cal); // no postact status
+=======
+				event.setPostact_deadline(DatatypeConverter.toCalendar(r.getDate(Event.COL_POSTACTDEADLINE)));
+>>>>>>> refs/remotes/origin/US10
 				events.add(event);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+<<<<<<< HEAD
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+=======
+>>>>>>> refs/remotes/origin/US10
 		} finally {
 			try {
 				q.close();
@@ -93,17 +116,24 @@ public class EventService {
 
 		Query q = Query.getInstance();
 		ResultSet r = null;
+<<<<<<< HEAD
 		DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
 		Calendar cal = Calendar.getInstance();
+=======
+>>>>>>> refs/remotes/origin/US10
 		try {
 			r = q.runQuery(query, input);
 			while (r.next()) {
 				event = new Event();
+<<<<<<< HEAD
 				cal = Calendar.getInstance();
+=======
+>>>>>>> refs/remotes/origin/US10
 				event.setEventID(r.getInt(Event.COL_EVENTID));
 				event.setEventname(r.getString(Event.COL_EVENTNAME));
 				event.setOrgcode(r.getString(Event.COL_ORGCODE));
 				event.setEventdesc(r.getString(Event.COL_EVENTDESC));
+<<<<<<< HEAD
 				cal.setTime(df.parse(r.getString(Event.COL_POSTACTDEADLINE)));// converts
 																				// date
 																				// string
@@ -112,13 +142,19 @@ public class EventService {
 																				// calendar
 																				// object
 				event.setPostact_deadline(cal); // no postact status
+=======
+				event.setPostact_deadline(DatatypeConverter.toCalendar(r.getDate(Event.COL_POSTACTDEADLINE)));
+>>>>>>> refs/remotes/origin/US10
 				overdueEvents.add(event);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+<<<<<<< HEAD
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+=======
+>>>>>>> refs/remotes/origin/US10
 		} finally {
 			try {
 				q.close();
@@ -147,17 +183,24 @@ public class EventService {
 		input.add(Status.PENDING);
 		Query q = Query.getInstance();
 		ResultSet r = null;
+<<<<<<< HEAD
 		DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
 		Calendar cal = Calendar.getInstance();
+=======
+>>>>>>> refs/remotes/origin/US10
 		try {
 			r = q.runQuery(query, input);
 			while (r.next()) {
 				event = new Event();
+<<<<<<< HEAD
 				cal = Calendar.getInstance();
+=======
+>>>>>>> refs/remotes/origin/US10
 				event.setEventID(r.getInt(Event.COL_EVENTID));
 				event.setEventname(r.getString(Event.COL_EVENTNAME));
 				event.setOrgcode(r.getString(Event.COL_ORGCODE));
 				event.setEventdesc(r.getString(Event.COL_EVENTDESC));
+<<<<<<< HEAD
 				cal.setTime(df.parse(r.getString(Event.COL_POSTACTDEADLINE)));// converts
 																				// date
 																				// string
@@ -167,13 +210,20 @@ public class EventService {
 																				// object
 				event.setPostact_status(Status.PENDING);
 				event.setPostact_deadline(cal); // no postact status
+=======
+				event.setPostact_status(Status.PENDING);
+				event.setPostact_deadline(DatatypeConverter.toCalendar(r.getDate(Event.COL_POSTACTDEADLINE)));
+>>>>>>> refs/remotes/origin/US10
 				events.add(event);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+<<<<<<< HEAD
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+=======
+>>>>>>> refs/remotes/origin/US10
 		} finally {
 			try {
 				q.close();
@@ -183,5 +233,51 @@ public class EventService {
 		}
 		return events;
 	}
+<<<<<<< HEAD
+=======
+	
+	public ArrayList<Event> searchEvents(String searchString) {
+		System.out.println("[METHOD] searchEvents " + searchString);
+		
+		ArrayList<Event> eventList = new ArrayList<Event>();
+		ArrayList<Object> input = new ArrayList<Object>();
+		Event event = null;
+		
+		String query = "SELECT *"
+				+ " FROM " + Event.TABLE_NAME + " NATURAL JOIN " + EventType.TABLE_NAME
+				+ " WHERE LOWER(" + Event.COL_EVENTNAME + ") LIKE LOWER(?) OR "
+				+ " LOWER(" + Event.COL_EVENTDESC + ") LIKE LOWER(?) OR "
+				+ " LOWER(" + Event.COL_ORGCODE + ") LIKE LOWER(?)";
+		
+		input.add("%" + searchString + "%");
+		input.add("%" + searchString + "%");
+		input.add("%" + searchString + "%");
+		
+		Query q = Query.getInstance();
+		ResultSet r = null;
+		
+		try {
+			r = q.runQuery(query, input);
+			
+			while(r.next()) {
+				event = new Event();
+				
+				event.setEventID(r.getInt(Event.COL_EVENTID));
+				event.setOrgcode(r.getString(Event.COL_ORGCODE));
+				event.setEventname(r.getString(Event.COL_EVENTNAME));
+				event.setEventtype(r.getString(EventType.COL_EVENTTYPE));
+				event.setPostact_status(DatatypeConverter.toStatus(r.getString(Event.COL_POSTACTSTATUS)));
+				event.setPostact_deadline(DatatypeConverter.toCalendar(r.getDate(Event.COL_POSTACTDEADLINE)));
+				
+				eventList.add(event);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return eventList;
+	}
+>>>>>>> refs/remotes/origin/US10
 
 }
