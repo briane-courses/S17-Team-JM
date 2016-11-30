@@ -1,41 +1,54 @@
 package servlet.sub;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.gson.Gson;
+
+import model.Event;
+import service.EventService;
+import servlet.MasterServlet;
 
 /**
  * Servlet implementation class SearchEventServlet
  */
-@WebServlet("/SearchEventServlet")
-public class SearchEventServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public SearchEventServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+public class SearchEventServlet{
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	public static final String URL = "/SearchEventServlet";
+	
+	private SearchEventServlet(){}
+
+	private static void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub	
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private static void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		
+		System.out.println("SEARCHEVENT SERVLET");
+		
+		String searchString = request.getParameter("search");
+		ArrayList<Event> eventList = EventService.searchEvents(searchString);
+		
+		PrintWriter pw = response.getWriter();
+		
+		Gson gson = new Gson();
+		String json = gson.toJson(eventList);
+
+		pw.write(json);
+	}
+	
+	public static void process(HttpServletRequest request, HttpServletResponse response, int type) throws ServletException, IOException{
+		if(type == MasterServlet.TYPE_GET)
+			doGet(request, response);
+		doPost(request, response);
 	}
 
 }

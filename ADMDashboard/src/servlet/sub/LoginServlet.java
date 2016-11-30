@@ -37,7 +37,6 @@ public class LoginServlet {
 		
 		// match attributes to the db
 		User user = UserService.searchUser(email);
-		System.out.println(user);
 		
 		// if user exists, go to admin/orgrep servlet
 		if(user != null) {
@@ -51,9 +50,9 @@ public class LoginServlet {
 			
 			// REDIRECT
 			if(user.getUserType().toString().equals(UserType.ORGREP + "")) {
-				request.getRequestDispatcher("HomeOrgRepServlet").forward(request, response);
+				request.getRequestDispatcher("/HomeOrgRepServlet").forward(request, response);
 			} else if(user.getUserType().toString().equals(UserType.ADMIN + "")) {
-				request.getRequestDispatcher("HomeAdminServlet").forward(request, response); 
+				request.getRequestDispatcher("/OrglistAdminServlet").forward(request, response); 
 			}
 			
 		} else {

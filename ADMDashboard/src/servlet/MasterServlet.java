@@ -14,8 +14,11 @@ import servlet.sub.HomeAdminServlet;
 import servlet.sub.HomeOrgRepServlet;
 import servlet.sub.LoginServlet;
 import servlet.sub.LogoutServlet;
+import servlet.sub.OrglistAdminServlet;
 import servlet.sub.RequirementsServlet;
+import servlet.sub.SearchEventServlet;
 import servlet.sub.StartServlet;
+import servlet.sub.ViewEventsServlet;
 
 @WebServlet(urlPatterns = {
 		AjaxUserCalendarServlet.URL,
@@ -24,8 +27,11 @@ import servlet.sub.StartServlet;
 		HomeOrgRepServlet.URL,
 		LoginServlet.URL,
 		LogoutServlet.URL,
+		OrglistAdminServlet.URL,
 		RequirementsServlet.URL,
-		StartServlet.URL
+		SearchEventServlet.URL,
+		StartServlet.URL,
+		ViewEventsServlet.URL
 		})
 		
 public class MasterServlet extends HttpServlet {
@@ -73,11 +79,20 @@ public class MasterServlet extends HttpServlet {
 				case LogoutServlet.URL:
 					LogoutServlet.process(request, response, type);
 					break;
+				case OrglistAdminServlet.URL:
+					OrglistAdminServlet.process(request, response, type);
+					break;
 				case RequirementsServlet.URL:
 					RequirementsServlet.process(request, response, type);
 					break;
+				case SearchEventServlet.URL:
+					SearchEventServlet.process(request, response, type);
+					break;
 				case StartServlet.URL:
 					StartServlet.process(request, response, type);
+					break;
+				case ViewEventsServlet.URL:
+					ViewEventsServlet.process(request, response, type);
 					break;
 				default:
 					System.err.println("ERROR: Servlet not implemented!");
