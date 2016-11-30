@@ -7,18 +7,12 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-<<<<<<< HEAD
 import model.Org;
-=======
->>>>>>> refs/remotes/origin/US10
 import model.User;
 import model.UserType;
 import service.UserService;
 import servlet.MasterServlet;
-<<<<<<< HEAD
 import utils.session.SessionManager;
-=======
->>>>>>> refs/remotes/origin/US10
 
 /**
  * Servlet implementation class LoginServlet
@@ -44,27 +38,12 @@ public class LoginServlet {
 		String logoURL = request.getParameter("logoURL");
 		
 		// match attributes to the db
-<<<<<<< HEAD
 		User user = SessionManager.beginSession(request, response, email, logoURL);
 		//System.out.println(user);
 		
 		// if user exists, go to admin/orgrep servlet
 		if(user != null) {
 				
-=======
-		User user = UserService.searchUser(email);
-		System.out.println(user);
-		
-		// if user exists, go to admin/orgrep servlet
-		if(user != null) {
-			
-			// CREATE COOKIE
-			Cookie userIDcookie = new Cookie(User.COL_IDNUMBER, user.getUserID() + "");
-			Cookie logoURLcookie = new Cookie("logoURL", logoURL);
-			
-			response.addCookie(logoURLcookie);		// add cookie to list of cookies
-			response.addCookie(userIDcookie); 		
->>>>>>> refs/remotes/origin/US10
 			
 			// REDIRECT
 			if(user.getUserType().toString().equals(UserType.ORGREP + "")) {

@@ -57,13 +57,8 @@
 			});
 			
 			// for ajax
-<<<<<<< HEAD
 			function changed_activity_type() {
 				var id = $("#activity_type").find(":selected").val();
-=======
-			function clickedType(id) {
-				var reqID = "#reqList" + id;
->>>>>>> refs/remotes/origin/US10
 				$.ajax({
 					url: "RequirementsServlet",
 					method: "post",
@@ -72,18 +67,11 @@
 					},
 					dataType: "json",
 					success: function(json) {
-<<<<<<< HEAD
 						console.log(json);
 						$("#reqList_jsp").empty();
 						for(var i = 0; i < json.length; i ++) {
 							console.log(json[i].reqName);
 							$("#reqList_jsp").append("<li>" + json[i].reqName + "</li>");
-=======
-						$(reqID).empty();
-						for(var i = 0; i < json.length; i ++) {
-							console.log("<li>" + json[i].reqName + "</li>");
-							$(reqID).append("<li>" + json[i].reqName + "</li>");
->>>>>>> refs/remotes/origin/US10
 						}
 					}
 				});
@@ -156,23 +144,8 @@
    		<br>
    		<h6>Other requirements per activity</h6>
    		<label>Click to see the list of other requirements per type of activity</label>
-<<<<<<< HEAD
       	<ul class="collapsible" data-collapsible="accordion">
           	<li>
-=======
-   		
-      	<ul class="collapsible" data-collapsible="accordion">
-      		<c:forEach items = "${eventTypeList }" var = "e">
-	          	<li>
-	            	<div id = "${e.eventtypeID }" class="collapsible-header" onclick = "clickedType(${e.eventtypeID })">${e.eventtype }</div>
-	            	<div class="collapsible-body">
-	            	<ol id = "reqList${e.eventtypeID }" class = "deadlineList" style = "margin: 20px; ">
-	            		
-				    </ol>
-          		</li>
-          	</c:forEach>
-          	<!-- 
->>>>>>> refs/remotes/origin/US10
             	<div class="collapsible-header">Acquaintance Party (On-Campus)</div>
             	<div class="collapsible-body">
               		<ul class = "deadlineList">
@@ -207,10 +180,6 @@
 		            </ul>
             	</div>
           	</li>
-<<<<<<< HEAD
-=======
-          	 -->
->>>>>>> refs/remotes/origin/US10
    		</ul>
    </div>
    </div>
