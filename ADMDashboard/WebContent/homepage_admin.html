@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
+  	   <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="20332845396-pvv6j3ifeu0391esi12rdcill7tmq0u7.apps.googleusercontent.com">
+	
+	
+  <title>Admin Dashboard ADM</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+ 
+  
+    <script src="https://apis.google.com/js/platform.js" async defer>
+	 </script>
+	
+
+</head>
+
+<body>
+
+  <!--  Scripts-->
+  <!--Import jQuery before materialize.js-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="js/materialize.js"></script>
+  <script>
+    function signOut() {
+	    gapi.load('auth2', function() {
+        gapi.auth2.init();
+      });
+      var auth2 = gapi.auth2.getAuthInstance();
+      auth2.signOut().then(function () {
+        console.log('User signed out.');
+		window.location.href = "index.html";
+      });
+    }
+
+    function onLoad() {
+      gapi.load('auth2', function() {
+        gapi.auth2.init();
+      });
+    }
+         $(document).ready(function() {
+         $('select').material_select();
+      });
+     
+
+     
+  </script>
+
+  <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
+  
+<!-- START OF NAVBAR --> 
+ <div class="navbar-fixed">
+ <nav class = "green">
+    <div class="nav-wrapper">
+   
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li> <a href="#" onclick="signOut();"><i class="material-icons">settings</i>Settings/Sign Out</a></li>
+		  </ul>
+    </div>
+  </nav>
+</div>
+
+ <ul id="slide-out" class="side-nav fixed">
+			<li>
+        <div class="userView">
+			   <img class="background" src="images/office.jpg">
+			   <a href="#!user"><img class="circle" src="images/cso.jpg"></a>
+			   <a href="#!name"><span class="white-text name">ORG NAME(org image above) </span></a>
+			   <a href="#!email"><span class="white-text email">orgname@gmail.com</span></a>
+			 </div>
+      </li>
+			<li><a href="homepage admin.html"><i class="material-icons">dashboard</i>Dashboard</a></li>
+						<li><div class="divider"></div></li>
+			<li><a href="calendar.html"><i class="material-icons">today</i>Calendar of special deadlines</a></li>
+		  <li><a href="organizations.html"><i class="material-icons">view_list</i>List of Organizations</a></li>
+      </ul>
+		  
+  <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+        <!-- END OF NAVBAR -->
+<!-- START OF MAIN VIEW( Body) -->
+
+	<div class = "row">
+		<div class ="col s3">
+		</div>
+		
+		<div class ="col s9">
+      <div class = "col s8">
+        <h4>Post-Activity Form Deadlines</h4>
+      </div>
+      <div class = "col s4">
+        <form>
+        <div class="input-field">
+          <input id="search" type="search" required>
+          <label for="search"><i class="material-icons">search</i></label>
+          <i class="material-icons">close</i>
+        </div>
+      </form>
+      </div>
+      
+      <ul class="collection">
+        <li class="collection-item avatar">
+          <div class = "col s3">
+            <img src="images/cso.jpg" alt="" class="circle">
+            Org Name
+          </div>
+          <div class = "col s3">
+            Event Name
+          </div>
+          <div class = "col s4">
+            Deadline
+          </div>
+          <div class = "col s1">
+            <!-- <a  class="btn-floating waves-effect waves-light btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit Event Deadline" href = "#modal1"><i class="material-icons right">mode_edit</i></a> -->
+            <button data-target="modal1" class="btn modal-trigger btn-floating waves-effect waves-light tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit Event Deadline"><i class="material-icons right">mode_edit</i></button>
+            <div id="modal1" class="modal">
+              <div class="modal-content">
+                <h4>Event Details</h4>
+                <div class = "col s12">
+                  Organization Responsible<br>
+                  Event Name<br>
+                  Original Deadline<br>
+                  New Deadline<br>
+                  <input type="date" class="datepicker">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat green-text text-darken-3">Save</a>
+                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Discard</a>
+              </div>
+            </div>
+          </div>
+          <div class = "col s1  ">
+            <a class="btn-floating  btn tooltipped orange"  data-position="bottom" data-delay="50" data-tooltip="Due in 1 week"><i class="material-icons right">error</i></a>
+          </div>
+      </li>
+      <li class="collection-item avatar">
+          <div class = "col s3">
+            <img src="images/cso.jpg" alt="" class="circle">
+            Org Name
+          </div>
+          <div class = "col s3">
+            Event Name
+          </div>
+          <div class = "col s4">
+            Deadline
+          </div>
+          
+           <div class = "col s1">
+            <!-- <a  class="btn-floating waves-effect waves-light btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit Event Deadline" href = "#modal1"><i class="material-icons right">mode_edit</i></a> -->
+            <button data-target="modal2" class="btn modal-trigger btn-floating waves-effect waves-light tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit Event Deadline"><i class="material-icons right">mode_edit</i></button>
+            <div id="modal2" class="modal">
+              <div class="modal-content">
+                <h4>Event Details</h4>
+                <div class = "col s12">
+                  Organization Responsible<br>
+                  Event Name<br>
+                  Original Deadline<br>
+                  New Deadline<br>
+                  <input type="date" class="datepicker">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat green-text text-darken-3">Save</a>
+                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Discard</a>
+              </div>
+            </div>
+          </div>
+          <div class = "col s1  ">
+            <a class="btn-floating btn tooltipped red"  data-position="bottom" data-delay="50" data-tooltip="Overdue"><i class="material-icons right">warning</i></a>
+          </div>
+      </li>
+      <li class="collection-item avatar">
+          <div class = "col s3">
+            <img src="images/cso.jpg" alt="" class="circle">
+            Org Name
+          </div>
+          <div class = "col s3">
+            Event Name
+          </div>
+          <div class = "col s4">
+            Deadline
+          </div>
+          <div class = "col s1">
+            <!-- <a  class="btn-floating waves-effect waves-light btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit Event Deadline" href = "#modal1"><i class="material-icons right">mode_edit</i></a> -->
+            <button data-target="modal3" class="btn modal-trigger btn-floating waves-effect waves-light tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit Event Deadline"><i class="material-icons right">mode_edit</i></button>
+            <div id="modal3" class="modal">
+              <div class="modal-content">
+                <h4>Event Details</h4>
+                <div class = "col s12">
+                  Organization Responsible<br>
+                  Event Name<br>
+                  Original Deadline<br>
+                  New Deadline<br>
+                  <input type="date" class="datepicker">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat green-text text-darken-3">Save</a>
+                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Discard</a>
+              </div>
+            </div>
+          </div>
+          <div class = "col s1  ">
+            <a class="btn-floating btn tooltipped black"  data-position="bottom" data-delay="50" data-tooltip="Due in 2 weeks"><i class="material-icons right">info</i></a>
+          </div>
+      </li>
+      <li class="collection-item avatar">
+          <div class = "col s3">
+            <img src="images/cso.jpg" alt="" class="circle">
+            Org Name
+          </div>
+          <div class = "col s3">
+            Event Name
+          </div>
+          <div class = "col s4">
+            Deadline
+          </div>
+          <div class = "col s1">
+            <!-- <a  class="btn-floating waves-effect waves-light btn tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit Event Deadline" href = "#modal1"><i class="material-icons right">mode_edit</i></a> -->
+            <button data-target="modal4" class="btn modal-trigger btn-floating waves-effect waves-light tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit Event Deadline"><i class="material-icons right">mode_edit</i></button>
+            <div id="modal4" class="modal">
+              <div class="modal-content">
+                <h4>Event Details</h4>
+                <div class = "col s12">
+                  Organization Responsible<br>
+                  Event Name<br>
+                  Original Deadline<br>
+                  New Deadline<br>
+                  <input type="date" class="datepicker">
+                </div>
+              </div>
+              <div class="modal-footer">
+                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat green-text text-darken-3">Save</a>
+                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Discard</a>
+              </div>
+            </div>
+          </div>
+          <div class = "col s1  ">
+            <a class="btn-floating btn tooltipped grey"  data-position="bottom" data-delay="50" data-tooltip="Other Deadlines"><i class="material-icons right">list</i></a>
+          </div>
+      </li>
+    </ul>
+    <div class = "col s12" align="right">
+      <button data-target="modal_edit_all" class="btn modal-trigger waves-effect waves-light tooltipped" data-position="bottom" data-delay="50" data-tooltip="Edit All Deadlines"><i class="material-icons left">mode_edit</i>Edit All Deadlines</button>
+      <div id="modal_edit_all" class="modal col s6" align="left">
+              <div class="modal-content ">
+                <h4>Add Suspension Dates</h4>
+                
+                  <!-- <input placeholder="Number of Days" type="text" class="validate">
+                  <label for="first_name">Number of Days</label> -->
+                  From
+                  <input type="date" class="datepicker">
+                  To
+                  <input type="date" class="datepicker">
+                
+              </div>
+              <div class="modal-footer">
+                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat green-text text-darken-3">Save</a>
+                <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Discard</a>
+              </div>
+            </div>
+    </div>
+ 
+  </div>
+	.	</div>
+	
+	</div>
+  </div>
+<!-- END OF MAIN VIEW (Body) -->  
+ <script>
+ // Initialize collapse button
+  $(".button-collapse").sideNav();
+  // Initialize collapsible (uncomment the line below if you use the dropdown variation)
+  //$('.collapsible').collapsible();
+</script>
+<script >
+  $(document).ready(function(){
+    // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
+    $('.modal-trigger').leanModal();
+  });
+</script>
+
+</body>
+</html>
