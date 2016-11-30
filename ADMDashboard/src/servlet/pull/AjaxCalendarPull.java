@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
+import factory.CalendarEventFactory;
 import model.Org;
 import model.Status;
 import model.calendar.CalendarEvent;
@@ -17,12 +18,12 @@ import service.CalendarEventService;
 import servlet.MasterServlet;
 import utils.session.SessionManager;
 
-public class AjaxCalendarServlet{
+public class AjaxCalendarPull{
 
 
 	public static final String URL = "/PullAjaxCalendar";
 	
-	private AjaxCalendarServlet() {}
+	private AjaxCalendarPull() {}
 
 	private static void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -42,12 +43,8 @@ public class AjaxCalendarServlet{
 		// needs orgcode of logged in user to be stored at log in
 		type = request.getParameter("type");
 		tempDate = request.getParameter("date");
-		arrDate = tempDate.substring(0,10).split("-");
-		date = new SimpleDate(
-				Integer.parseInt(arrDate[0]), 
-				Integer.parseInt(arrDate[1]), 
-				Integer.parseInt(arrDate[2])
-				);
+		if(tempDate != null)
+			date = new SimpleDate(tempDate);
 		switch(type){
 		case "admin":
 			orgCode = (String) SessionManager.getAttribute(request, Org.COL_ORGCODE);
@@ -56,16 +53,22 @@ public class AjaxCalendarServlet{
 			break;
 		case "user":
 			orgCode = (String) SessionManager.getAttribute(request, Org.COL_ORGCODE);
-			if(orgCode != null)
-				events = CalendarEventService.getEvents(orgCode, Status.DONE);
+			orgCode = "imes";
+			if(orgCode != null && date != null)
+				events = CalendarEventService.getEventsByMonth(orgCode, Status.DONE, date);
+			break;
+		case "rep":
+			orgCode = (String) SessionManager.getAttribute(request, Org.COL_ORGCODE);
+			if(orgCode != null && date != null)
+				events = CalendarEventService.getEventsByMonth(orgCode, Status.DONE, date);
 			break;
 		default:
 			events = CalendarEventService.getAllEvents(Status.DONE);
 		}
 		
 
-		//events = CalendarEventService.getEventsByOrg("imes", Status.DONE);
-		//events.add(new CalendarEvent(1, "TEST", "2016-11-15", "2016-11-16", "#333"));
+		//events.add(CalendarEventFactory.getInstance().createEvent(1, "TEST", "2016-11-15", null, "#333"));
+		
 		String json = new Gson().toJson(events);
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");

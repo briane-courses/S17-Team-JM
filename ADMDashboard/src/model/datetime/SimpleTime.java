@@ -47,8 +47,9 @@ public class SimpleTime {
 	public void setHourOverflow(int hourOverflow) {
 		this.hourOverflow = hourOverflow;
 	}
+	@Override
 	public String toString(){
-		return hour + ":" + minute + ":" + second;
+		return hour + ":" + (minute < 10 ? "0"+minute : minute) + ":" + (second < 10 ? "0"+second : second);
 	}
 	
 	public boolean equals(int hour, int minute, int second){
