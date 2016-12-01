@@ -7,9 +7,20 @@ import java.util.ArrayList;
 import model.EventType;
 import utils.db.Query;
 
+/**
+ * This class handles all SQL statements needed for the EventType Transfer Objects
+ * @author Mavic Reccion
+ *
+ */
 public class EventTypeService {
 	
+	/**
+	 * This method retrieves all event types in the database
+	 * @return ArrayList<EventType>
+	 */
 	public static ArrayList<EventType> getAllEventType() {
+		System.out.println("[METHOD] getAllEventType");
+		
 		ArrayList<EventType> eventTypeList = new ArrayList<EventType>();
 		EventType eventType = null;
 		

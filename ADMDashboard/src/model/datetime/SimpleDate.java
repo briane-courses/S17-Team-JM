@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
 import java.util.GregorianCalendar;
 
 public class SimpleDate {
@@ -22,7 +23,6 @@ public class SimpleDate {
 		month = Integer.parseInt(arrDate[1]);
 		day = Integer.parseInt(arrDate[2]);
 	}
-	
 	public int getYear() {
 		return year;
 	}
@@ -36,6 +36,7 @@ public class SimpleDate {
 		if(month > 12)
 			setYear(getYear() + 1);
 		this.month = month % 12;
+
 	}
 	public int getDay() {
 		return day;
@@ -46,7 +47,8 @@ public class SimpleDate {
 		this.day = day % (new GregorianCalendar(getYear(), getMonth(), 1).getActualMaximum(GregorianCalendar.DAY_OF_MONTH) + 1);
 	}
 	
-	public Calendar toCalendar() {
+
+	public Calendar getCalendar() {
 	    Calendar date = Calendar.getInstance();
 	    date.set(Calendar.YEAR, year);
 	    date.set(Calendar.MONTH, month);

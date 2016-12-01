@@ -91,13 +91,12 @@ public class HomeOrgRepServlet {
 		request.getSession().setAttribute("otherDueDateList", otherDueDateList);
 		
 		
-		// for activity drop down
+		// for accordion
 		ArrayList<EventType> eventTypeList = EventTypeService.getAllEventType();
 		request.getSession().setAttribute("eventTypeList", eventTypeList);
 			
 		// send request to jsp
 		request.getRequestDispatcher("/homepage_orgrep.jsp").forward(request, response);
-		// response.sendRedirect("homepage_orgrep.jsp");
 		
 	}
 

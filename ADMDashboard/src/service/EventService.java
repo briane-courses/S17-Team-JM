@@ -2,12 +2,13 @@ package service;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import model.Event;
 import model.EventType;
 import model.Status;
+import model.datetime.SimpleDate;
 import utils.converter.DatatypeConverter;
 import utils.db.Query;
 
@@ -55,14 +56,23 @@ public class EventService {
 	public static ArrayList<String> convertDates(ArrayList<Event> events) {
 		System.out.println("[METHOD] convertDates");
 		ArrayList<String> dates = new ArrayList<String>();
-		SimpleDateFormat formatter = new SimpleDateFormat("mm-dd-yyyy");
-
-		for (int i = 0; i < events.size(); i++) {
-			dates.add(formatter.format(events.get(i).getPostact_deadline().getTime()));
-			// System.out.println(dates.get(i));
+		
+		SimpleDate simpleDate = null;
+		Calendar c = null;
+		int year, month, day;
+		
+		for(int i = 0; i < events.size(); i ++) {
+			c = events.get(i).getPostact_deadline();
+			year = c.get(Calendar.YEAR);
+			month = c.get(Calendar.MONTH);
+			day = c.get(Calendar.DAY_OF_MONTH);
+			simpleDate = new SimpleDate(year, month, day);			
+			
+			dates.add(simpleDate.toString());
 		}
+		
+		
 		return dates;
-
 	}
 
 	public static ArrayList<Event> getOverdueDeadlines(String orgcode) {
@@ -144,7 +154,7 @@ public class EventService {
 		return events;
 	}
 	
-	public ArrayList<Event> searchEvents(String searchString) {
+	public static ArrayList<Event> searchEvents(String searchString) {
 		System.out.println("[METHOD] searchEvents " + searchString);
 		
 		ArrayList<Event> eventList = new ArrayList<Event>();
@@ -182,6 +192,12 @@ public class EventService {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				q.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		return eventList;

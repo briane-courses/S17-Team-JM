@@ -149,47 +149,11 @@
 	          	<li>
 	            	<div id = "${e.eventtypeID }" class="collapsible-header" onclick = "clickedType(${e.eventtypeID })">${e.eventtype }</div>
 	            	<div class="collapsible-body">
-	            	<ol id = "reqList${e.eventtypeID }" class = "deadlineList" style = "margin: 20px; ">
+	            	<ol id = "reqList${e.eventtypeID }" class = "deadlineList">
 	            		
 				    </ol>
           		</li>
           	</c:forEach>
-          	<!-- 
-            	<div class="collapsible-header">Acquaintance Party (On-Campus)</div>
-            	<div class="collapsible-body">
-              		<ul class = "deadlineList">
-			        	<li>Requirement #1</li>
-			        	<li>Requirement #2</li>
-			        	<li>Requirement #3</li>
-			        	<li>Requirement #4</li>
-			        	<li>Requirement #5</li>
-              		</ul>
-          	</li>
-          	<li>
-            	<div class="collapsible-header">Concerts</div>
-            	<div class="collapsible-body">
-		        	<ul class = "deadlineList">
-		            	<li>Requirement #1</li>
-			            <li>Requirement #2</li>
-			            <li>Requirement #3</li>
-			            <li>Requirement #4</li>
-			            <li>Requirement #5</li>
-		            </ul>
-            	</div>
-          	</li>
-          	<li>
-		    	<div class="collapsible-header" >Contests</div>
-		        <div class="collapsible-body">
-		        	<ul class = "deadlineList">
-		            	<li>Requirement #1</li>
-			            <li>Requirement #2</li>
-			            <li>Requirement #3</li>
-			            <li>Requirement #4</li>
-			            <li>Requirement #5</li>
-		            </ul>
-            	</div>
-          	</li>
-          	 -->
    		</ul>
    </div>
    </div>

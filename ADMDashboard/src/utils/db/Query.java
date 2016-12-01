@@ -110,6 +110,7 @@ public class Query {
 	 * @param input - An ArrayList of objects. Can contain: String, int, float & etc.
 	 * 
 	 */
+	@SuppressWarnings("rawtypes")
 	public ResultSet runQuery(String query, ArrayList<Object> input) throws SQLException{
 		if(connect(username, password, url)){
 			pstmt = con.prepareStatement(query);
@@ -141,6 +142,7 @@ public class Query {
 	 * @param input - An ArrayList of objects. Can contain: String, int, float & etc.
 	 * 
 	 */
+	@SuppressWarnings("rawtypes")
 	public boolean runInsertUpdateDelete(String query, ArrayList<Object> input) throws SQLException{
 		boolean result = connect(username, password, url);
 		if(result){
@@ -173,6 +175,7 @@ public class Query {
 	 * @param input - An ArrayList of objects. Can contain: String, int, float & etc.
 	 * 
 	 */
+	@SuppressWarnings("rawtypes")
 	public ResultSet runStoredProcedure(String procedure, ArrayList<Object> input) throws SQLException{
 		if(connect(username, password, url)){
 			cstmt = con.prepareCall (procedure);
