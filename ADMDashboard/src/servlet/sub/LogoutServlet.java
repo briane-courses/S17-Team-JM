@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import servlet.MasterServlet;
+import utils.session.SessionManager;
 
 /**
  * Servlet implementation class LogoutServlet
@@ -24,6 +25,7 @@ public class LogoutServlet {
 		// TODO Auto-generated method stub
 		System.out.println("LOGOUT SERVLET");
 
+<<<<<<< HEAD
 		// get cookies
 		Cookie[] cookies = request.getCookies();
 
@@ -40,8 +42,14 @@ public class LogoutServlet {
 
 		// kill session
 		// request.getSession().invalidate();
+=======
+		// kill session
+		SessionManager.endSession(request, response);
+		request.getRequestDispatcher("StartServlet").forward(request, response);
+>>>>>>> 025278646cd2c4c40fe62ccf7e43b55bf12f04ab
 
 		// go back to login page
+		/*
 		if (cookies == null) {
 			System.out.println("returning... if");
 			request.getRequestDispatcher("StartServlet").forward(request, response);
@@ -51,6 +59,7 @@ public class LogoutServlet {
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 			return;
 		}
+		*/
 
 	}
 

@@ -1,5 +1,6 @@
 package utils.converter;
 
+import java.awt.Color;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -10,9 +11,22 @@ public class DatatypeConverter {
 
 	private DatatypeConverter(){}
 	
+<<<<<<< HEAD
 	public static String toHex(int r, int g, int b){return "#"+Integer.toHexString(r) 
 	+ Integer.toHexString(g) 
 	+ Integer.toHexString(b);
+=======
+	public static String toHex(Color color){
+		return "#"+Integer.toHexString(color.getRed()) 
+				+ Integer.toHexString(color.getGreen()) 
+				+ Integer.toHexString(color.getBlue());
+	}
+	
+	public static String toHex(int r, int g, int b){
+		return "#"+Integer.toHexString(r) 
+				+ Integer.toHexString(g) 
+				+ Integer.toHexString(b);
+>>>>>>> 025278646cd2c4c40fe62ccf7e43b55bf12f04ab
 	}
 	
 	public static String toString(Calendar calendar, String format){ // BUGGY DO NOT USE

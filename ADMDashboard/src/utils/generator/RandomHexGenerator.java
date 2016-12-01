@@ -23,7 +23,11 @@ public class RandomHexGenerator {
 		//to get rainbow, pastel colors
 		color = Color.getHSBColor(hue, saturation, luminance);
 		
+<<<<<<< HEAD
 		return DatatypeConverter.toHex(color.getRed(),color.getGreen(), color.getBlue());
+=======
+		return DatatypeConverter.toHex(color);
+>>>>>>> 025278646cd2c4c40fe62ccf7e43b55bf12f04ab
 		
 	}
 }

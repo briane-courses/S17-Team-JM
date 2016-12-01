@@ -8478,3 +8478,7 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 .other-week{
   color: green;
 }
+
+ul li ol li {
+  list-style-type: decimal;
+}

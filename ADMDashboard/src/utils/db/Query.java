@@ -10,6 +10,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import model.datetime.SimpleDate;
+
 import java.sql.PreparedStatement;
 
 public class Query {
@@ -32,8 +34,13 @@ public class Query {
 	public static final String[] ACCESS1 = {"sofengg","sofenggADM!"};
 	public static final String[] ACCESS2 = {"root","p@ssword"};
 	
+<<<<<<< HEAD
 	private static final String USER = ACCESS1[0];
 	private static final String PASS = ACCESS1[1];
+=======
+	private static final String USER = ACCESS2[0];
+	private static final String PASS = ACCESS2[1];
+>>>>>>> 025278646cd2c4c40fe62ccf7e43b55bf12f04ab
 	private static final String URL = "jdbc:mysql://localhost:3306/adm";
 	
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
@@ -106,30 +113,13 @@ public class Query {
 	public ResultSet runQuery(String query, ArrayList<Object> input) throws SQLException{
 		if(connect(username, password, url)){
 			pstmt = con.prepareStatement(query);
-			if(input != null)
-				for(int i = 0; i < input.size(); i++){
-					if(input.get(i) instanceof String)
-						pstmt.setString(i + 1,(String) input.get(i));
-					else if(input.get(i) instanceof Integer)
-						pstmt.setInt(i + 1,(Integer) input.get(i));
-					else if(input.get(i) instanceof Float)
-						pstmt.setFloat(i + 1,(Float) input.get(i));
-					else if(input.get(i) instanceof Double)
-						pstmt.setDouble(i + 1,(Double) input.get(i));
-					else if(input.get(i) instanceof Long)
-						pstmt.setLong(i + 1, (Long)input.get(i));
-					else if(input.get(i) instanceof Boolean)
-						pstmt.setBoolean(i + 1, (Boolean)input.get(i));
-					else if(input.get(i) instanceof Enum)
-						pstmt.setString(i + 1,((Enum) input.get(i)).toString());
-					else if(input.get(i) instanceof Calendar)
-						pstmt.setDate(i + 1,(Date) ((Calendar) input.get(i)).getTime());
-					}
+			setPreparedStatementAttributes(input);
 			rs = pstmt.executeQuery();
 			}
 		return rs;
 		
 	}
+	
 	/**
 	 * 	Runs a query and returns true or false depending on whether query was a success. </br>
 	 *  Uses array list of objects as its input but can be set to null if no input is needed.</br> 
@@ -155,25 +145,7 @@ public class Query {
 		boolean result = connect(username, password, url);
 		if(result){
 			pstmt = con.prepareStatement(query);
-			if(input != null)
-				for(int i = 0; i < input.size(); i++){
-					if(input.get(i) instanceof String)
-						pstmt.setString(i + 1,(String) input.get(i));
-					else if(input.get(i) instanceof Integer)
-						pstmt.setInt(i + 1,(Integer) input.get(i));
-					else if(input.get(i) instanceof Float)
-						pstmt.setFloat(i + 1,(Float) input.get(i));
-					else if(input.get(i) instanceof Double)
-						pstmt.setDouble(i + 1,(Double) input.get(i));
-					else if(input.get(i) instanceof Long)
-						pstmt.setLong(i + 1, (Long)input.get(i));
-					else if(input.get(i) instanceof Boolean)
-						pstmt.setBoolean(i + 1, (Boolean)input.get(i));
-					else if(input.get(i) instanceof Enum)
-						pstmt.setString(i + 1,((Enum) input.get(i)).toString());
-					else if(input.get(i) instanceof Calendar)
-						pstmt.setDate(i + 1,(Date) ((Calendar) input.get(i)).getTime());
-					}
+			setPreparedStatementAttributes(input);
 			result = pstmt.execute();
 			}
 		return result;
@@ -204,25 +176,7 @@ public class Query {
 	public ResultSet runStoredProcedure(String procedure, ArrayList<Object> input) throws SQLException{
 		if(connect(username, password, url)){
 			cstmt = con.prepareCall (procedure);
-		if(input != null)
-			for(int i = 0; i < input.size(); i++){
-				if(input.get(i) instanceof String)
-					cstmt.setString(i + 1,(String) input.get(i));
-				else if(input.get(i) instanceof Integer)
-					cstmt.setInt(i + 1,(Integer) input.get(i));
-				else if(input.get(i) instanceof Float)
-					cstmt.setFloat(i + 1,(Float) input.get(i));
-				else if(input.get(i) instanceof Double)
-					cstmt.setDouble(i + 1,(Double) input.get(i));
-				else if(input.get(i) instanceof Long)
-					cstmt.setLong(i + 1, (Long)input.get(i));
-				else if(input.get(i) instanceof Boolean)
-					cstmt.setBoolean(i + 1, (Boolean)input.get(i));
-				else if(input.get(i) instanceof Enum)
-					pstmt.setString(i + 1,((Enum) input.get(i)).toString());
-				else if(input.get(i) instanceof Calendar)
-					cstmt.setDate(i + 1,(Date) ((Calendar) input.get(i)).getTime());
-				}
+			setCallableStatementAttributes(input);
 			rs = cstmt.executeQuery();
 			}
 		return rs;
@@ -331,6 +285,64 @@ public class Query {
 		if(con != null)
 			return con.isClosed();
 		return true;
+	}
+	
+	/**
+	 *Sets attributes for query methods using prepared statements
+	 */
+	private void setPreparedStatementAttributes(ArrayList<Object> input) throws SQLException{
+		if(input != null)
+			for(int i = 0; i < input.size(); i++){
+				if(input.get(i) instanceof String)
+					pstmt.setString(i + 1,(String) input.get(i));
+				else if(input.get(i) instanceof Integer)
+					pstmt.setInt(i + 1,(Integer) input.get(i));
+				else if(input.get(i) instanceof Float)
+					pstmt.setFloat(i + 1,(Float) input.get(i));
+				else if(input.get(i) instanceof Double)
+					pstmt.setDouble(i + 1,(Double) input.get(i));
+				else if(input.get(i) instanceof Long)
+					pstmt.setLong(i + 1, (Long)input.get(i));
+				else if(input.get(i) instanceof Boolean)
+					pstmt.setBoolean(i + 1, (Boolean)input.get(i));
+				else if(input.get(i) instanceof Enum)
+					pstmt.setString(i + 1,((Enum) input.get(i)).toString());
+				else if(input.get(i) instanceof SimpleDate)
+					pstmt.setDate(i + 1, (Date) ((SimpleDate)input.get(i)).toDate());
+				else if(input.get(i) instanceof Date)
+					pstmt.setDate(i + 1,(Date) input.get(i));
+				else if(input.get(i) instanceof Calendar)
+					pstmt.setDate(i + 1,(Date) ((Calendar) input.get(i)).getTime());
+				}
+	}
+	
+	/**
+	 *Sets attributes for query methods using callable statements
+	 */
+	private void setCallableStatementAttributes(ArrayList<Object> input) throws SQLException{
+		if(input != null)
+			for(int i = 0; i < input.size(); i++){
+				if(input.get(i) instanceof String)
+					cstmt.setString(i + 1,(String) input.get(i));
+				else if(input.get(i) instanceof Integer)
+					cstmt.setInt(i + 1,(Integer) input.get(i));
+				else if(input.get(i) instanceof Float)
+					cstmt.setFloat(i + 1,(Float) input.get(i));
+				else if(input.get(i) instanceof Double)
+					cstmt.setDouble(i + 1,(Double) input.get(i));
+				else if(input.get(i) instanceof Long)
+					cstmt.setLong(i + 1, (Long)input.get(i));
+				else if(input.get(i) instanceof Boolean)
+					cstmt.setBoolean(i + 1, (Boolean)input.get(i));
+				else if(input.get(i) instanceof Enum)
+					cstmt.setString(i + 1,((Enum) input.get(i)).toString());
+				else if(input.get(i) instanceof SimpleDate)
+					cstmt.setDate(i + 1, (Date) ((SimpleDate)input.get(i)).toDate());
+				else if(input.get(i) instanceof Date)
+					cstmt.setDate(i + 1,(Date) input.get(i));
+				else if(input.get(i) instanceof Calendar)
+					cstmt.setDate(i + 1,(Date) ((Calendar) input.get(i)).getTime());
+				}
 	}
 	
 	/*

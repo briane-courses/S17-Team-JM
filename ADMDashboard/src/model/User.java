@@ -25,6 +25,13 @@ public class User implements Serializable {
 		this.email = email;
 		this.userType = userType;
 		this.orgcode = orgcode;
+<<<<<<< HEAD
+=======
+	}
+	
+	public boolean isAdmin(){
+		return getUserType().toString().equals(UserType.ADMIN.toString());
+>>>>>>> 025278646cd2c4c40fe62ccf7e43b55bf12f04ab
 	}
 
 	public int getUserID() {
