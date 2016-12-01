@@ -10,18 +10,21 @@ public class User implements Serializable {
 	public static final String COL_IDNUMBER = "userID";
 	public static final String COL_EMAIL = "email";
 	public static final String COL_USERTYPE = "usertype";
+	public static final String COL_ORGCODE = "orgcode";
 	
 	private int userID;
 	private String email;
 	private UserType userType;
+	private String orgcode;
 	
 	public User() {}
 
-	public User(int userID, String email, UserType userType) {
+	public User(int userID, String email, UserType userType, String orgcode) {
 		super();
 		this.userID = userID;
 		this.email = email;
 		this.userType = userType;
+		this.orgcode = orgcode;
 	}
 
 	public int getUserID() {
@@ -46,6 +49,14 @@ public class User implements Serializable {
 
 	public void setUserType(UserType userType) {
 		this.userType = userType;
+	}
+
+	public String getOrgcode() {
+		return orgcode;
+	}
+
+	public void setOrgcode(String orgcode) {
+		this.orgcode = orgcode;
 	}
 
 }
