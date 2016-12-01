@@ -8459,6 +8459,7 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
     margin-bottom: 5em;
   }
 }
+
 .deadlineList{
   margin: 20px;
 }
@@ -8477,8 +8478,12 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 
 .other-week{
   color: green;
+<<<<<<< HEAD
 }
 
 ul li ol li {
   list-style-type: decimal;
 }
+=======
+}
+>>>>>>> origin/US02
