@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import servlet.sub.AjaxUserCalendarServlet;
 import servlet.sub.CalendarOrgRepServlet;
 import servlet.sub.HomeAdminServlet;
@@ -16,11 +17,12 @@ import servlet.sub.LogoutServlet;
 import servlet.sub.OrglistAdminServlet;
 import servlet.sub.RequirementsServlet;
 import servlet.sub.SearchEventServlet;
+import servlet.sub.SearchOrgServlet;
 import servlet.sub.StartServlet;
 import servlet.sub.ViewEventsServlet;
+
 @WebServlet(urlPatterns = {
-		AjaxCalendarPull.URL,
-		AjaxCalendarPush.URL,
+		AjaxUserCalendarServlet.URL,
 		CalendarOrgRepServlet.URL,
 		HomeAdminServlet.URL,
 		HomeOrgRepServlet.URL,
@@ -29,6 +31,7 @@ import servlet.sub.ViewEventsServlet;
 		OrglistAdminServlet.URL,
 		RequirementsServlet.URL,
 		SearchEventServlet.URL,
+		SearchOrgServlet.URL,
 		StartServlet.URL,
 		ViewEventsServlet.URL
 		})
@@ -60,11 +63,8 @@ public class MasterServlet extends HttpServlet {
 		try {
 			
 			switch(request.getServletPath()){
-				case AjaxCalendarPull.URL:
-					AjaxCalendarPull.process(request, response, type);
-					break;
-				case AjaxCalendarPush.URL:
-					AjaxCalendarPush.process(request, response, type);
+				case AjaxUserCalendarServlet.URL:
+					AjaxUserCalendarServlet.process(request, response, type);
 					break;
 				case CalendarOrgRepServlet.URL:
 					CalendarOrgRepServlet.process(request, response, type);
@@ -92,6 +92,9 @@ public class MasterServlet extends HttpServlet {
 					break;
 				case StartServlet.URL:
 					StartServlet.process(request, response, type);
+					break;
+				case SearchOrgServlet.URL:
+					SearchOrgServlet.process(request, response, type);
 					break;
 				case ViewEventsServlet.URL:
 					ViewEventsServlet.process(request, response, type);
