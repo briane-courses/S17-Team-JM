@@ -66,6 +66,42 @@ gapi.client.load('calendar', 'v3', function () { // load the calendar api (versi
 */
 $(document).ready(function() {
 		
+	function updateEvent(event, delta, revertFunc){
+		//alert(event.title + " was dropped on " + event.start.format() +" with id: "+ event.id);
+        
+        $.ajax({
+            url: "PushAjaxCalendar",
+            type: "POST",
+            data: ({
+              type: 'admin',
+              id: event.id,
+              title: event.title,
+              start: event.start.format(),
+              date: event.start.format()
+            }),
+            success: function(data, textStatus) {
+                if (!data)
+                {
+                  revertFunc();
+                  console.log("NO DATA");
+                  return;
+                }
+                $('#calendar').fullCalendar('updateEvent', event);
+                console.log("Success! Event: ["+event.id+"] ["+event.title+"] moved successfully.");
+              },
+              error: function() {
+                revertFunc();
+                console.log("NO DATA");
+              },
+
+  	        loading: function(bool) {
+  	            if (bool) $('#loading').show();
+  	            else $('#loading').hide();
+  	        }
+              
+            });
+        
+	}
 	
 	
 		$('#calendar').fullCalendar({
@@ -76,83 +112,43 @@ $(document).ready(function() {
 			},
 			defaultDate: moment(),
 			navLinks: true, // can click day/week names to navigate views
-			//editable: true, // allow edits (probably best for admin)
+			editable: true, // allow edits (probably best for admin)
 			eventLimit: true, // allow "more" link when too many events
-			selectable: false, // allow click and drag 
+			//selectable: true,
+			//selectHelper: true,
+			droppable: true,
+			drop: function() {
+				// remove selected item
+				//$(this).remove();
+			},
 			events: {
 		        url: 'PullAjaxCalendar',
 		        type: 'POST',
 		        data: function() { // a function that returns an object
 		        	return {
-		                type: 'user',
+		                type: 'admin',
 		                date: $('#calendar').fullCalendar('getDate').format()
-		        };},
+		        	};
+		        },
 		        error: function() {
 		            alert('there was an error while fetching events!');
 		        },
 		        loading: function(bool) {
-					$('#loading').toggle(bool);
+		            if (bool) $('#loading').show();
+		            else $('#loading').hide();
 				}
-		    }
+		    },
+		    eventDrop: function(event, delta, revertFunc) {
+
+		    	updateEvent(event, delta, revertFunc);
+		    	
+		        },
+
+	        loading: function(bool) {
+	            if (bool) $('#loading').show();
+	            else $('#loading').hide();
+	        }
 			
-			/*
-			events: [
-				{
-					title: 'All Day Event',
-					start: '2016-09-01'
-				},
-				{
-					title: 'Long Event',
-					start: '2016-09-07',
-					end: '2016-09-10'
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: '2016-09-09T16:00:00'
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: '2016-09-16T16:00:00'
-				},
-				{
-					title: 'Conference',
-					start: '2016-09-11',
-					end: '2016-09-13'
-				},
-				{
-					title: 'Meeting',
-					start: '2016-09-12T10:30:00',
-					end: '2016-09-12T12:30:00'
-				},
-				{
-					title: 'Lunch',
-					start: '2016-09-12T12:00:00'
-				},
-				{
-					title: 'Meeting',
-					start: '2016-09-12T14:30:00'
-				},
-				{
-					title: 'Happy Hour',
-					start: '2016-09-12T17:30:00'
-				},
-				{
-					title: 'Dinner',
-					start: '2016-09-12T20:00:00'
-				},
-				{
-					title: 'Birthday Party',
-					start: '2016-09-13T07:00:00'
-				},
-				{
-					title: 'Click for Google',
-					url: 'http://google.com/',
-					start: '2016-09-28'
-				}
-			]
-			*/
 		});
 		
 	});

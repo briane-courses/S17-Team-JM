@@ -37,7 +37,6 @@ public class AjaxCalendarPull{
 		String type = null;
 		String orgCode = null;
 		String tempDate = null;
-		String arrDate[] = null;
 		SimpleDate date = null;
 		
 		// needs orgcode of logged in user to be stored at log in
@@ -47,23 +46,20 @@ public class AjaxCalendarPull{
 			date = new SimpleDate(tempDate);
 		switch(type){
 		case "admin":
-			orgCode = (String) SessionManager.getAttribute(request, Org.COL_ORGCODE);
-			if(orgCode != null)
-				events = CalendarEventService.getAllEvents(Status.DONE);
+			events = CalendarEventService.getEventsByMonth(Status.PENDING, date);
 			break;
 		case "user":
 			orgCode = (String) SessionManager.getAttribute(request, Org.COL_ORGCODE);
-			orgCode = "imes";
 			if(orgCode != null && date != null)
-				events = CalendarEventService.getEventsByMonth(orgCode, Status.DONE, date);
+				events = CalendarEventService.getEventsByMonth(orgCode, Status.PENDING, date);
 			break;
 		case "rep":
 			orgCode = (String) SessionManager.getAttribute(request, Org.COL_ORGCODE);
 			if(orgCode != null && date != null)
-				events = CalendarEventService.getEventsByMonth(orgCode, Status.DONE, date);
+				events = CalendarEventService.getEventsByMonth(orgCode, Status.PENDING, date);
 			break;
 		default:
-			events = CalendarEventService.getAllEvents(Status.DONE);
+			System.out.println("Error: ajax type mismatch!");
 		}
 		
 

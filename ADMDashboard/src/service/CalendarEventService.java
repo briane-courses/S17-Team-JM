@@ -7,6 +7,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import factory.CalendarEventFactory;
+import model.Event;
 import model.Status;
 import model.calendar.CalendarEvent;
 import model.datetime.SimpleDate;
@@ -136,6 +137,96 @@ public class CalendarEventService {
 		try {
 			r = q.runQuery(query, input);
 			
+			while(r.next()) {
+				/*
+				event = CalendarEventFactory.getInstance().createEvent(
+						r.getInt(CalendarEvent.COL_EVENTID), 
+						r.getString(CalendarEvent.COL_EVENTNAME),
+						r.getDate(CalendarEvent.COL_DATE).toString(), 
+						r.getDate(CalendarEvent.COL_POSTACTDEADLINE).toString(), 
+						RandomHexGenerator.newHex());
+				*/
+				event = CalendarEventFactory.getInstance().createEvent(
+						r.getInt(CalendarEvent.COL_EVENTID), 
+						r.getString(CalendarEvent.COL_EVENTNAME),
+						r.getDate(CalendarEvent.COL_POSTACTDEADLINE).toString(), 
+						null, 
+						RandomHexGenerator.newHex());
+				
+				result.add(event);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				q.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public static boolean updateAddEvent(Integer eventID, String name, SimpleDate date){
+		boolean result = false;
+		String query = null;
+		ArrayList<Object> input = new ArrayList<>();
+		if(eventID == -1){
+			query = "insert into "+Event.TABLE_NAME
+			+" ("+Event.COL_EVENTNAME+", "+Event.COL_POSTACTDEADLINE+")";
+		}else{
+			query = "update "+Event.TABLE_NAME+
+					" set "+Event.COL_EVENTNAME+" = ?,"+
+					" "+Event.COL_POSTACTDEADLINE+" = ? "+
+					" where "+Event.COL_EVENTID+" = ?";
+		}
+		input.add(name);
+		input.add(date.toString());
+		if(eventID != -1)
+			input.add(eventID);
+		
+		Query q = Query.getInstance();
+		
+		try {
+			result = q.runInsertUpdateDelete(query, input);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				q.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public static ArrayList<CalendarEvent> getEventsByMonth(Status status, SimpleDate date){
+		//TODO: implement date
+		ArrayList<CalendarEvent> result = new ArrayList<>();
+		ArrayList<Object> input = new ArrayList<>();
+		CalendarEvent event = null;
+		
+		String query = "select *"
+				+ " from"
+				+ " " + CalendarEvent.TABLE_EVENT
+				+ " natural join " + CalendarEvent.TABLE_EVENTDATE
+				+ " where "+CalendarEvent.COL_POSTACTSTATUS+" = ? " 
+				+ " and month("+CalendarEvent.COL_POSTACTDEADLINE+") = ? " 
+				+ " and year("+CalendarEvent.COL_POSTACTDEADLINE+") = ? " 
+				+ " ORDER BY "+CalendarEvent.COL_POSTACTDEADLINE+";";
+		
+		input.add(status);
+		input.add(date.getMonth());
+		input.add(date.getYear());
+		
+		Query q = Query.getInstance();
+		ResultSet r = null;
+		
+		try {
+			r = q.runQuery(query, input);
 			while(r.next()) {
 				/*
 				event = CalendarEventFactory.getInstance().createEvent(

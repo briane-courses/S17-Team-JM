@@ -15,6 +15,7 @@ import model.calendar.CalendarEvent;
 import model.datetime.SimpleDate;
 import service.CalendarEventService;
 import servlet.MasterServlet;
+import servlet.pull.AjaxCalendarPull;
 import utils.session.SessionManager;
 
 public class AjaxCalendarPush {
@@ -30,49 +31,24 @@ public static final String URL = "/PushAjaxCalendar";
 
 	private static void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		ArrayList<CalendarEvent> events = new ArrayList<>();
-		String type = null;
-		String orgCode = null;
+		String eventID = null;
+		String title = null;
 		String tempDate = null;
-		String arrDate[] = null;
 		SimpleDate date = null;
+		boolean validInt = false;
 		
-		// needs orgcode of logged in user to be stored at log in
-		type = request.getParameter("type");
-		tempDate = request.getParameter("date");
-		arrDate = tempDate.substring(0,10).split("-");
-		date = new SimpleDate(
-				Integer.parseInt(arrDate[0]), 
-				Integer.parseInt(arrDate[1]), 
-				Integer.parseInt(arrDate[2])
-				);
-		switch(type){
-		case "admin":
-			orgCode = (String) SessionManager.getAttribute(request, Org.COL_ORGCODE);
-			if(orgCode != null)
-				events = CalendarEventService.getAllEvents(Status.DONE);
-			break;
-		case "user":
-			orgCode = (String) SessionManager.getAttribute(request, Org.COL_ORGCODE);
-			if(orgCode != null && date != null)
-				events = CalendarEventService.getEventsByMonth(orgCode, Status.DONE, date);
-			break;
-		case "rep":
-			orgCode = (String) SessionManager.getAttribute(request, Org.COL_ORGCODE);
-			if(orgCode != null && date != null)
-				events = CalendarEventService.getEventsByMonth(orgCode, Status.DONE, date);
-			break;
-		default:
-			events = CalendarEventService.getAllEvents(Status.DONE);
-		}
-		
-		//events = CalendarEventService.getEventsByOrg("imes", Status.DONE);
-		//events.add(new CalendarEvent(1, "TEST", "2016-11-15", "2016-11-16", "#333"));
-		String json = new Gson().toJson(events);
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
-		System.out.println(json);
-		response.getWriter().write(json);
+		eventID = request.getParameter("id");
+		title = request.getParameter("title");
+		tempDate = request.getParameter("start");
+		date = new SimpleDate(tempDate);
+
+		System.out.println("Recieved Event: "+title+" "+eventID+" "+date.toString()+" ");
+		if(eventID != null)
+			if(!eventID.equals(""))
+				if(CalendarEventService.updateAddEvent(Integer.parseInt(eventID), title, date)){
+					System.out.println("Success!");
+					request.getRequestDispatcher(AjaxCalendarPull.URL).forward(request, response);
+				}
 	}
 	
 	public static void process(HttpServletRequest request, HttpServletResponse response, int type) throws ServletException, IOException{

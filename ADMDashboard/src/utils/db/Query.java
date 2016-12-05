@@ -141,7 +141,8 @@ public class Query {
 		if(result){
 			pstmt = con.prepareStatement(query);
 			setPreparedStatementAttributes(input);
-			result = pstmt.execute();
+			pstmt.execute();
+			result = true;
 			}
 		return result;
 		
