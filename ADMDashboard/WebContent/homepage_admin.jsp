@@ -92,10 +92,10 @@
 			   <a href="#!email"><span class="email">orgname@gmail.com</span></a>
 			 </div>
     </li>
-			<li><a href="homepage admin.html"><i class="material-icons">dashboard</i>Dashboard</a></li>
+			<li><a href="homepage_admin.jsp"><i class="material-icons">dashboard</i>Dashboard</a></li>
 						<li><div class="divider"></div></li>
-			<li><a href="calendar.html"><i class="material-icons">today</i>Calendar of special deadlines</a></li>
-		  <li><a href="organizations.html"><i class="material-icons">view_list</i>List of Organizations</a></li>
+			<li><a href="calendar.jsp"><i class="material-icons">today</i>Calendar of special deadlines</a></li>
+		  <li><a href="orglist_admin.jsp"><i class="material-icons">view_list</i>List of Organizations</a></li>
       </ul>
 		  
         <!-- END OF NAVBAR -->
