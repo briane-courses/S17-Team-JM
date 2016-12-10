@@ -4067,7 +4067,7 @@ input[type=range] + .thumb {
 
 nav {
   color: #fff;
-  background-color: green;
+  background-color: #ee6e73;
   width: 100%;
   height: 56px;
   line-height: 56px;
@@ -5288,7 +5288,7 @@ button.btn-floating {
   background-color: #fafafa;
   padding: 0;
   max-height: 70%;
-  width: 30%;
+  width: 55%;
   margin: auto;
   overflow-y: auto;
   border-radius: 2px;
@@ -8460,70 +8460,22 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
   }
 }
 
-/* ========================================================================
-    USER DEFINED
-   ======================================================================== */
-
-/* TOP NAV */
-nav a {
-    -webkit-font-smoothing: antialiased;
-    color: #fff;
-    -webkit-tap-highlight-color: transparent;
-}
-nav.top-nav {
-    height: 122px;
-    box-shadow: none;
+.deadlineList{
+  margin: 20px;
 }
 
-@media only screen and (max-width: 992px) {
-    nav .nav-wrapper a.page-title {
-        font-size:36px;
-        text-align: center;
-    }
+.overdue{
+  color: red;
 }
 
-nav.top-nav a.page-title{
-    line-height: 122px;
-    font-size: 48px;
+.week1{
+  color: orange;
 }
 
-a.button-collapse.top-nav {
-    position: absolute;
-    text-align: center;
-    height: 48px;
-    width: 48px;
-    left: 7.5%;
-    top: 0px;
-    float: none;
-    margin-left: 1.5rem;
-    color: white;
-    font-size: 36px;
-    z-index: 2;
+.week2{
+  color: black;
 }
 
-a.button-collapse.top-nav.full {
-    line-height: 122px;
-}
-/* END OF TOP NAV */
-
-/* SIDE NAV*/
-
-ul.side-nav.fixed {
-    overflow: hidden;
-}
-
-ul:not(browser-default){
-    padding-left: 0px;
-    list-style-type: none;
-}
-
-/* END OF SIDE NAV */
-
-
-header, main, footer {
-    padding-left: 300px
-}
-
-header {
-    background-color: green;
+.other-week{
+  color: green;
 }

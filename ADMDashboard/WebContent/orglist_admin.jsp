@@ -18,18 +18,19 @@
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
  
   
+	<!--  Scripts-->
+	<!--Import jQuery before materialize.js-->
     <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script type="text/javascript" src = "js/jquery-3.0.0.min.js"></script>
+	<script src="js/materialize.js"></script>
 	
 
 </head>
 
 <body>
 
-  <!--  Scripts-->
-  <!--Import jQuery before materialize.js-->
-  <script src="js/materialize.js"></script>
   <script>
+
 	    function signOut() {
 		    gapi.load('auth2', function() {
 	        gapi.auth2.init();
@@ -49,6 +50,40 @@
 	         $(document).ready(function() {
 	         $('select').material_select();
 	      });
+	       
+	         /*
+	    var search = function(e) {
+	   		console.log("e.keyCode = " + e.keyCode);
+	    	if (e.keyCode == 13) {
+	            var tb = document.getElementById("search");
+	            console.log(tb.value);
+	            
+	            $("#searchInput").val(tb.value);
+	            $("#searchform").submit();
+	            
+	            tb.value = "";
+	            
+	            return false;
+	            
+	            // ajax
+	            
+	            $.ajax({
+					url: "SearchOrgServlet",
+					method: "post",
+					data: {
+						orgcode : id
+					},
+					dataType: "json",
+					success: function(json) {
+						$("#orgListUI").empty();
+			            
+			            return false;
+					}
+	            });
+	        }
+	    	
+	    	return true;
+	    }*/
      
     	function viewEvents(obj) {
     		var id = obj.id;
@@ -149,8 +184,8 @@
       </li>
 			<li><a href="homepage_admin.html"><i class="material-icons">dashboard</i>Dashboard</a></li>
 						<li><div class="divider"></div></li>
-			<li><a href="calendar.html"><i class="material-icons">today</i>Calendar of special deadlines</a></li>
-		  <li><a href="organizations.html"><i class="material-icons">view_list</i>List of Organizations</a></li>
+			<li><a href="calendar.jsp"><i class="material-icons">today</i>Calendar of special deadlines</a></li>
+		  <li><a href="orglist_admin.jsp"><i class="material-icons">view_list</i>List of Organizations</a></li>
       </ul>
 		  
   <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
@@ -162,8 +197,19 @@
 		</div>
 		
 		<div class ="col s9">
-      <div class = "col s12">
+      <div class = "col s8">
         <h4>Organizations</h4>
+      </div>
+      
+      <div class = "col s4">
+        <form id="searchform" action="SearchOrgServlet" method="POST">
+        <div class="input-field">
+			<input type="search" name = "search" id="search" required>
+			
+          <label for="search"><i class="material-icons">search</i></label>
+          <i class="material-icons">close</i>
+        </div>
+      </form>
       </div>
 
       

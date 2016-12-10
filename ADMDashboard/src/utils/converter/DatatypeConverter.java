@@ -10,7 +10,7 @@ import model.Status;
 public class DatatypeConverter {
 
 	private DatatypeConverter(){}
-
+	
 	public static String toHex(Color color){
 		return "#"+Integer.toHexString(color.getRed()) 
 				+ Integer.toHexString(color.getGreen()) 

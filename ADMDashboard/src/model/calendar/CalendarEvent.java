@@ -1,19 +1,10 @@
 package model.calendar;
 
 import java.io.Serializable;
-<<<<<<< HEAD
-=======
-import java.util.Calendar;
-import java.util.Date;
->>>>>>> 025278646cd2c4c40fe62ccf7e43b55bf12f04ab
 
 import model.Event;
 import model.EventDate;
 import model.Org;
-<<<<<<< HEAD
-=======
-import model.Status;
->>>>>>> 025278646cd2c4c40fe62ccf7e43b55bf12f04ab
 
 public class CalendarEvent implements Serializable{
 
