@@ -8,9 +8,18 @@ import model.EventType_Requirements;
 import model.Requirement;
 import utils.db.Query;
 
+/**
+ * This class handles all SQL statements needed for the Requirement Transfer Objects
+ * @author Mavic Reccion
+ *
+ */
 public class RequirementService {
 
-	
+	/**
+	 * This method gets ALL requirements of a specific Event Type
+	 * @param eventTypeID
+	 * @return ArrayList<Requirement>
+	 */
 	public static ArrayList<Requirement> getRequirements(int eventTypeID) {
 		ArrayList<Requirement> reqList = new ArrayList<Requirement>();
 		Requirement req = null;

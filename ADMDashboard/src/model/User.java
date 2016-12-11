@@ -26,10 +26,6 @@ public class User implements Serializable {
 		this.userType = userType;
 		this.orgcode = orgcode;
 	}
-	
-	public boolean isAdmin(){
-		return getUserType().toString().equals(UserType.ADMIN.toString());
-	}
 
 	public int getUserID() {
 		return userID;

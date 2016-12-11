@@ -8,22 +8,32 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-import servlet.sub.*;
-import servlet.pull.*;
-import servlet.push.*;
-
+import servlet.sub.AjaxUserCalendarServlet;
+import servlet.sub.CalendarOrgRepServlet;
+import servlet.sub.HomeAdminServlet;
+import servlet.sub.HomeOrgRepServlet;
+import servlet.sub.LoginServlet;
+import servlet.sub.LogoutServlet;
+import servlet.sub.OrglistAdminServlet;
+import servlet.sub.RequirementsServlet;
+import servlet.sub.SearchEventServlet;
+import servlet.sub.SearchOrgServlet;
+import servlet.sub.StartServlet;
+import servlet.sub.ViewEventsServlet;
 
 @WebServlet(urlPatterns = {
-		AjaxCalendarPull.URL,
-		AjaxCalendarPush.URL,
+		AjaxUserCalendarServlet.URL,
 		CalendarOrgRepServlet.URL,
 		HomeAdminServlet.URL,
 		HomeOrgRepServlet.URL,
 		LoginServlet.URL,
 		LogoutServlet.URL,
+		OrglistAdminServlet.URL,
 		RequirementsServlet.URL,
-		StartServlet.URL
+		SearchEventServlet.URL,
+		SearchOrgServlet.URL,
+		StartServlet.URL,
+		ViewEventsServlet.URL
 		})
 		
 public class MasterServlet extends HttpServlet {
@@ -53,11 +63,8 @@ public class MasterServlet extends HttpServlet {
 		try {
 			
 			switch(request.getServletPath()){
-				case AjaxCalendarPull.URL:
-					AjaxCalendarPull.process(request, response, type);
-					break;
-				case AjaxCalendarPush.URL:
-					AjaxCalendarPush.process(request, response, type);
+				case AjaxUserCalendarServlet.URL:
+					AjaxUserCalendarServlet.process(request, response, type);
 					break;
 				case CalendarOrgRepServlet.URL:
 					CalendarOrgRepServlet.process(request, response, type);
@@ -74,11 +81,23 @@ public class MasterServlet extends HttpServlet {
 				case LogoutServlet.URL:
 					LogoutServlet.process(request, response, type);
 					break;
+				case OrglistAdminServlet.URL:
+					OrglistAdminServlet.process(request, response, type);
+					break;
 				case RequirementsServlet.URL:
 					RequirementsServlet.process(request, response, type);
 					break;
+				case SearchEventServlet.URL:
+					SearchEventServlet.process(request, response, type);
+					break;
 				case StartServlet.URL:
 					StartServlet.process(request, response, type);
+					break;
+				case SearchOrgServlet.URL:
+					SearchOrgServlet.process(request, response, type);
+					break;
+				case ViewEventsServlet.URL:
+					ViewEventsServlet.process(request, response, type);
 					break;
 				default:
 					System.err.println("ERROR: Servlet not implemented!");

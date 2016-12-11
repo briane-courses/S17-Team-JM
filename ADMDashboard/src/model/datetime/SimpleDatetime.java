@@ -35,10 +35,5 @@ public class SimpleDatetime {
 	public boolean equals(SimpleDatetime datetime){
 		return simpleDate.equals(datetime.getDate()) && simpleTime.equals(datetime.getTime());
 	}
-
-	@Override
-	public String toString(){
-		return simpleDate.toString() + " " + simpleTime.toString(); 
-	}
 	
 }

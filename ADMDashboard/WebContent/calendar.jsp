@@ -19,7 +19,7 @@
 	<script src='js/moment.min.js'></script>
   <script src="js/jquery-3.0.0.min.js"></script>
 	<script src='js/fullcalendar.min.js'></script>
-	<script src='js/calendar/usercalendar.js'></script>
+	<script src='js/calendar.js'></script>
 	
   <!--  Scripts-->
   <!--Import jQuery before materialize.js-->
@@ -129,7 +129,7 @@
   </div> 
   <!--  end of modal structure. --> 
  
-<script src="js/calendar/usercalendar.js"></script>
+<script src="js/calendar.js"></script>
 <script>
   $(document).ready(function() {
 	   $('.modal-trigger').leanModal();	
