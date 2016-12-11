@@ -34,20 +34,15 @@ public class CalendarEventService {
 			r = q.runQuery(query);
 			
 			while(r.next()) {
-				/*
 				event = CalendarEventFactory.getInstance().createEvent(
 						r.getInt(CalendarEvent.COL_EVENTID), 
 						r.getString(CalendarEvent.COL_EVENTNAME),
-						r.getDate(CalendarEvent.COL_DATE).toString(), 
-						r.getDate(CalendarEvent.COL_POSTACTDEADLINE).toString(), 
-						RandomHexGenerator.newHex());
-				*/
-				event = CalendarEventFactory.getInstance().createEvent(
-						r.getInt(CalendarEvent.COL_EVENTID), 
-						r.getString(CalendarEvent.COL_EVENTNAME),
+						r.getString(CalendarEvent.COL_ORGCODE),
+						r.getString(CalendarEvent.COL_EVENTDESC),
 						r.getDate(CalendarEvent.COL_POSTACTDEADLINE).toString(), 
 						null, 
-						RandomHexGenerator.newHex());
+						r.getString(CalendarEvent.COL_POSTACTSTATUS),
+						"#4CAF50");
 				result.add(event);
 			}
 			
@@ -63,6 +58,45 @@ public class CalendarEventService {
 		return result;
 	}
 
+	public static CalendarEvent getEvent(Integer eventID){
+		CalendarEvent result = null;
+		ArrayList<Object> input = new ArrayList<>();
+		String query = "select *"
+				+ " from"
+				+ " " + CalendarEvent.TABLE_EVENT
+				+ " natural join " + CalendarEvent.TABLE_EVENTDATE
+				+ " where "+CalendarEvent.COL_EVENTID+"= ? " 
+				+ " ORDER BY "+CalendarEvent.COL_POSTACTDEADLINE+";";
+		input.add(eventID);
+		Query q = Query.getInstance();
+		ResultSet r = null;
+		
+		try {
+			r = q.runQuery(query, input);
+			
+			while(r.next()) {
+				result = CalendarEventFactory.getInstance().createEvent(
+						r.getInt(CalendarEvent.COL_EVENTID), 
+						r.getString(CalendarEvent.COL_EVENTNAME),
+						r.getString(CalendarEvent.COL_ORGCODE),
+						r.getString(CalendarEvent.COL_EVENTDESC),
+						r.getDate(CalendarEvent.COL_POSTACTDEADLINE).toString(), 
+						null, 
+						r.getString(CalendarEvent.COL_POSTACTSTATUS),
+						"#4CAF50");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				q.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
 	
 	public static ArrayList<CalendarEvent> getAllEvents(Status status){
 		ArrayList<CalendarEvent> result = new ArrayList<>();
@@ -95,9 +129,12 @@ public class CalendarEventService {
 				event = CalendarEventFactory.getInstance().createEvent(
 						r.getInt(CalendarEvent.COL_EVENTID), 
 						r.getString(CalendarEvent.COL_EVENTNAME),
+						r.getString(CalendarEvent.COL_ORGCODE),
+						r.getString(CalendarEvent.COL_EVENTDESC),
 						r.getDate(CalendarEvent.COL_POSTACTDEADLINE).toString(), 
 						null, 
-						RandomHexGenerator.newHex());
+						r.getString(CalendarEvent.COL_POSTACTSTATUS),
+						"#4CAF50");
 				result.add(event);
 			}
 			
@@ -149,9 +186,12 @@ public class CalendarEventService {
 				event = CalendarEventFactory.getInstance().createEvent(
 						r.getInt(CalendarEvent.COL_EVENTID), 
 						r.getString(CalendarEvent.COL_EVENTNAME),
+						r.getString(CalendarEvent.COL_ORGCODE),
+						r.getString(CalendarEvent.COL_EVENTDESC),
 						r.getDate(CalendarEvent.COL_POSTACTDEADLINE).toString(), 
 						null, 
-						RandomHexGenerator.newHex());
+						r.getString(CalendarEvent.COL_POSTACTSTATUS),
+						"#4CAF50");
 				
 				result.add(event);
 			}
@@ -168,23 +208,17 @@ public class CalendarEventService {
 		return result;
 	}
 	
-	public static boolean updateAddEvent(Integer eventID, String name, SimpleDate date){
+	public static boolean moveEventDate(Integer eventID, SimpleDate date){
 		boolean result = false;
 		String query = null;
 		ArrayList<Object> input = new ArrayList<>();
-		if(eventID == -1){
-			query = "insert into "+Event.TABLE_NAME
-			+" ("+Event.COL_EVENTNAME+", "+Event.COL_POSTACTDEADLINE+")";
-		}else{
-			query = "update "+Event.TABLE_NAME+
-					" set "+Event.COL_EVENTNAME+" = ?,"+
-					" "+Event.COL_POSTACTDEADLINE+" = ? "+
-					" where "+Event.COL_EVENTID+" = ?";
-		}
-		input.add(name);
+		query = "update "+Event.TABLE_NAME+
+				" set "+
+				" "+Event.COL_POSTACTDEADLINE+" = ? "+
+				" where "+Event.COL_EVENTID+" = ?";
+		
 		input.add(date.toString());
-		if(eventID != -1)
-			input.add(eventID);
+		input.add(eventID);
 		
 		Query q = Query.getInstance();
 		
@@ -197,6 +231,100 @@ public class CalendarEventService {
 				q.close();
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public static boolean updateEvent(CalendarEvent event){
+		boolean result = false;
+		String query = null;
+		ArrayList<Object> input = new ArrayList<>();
+		
+			query = "update "+Event.TABLE_NAME+
+					" set "+Event.COL_EVENTNAME+" = ?,"+
+					" "+Event.COL_POSTACTDEADLINE+" = ? "+
+					" "+Event.COL_EVENTDESC+" = ? "+
+					" "+Event.COL_POSTACTSTATUS+" = ? "+
+					" "+Event.COL_ORGCODE+" = ? "+
+					" where "+Event.COL_EVENTID+" = ?";
+		
+		input.add(event.getTitle());
+		input.add(event.getStart());
+		input.add(event.getDescription());
+		input.add(event.getStatus());
+		input.add(event.getOrg());
+		input.add(event.getId());
+		
+		Query q = Query.getInstance();
+		
+		try {
+			result = q.runInsertUpdateDelete(query, input);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				q.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public static ArrayList<CalendarEvent> getEventsByMonth(SimpleDate date){
+		//TODO: implement date
+		ArrayList<CalendarEvent> result = new ArrayList<>();
+		ArrayList<Object> input = new ArrayList<>();
+		CalendarEvent event = null;
+		
+		String query = "select *"
+				+ " from"
+				+ " " + CalendarEvent.TABLE_EVENT
+				+ " natural join " + CalendarEvent.TABLE_EVENTDATE
+				+ " where " 
+				+ " month("+CalendarEvent.COL_POSTACTDEADLINE+") = ? " 
+				+ " and year("+CalendarEvent.COL_POSTACTDEADLINE+") = ? " 
+				+ " ORDER BY "+CalendarEvent.COL_POSTACTDEADLINE+";";
+		
+		input.add(date.getMonth());
+		input.add(date.getYear());
+		
+		Query q = Query.getInstance();
+		ResultSet r = null;
+		
+		try {
+			r = q.runQuery(query, input);
+			while(r.next()) {
+				/*
+				event = CalendarEventFactory.getInstance().createEvent(
+						r.getInt(CalendarEvent.COL_EVENTID), 
+						r.getString(CalendarEvent.COL_EVENTNAME),
+						r.getDate(CalendarEvent.COL_DATE).toString(), 
+						r.getDate(CalendarEvent.COL_POSTACTDEADLINE).toString(), 
+						RandomHexGenerator.newHex());
+				*/
+				event = CalendarEventFactory.getInstance().createEvent(
+						r.getInt(CalendarEvent.COL_EVENTID), 
+						r.getString(CalendarEvent.COL_EVENTNAME),
+						r.getString(CalendarEvent.COL_ORGCODE),
+						r.getString(CalendarEvent.COL_EVENTDESC),
+						r.getDate(CalendarEvent.COL_POSTACTDEADLINE).toString(), 
+						null, 
+						r.getString(CalendarEvent.COL_POSTACTSTATUS),
+						"#4CAF50");
+				
+				result.add(event);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				q.close();
+			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
@@ -239,9 +367,12 @@ public class CalendarEventService {
 				event = CalendarEventFactory.getInstance().createEvent(
 						r.getInt(CalendarEvent.COL_EVENTID), 
 						r.getString(CalendarEvent.COL_EVENTNAME),
+						r.getString(CalendarEvent.COL_ORGCODE),
+						r.getString(CalendarEvent.COL_EVENTDESC),
 						r.getDate(CalendarEvent.COL_POSTACTDEADLINE).toString(), 
 						null, 
-						RandomHexGenerator.newHex());
+						r.getString(CalendarEvent.COL_POSTACTSTATUS),
+						"#4CAF50");
 				
 				result.add(event);
 			}
@@ -296,9 +427,12 @@ public class CalendarEventService {
 				event = CalendarEventFactory.getInstance().createEvent(
 						r.getInt(CalendarEvent.COL_EVENTID), 
 						r.getString(CalendarEvent.COL_EVENTNAME),
+						r.getString(CalendarEvent.COL_ORGCODE),
+						r.getString(CalendarEvent.COL_EVENTDESC),
 						r.getDate(CalendarEvent.COL_POSTACTDEADLINE).toString(), 
 						null, 
-						RandomHexGenerator.newHex());
+						r.getString(CalendarEvent.COL_POSTACTSTATUS),
+						"#4CAF50");
 				
 				result.add(event);
 			}

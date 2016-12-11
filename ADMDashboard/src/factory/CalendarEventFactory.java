@@ -15,12 +15,12 @@ public class CalendarEventFactory {
 		return instance;
 	}
 	
-	public CalendarEvent createEvent(int id, String title, String start, String end, String color){
+	public CalendarEvent createEvent(int id, String title, String org, String description, String start, String end, String status, String color){
 		if(end != null)
 			if(end.equals("")){
-				return new CalendarEvent(id, title, start, color);
+				return new CalendarEvent(id, title, org, description, start, status, color);
 			}
-		return new WholeDayEvent(id, title, start, end, color);
+		return new WholeDayEvent(id, title, org, description, start, end, status, color);
 	}
 	
 }

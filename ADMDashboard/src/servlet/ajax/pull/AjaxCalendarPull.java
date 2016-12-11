@@ -1,4 +1,4 @@
-package servlet.pull;
+package servlet.ajax.pull;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 
-import factory.CalendarEventFactory;
 import model.Org;
 import model.Status;
 import model.calendar.CalendarEvent;
@@ -40,7 +39,7 @@ public class AjaxCalendarPull{
 		SimpleDate date = null;
 		
 		// needs orgcode of logged in user to be stored at log in
-		type = request.getParameter("type");
+		type = request.getParameter("user");
 		tempDate = request.getParameter("date");
 		if(tempDate != null)
 			date = new SimpleDate(tempDate);

@@ -11,15 +11,16 @@
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href='css/calendar/calendar.css' rel='stylesheet' />
   <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
   
-	<link href='css/fullcalendar.css' rel='stylesheet' />
-	<link href='css/fullcalendar.print.css' rel='stylesheet' media='print' />
-	<script src='js/moment.min.js'></script>
+	<link href='css/calendar/fullcalendar.css' rel='stylesheet' />
+	<link href='css/calendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+	<script src='js/calendar/moment.min.js'></script>
   	<script src="js/jquery-3.0.0.min.js"></script>
-  	<script src="js/jquery-migrate-3.0.0.js"></script>
-  	<script src="js/jquery-ui.min.js"></script>
-	<script src='js/fullcalendar.min.js'></script>
+  	<script src="js/calendar/jquery-migrate-3.0.0.js"></script>
+  	<script src="js/calendar/jquery-ui.min.js"></script>
+	<script src='js/calendar/fullcalendar.min.js'></script>
 	<script src='js/calendar/admincalendar.js'></script>
 	
   <!--  Scripts-->

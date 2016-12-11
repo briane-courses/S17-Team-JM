@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import servlet.sub.AjaxUserCalendarServlet;
+import servlet.ajax.pull.AjaxCalendarPull;
+import servlet.ajax.push.AjaxCalendarPush;
 import servlet.sub.CalendarOrgRepServlet;
 import servlet.sub.HomeAdminServlet;
 import servlet.sub.HomeOrgRepServlet;
@@ -22,7 +23,8 @@ import servlet.sub.StartServlet;
 import servlet.sub.ViewEventsServlet;
 
 @WebServlet(urlPatterns = {
-		AjaxUserCalendarServlet.URL,
+		AjaxCalendarPush.URL,
+		AjaxCalendarPull.URL,
 		CalendarOrgRepServlet.URL,
 		HomeAdminServlet.URL,
 		HomeOrgRepServlet.URL,
@@ -63,8 +65,11 @@ public class MasterServlet extends HttpServlet {
 		try {
 			
 			switch(request.getServletPath()){
-				case AjaxUserCalendarServlet.URL:
-					AjaxUserCalendarServlet.process(request, response, type);
+				case AjaxCalendarPush.URL:
+					AjaxCalendarPush.process(request, response, type);
+					break;
+				case AjaxCalendarPull.URL:
+					AjaxCalendarPull.process(request, response, type);
 					break;
 				case CalendarOrgRepServlet.URL:
 					CalendarOrgRepServlet.process(request, response, type);
