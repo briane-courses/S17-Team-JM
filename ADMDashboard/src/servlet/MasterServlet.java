@@ -17,6 +17,7 @@ import servlet.sub.LogoutServlet;
 import servlet.sub.OrglistAdminServlet;
 import servlet.sub.RequirementsServlet;
 import servlet.sub.SearchEventServlet;
+import servlet.sub.SearchOrgServlet;
 import servlet.sub.StartServlet;
 import servlet.sub.ViewEventsServlet;
 
@@ -30,6 +31,7 @@ import servlet.sub.ViewEventsServlet;
 		OrglistAdminServlet.URL,
 		RequirementsServlet.URL,
 		SearchEventServlet.URL,
+		SearchOrgServlet.URL,
 		StartServlet.URL,
 		ViewEventsServlet.URL
 		})
@@ -90,6 +92,9 @@ public class MasterServlet extends HttpServlet {
 					break;
 				case StartServlet.URL:
 					StartServlet.process(request, response, type);
+					break;
+				case SearchOrgServlet.URL:
+					SearchOrgServlet.process(request, response, type);
 					break;
 				case ViewEventsServlet.URL:
 					ViewEventsServlet.process(request, response, type);

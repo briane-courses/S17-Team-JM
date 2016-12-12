@@ -30,10 +30,10 @@ public class Query {
 	private static Query instance = null;
 	
 	public static final String[] ACCESS1 = {"sofengg","sofenggADM!"};
-	public static final String[] ACCESS2 = {"root","p@ssword"};
+	public static final String[] ACCESS2 = {"root","micohalvarez"};
 	
-	private static final String USER = ACCESS1[0];
-	private static final String PASS = ACCESS1[1];
+	private static final String USER = ACCESS2[0];
+	private static final String PASS = ACCESS2[1];
 	private static final String URL = "jdbc:mysql://localhost:3306/adm";
 	
 	private static final String DRIVER = "com.mysql.jdbc.Driver";

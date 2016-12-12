@@ -12,6 +12,13 @@ public class SimpleDate {
 		this.setMonth(month);
 		this.setDay(day);
 	}
+public SimpleDate(String date){
+		
+		String[] arrDate = date.substring(0,10).split("-");
+		year = Integer.parseInt(arrDate[0]); 
+		month = Integer.parseInt(arrDate[1]);
+		day = Integer.parseInt(arrDate[2]);
+	}
 	public int getYear() {
 		return year;
 	}

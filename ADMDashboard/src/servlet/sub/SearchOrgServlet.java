@@ -16,18 +16,26 @@ import service.UserService;
 import servlet.MasterServlet;
 
 /**
- * Servlet implementation class OrglistAdminServlet
+ * Servlet implementation class SearchOrgServlet
  */
-public class OrglistAdminServlet {
+public class SearchOrgServlet{
+
+	public static final String URL = "/SearchOrgServlet";
 	
-	public static final String URL = "/OrglistAdminServlet";
-	
-    private OrglistAdminServlet() { }
-    
-    private static void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private SearchOrgServlet(){}
+
+	private static void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub	
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+	}
+
+	private static void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-    	System.out.println("ORGLISTADMIN SERVLET");
-    	
+		System.out.println("SEARCHORG SERVLET");
+		
+		String searchString = request.getParameter("search");
+		
 		User user = null;
 		String logoURL = "";
 		
@@ -51,17 +59,13 @@ public class OrglistAdminServlet {
 		request.getSession().setAttribute(User.COL_EMAIL, user.getEmail());			// email
 		
 		// for organization list
-		ArrayList<Org> orgList = OrgService.getAllOrgs();
+		ArrayList<Org> orgList = OrgService.searchOrgs(searchString);
+		System.out.println("orgList = " + orgList.size());
 		request.getSession().setAttribute("orgList", orgList);
 		
 		// send request to jsp
 		request.getRequestDispatcher("/orglist_admin.jsp").forward(request, response);
-    	
-	}
-    
-	private static void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		
 	}
 	
 	public static void process(HttpServletRequest request, HttpServletResponse response, int type) throws ServletException, IOException{
