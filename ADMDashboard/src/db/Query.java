@@ -1,4 +1,4 @@
-package db;
+package utils.db;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -23,18 +23,22 @@ public class Query {
 	 * r.close();
 	 * 
 	 * Note:
-	 * See Javadocs for more info per method
+	 * See comments for more info per method
+	 * Comments are viewable as tool-tips when auto completing method names
 	 * */
 
 	private static Query instance = null;
 	
-	private static final String USER = "sofengg";
-	private static final String PASS = "sofenggADM!";
+	public static final String[] ACCESS1 = {"sofengg","sofenggADM!"};
+	public static final String[] ACCESS2 = {"root","p@ssword"};
+	
+	private static final String USER = ACCESS1[0];
+	private static final String PASS = ACCESS1[1];
 	private static final String URL = "jdbc:mysql://localhost:3306/adm";
 	
 	private static final String DRIVER = "com.mysql.jdbc.Driver";
 	
-	private String username, password, url;
+	private String username, password, url, driver;
 	private Connection con = null;
 	
 	private PreparedStatement pstmt = null;
@@ -44,7 +48,7 @@ public class Query {
 
 	private Query(String username, String password, String url){
 				try {
-					setConnection(username, password, url);
+					setConnection(username, password, url, DRIVER);
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -78,6 +82,31 @@ public class Query {
 		return rs;
 	}
 	
+	public void updateData(String query,ArrayList<Object> input) throws SQLException{
+		if(connect(username, password, url)){
+			pstmt = con.prepareStatement(query);
+			if(input != null)
+				for(int i = 0; i < input.size(); i++){
+					if(input.get(i) instanceof String)
+						pstmt.setString(i + 1,(String) input.get(i));
+					else if(input.get(i) instanceof Integer)
+						pstmt.setInt(i + 1,(Integer) input.get(i));
+					else if(input.get(i) instanceof Float)
+						pstmt.setFloat(i + 1,(Float) input.get(i));
+					else if(input.get(i) instanceof Double)
+						pstmt.setDouble(i + 1,(Double) input.get(i));
+					else if(input.get(i) instanceof Long)
+						pstmt.setLong(i + 1, (Long)input.get(i));
+					else if(input.get(i) instanceof Boolean)
+						pstmt.setBoolean(i + 1, (Boolean)input.get(i));
+					else if(input.get(i) instanceof Enum)
+						pstmt.setString(i + 1,((Enum) input.get(i)).toString());
+					else if(input.get(i) instanceof Calendar)
+						pstmt.setDate(i + 1,(Date) ((Calendar) input.get(i)).getTime());
+					}
+			pstmt.executeUpdate();
+			}
+	}
 	/**
 	 * 	Runs a query and returns a result set. </br>
 	 * 	Result set must be closed after use for security. </br>
@@ -99,6 +128,7 @@ public class Query {
 	 * @param input - An ArrayList of objects. Can contain: String, int, float & etc.
 	 * 
 	 */
+	@SuppressWarnings("rawtypes")
 	public ResultSet runQuery(String query, ArrayList<Object> input) throws SQLException{
 		if(connect(username, password, url)){
 			pstmt = con.prepareStatement(query);
@@ -117,7 +147,7 @@ public class Query {
 					else if(input.get(i) instanceof Boolean)
 						pstmt.setBoolean(i + 1, (Boolean)input.get(i));
 					else if(input.get(i) instanceof Enum)
-						pstmt.setString(i + 1,(String) input.get(i));
+						pstmt.setString(i + 1,((Enum) input.get(i)).toString());
 					else if(input.get(i) instanceof Calendar)
 						pstmt.setDate(i + 1,(Date) ((Calendar) input.get(i)).getTime());
 					}
@@ -147,6 +177,7 @@ public class Query {
 	 * @param input - An ArrayList of objects. Can contain: String, int, float & etc.
 	 * 
 	 */
+	@SuppressWarnings("rawtypes")
 	public boolean runInsertUpdateDelete(String query, ArrayList<Object> input) throws SQLException{
 		boolean result = connect(username, password, url);
 		if(result){
@@ -166,7 +197,7 @@ public class Query {
 					else if(input.get(i) instanceof Boolean)
 						pstmt.setBoolean(i + 1, (Boolean)input.get(i));
 					else if(input.get(i) instanceof Enum)
-						pstmt.setString(i + 1,(String) input.get(i));
+						pstmt.setString(i + 1,((Enum) input.get(i)).toString());
 					else if(input.get(i) instanceof Calendar)
 						pstmt.setDate(i + 1,(Date) ((Calendar) input.get(i)).getTime());
 					}
@@ -197,6 +228,7 @@ public class Query {
 	 * @param input - An ArrayList of objects. Can contain: String, int, float & etc.
 	 * 
 	 */
+	@SuppressWarnings("rawtypes")
 	public ResultSet runStoredProcedure(String procedure, ArrayList<Object> input) throws SQLException{
 		if(connect(username, password, url)){
 			cstmt = con.prepareCall (procedure);
@@ -215,7 +247,7 @@ public class Query {
 				else if(input.get(i) instanceof Boolean)
 					cstmt.setBoolean(i + 1, (Boolean)input.get(i));
 				else if(input.get(i) instanceof Enum)
-					cstmt.setString(i + 1,(String) input.get(i));
+					pstmt.setString(i + 1,((Enum) input.get(i)).toString());
 				else if(input.get(i) instanceof Calendar)
 					cstmt.setDate(i + 1,(Date) ((Calendar) input.get(i)).getTime());
 				}
@@ -225,6 +257,8 @@ public class Query {
 	}
 
 	/**
+	 * Runs a query</br></br>
+	 * 
 	 * @param query - query to be run.
 	 * 
 	 * @deprecated  Does not make use of prepared statements and is insecure.</br>
@@ -272,7 +306,7 @@ public class Query {
 	/**
 	 * Sets connection of the database. </br>
 	 * Must be used in the beginning of every method that accesses the database. </br></br>
-	 * 
+	 * <i>Driver URL may be changed by using setDriver<i> </br></br>
 	 * @param username - username in database
 	 * @param password - password of database
 	 * @param url - connection url of database
@@ -280,7 +314,7 @@ public class Query {
 	private boolean connect(String username, String password, String url) throws SQLException{
 		close();
 		try {
-			Class.forName(DRIVER);
+			Class.forName(driver);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -302,7 +336,22 @@ public class Query {
 		setPassword(password);
 		setUrl(url);
 	}
-	
+	/**
+	 * Sets connection parameters of this class. </br>
+	 * Does not actually connect to database by itself. </br></br>
+	 * 
+	 * @param username - username in database
+	 * @param password - password of database
+	 * @param url - connection url of database
+	 * @param driver - url of driver
+	 */
+	public void setConnection(String username, String password, String url, String driver) throws SQLException{
+		close();
+		setUsername(username);
+		setPassword(password);
+		setUrl(url);
+		setDriver(driver);
+	}
 	/**
 	 * Returns true if database connection is closed. </br>
 	 */
@@ -326,5 +375,13 @@ public class Query {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getDriver() {
+		return driver;
+	}
+
+	public void setDriver(String driver) {
+		this.driver = driver;
 	}
 }
