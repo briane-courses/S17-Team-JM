@@ -108,7 +108,6 @@ public class MasterServlet extends HttpServlet {
 					System.err.println("ERROR: Servlet not implemented!");
 			}
 		} catch (ServletException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
