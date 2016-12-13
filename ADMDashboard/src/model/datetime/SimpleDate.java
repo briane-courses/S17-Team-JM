@@ -68,6 +68,9 @@ public class SimpleDate {
 	public String toString(){
 		return year + "-" + (month < 10 ? "0"+month : month) + "-" + (day < 10 ? "0"+day : day);
 	}
+	public static String toString(int year, int month, int day){
+		return year + "-" + (month < 10 ? "0"+month : month) + "-" + (day < 10 ? "0"+day : day);
+	}
 	public boolean equals(int year, int month, int day){
 		return getYear() == year && getMonth() == month && getDay() == day;
 	}
