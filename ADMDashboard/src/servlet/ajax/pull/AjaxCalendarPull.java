@@ -40,6 +40,7 @@ public class AjaxCalendarPull{
 		
 		// needs orgcode of logged in user to be stored at log in
 		type = request.getParameter("user");
+		
 		tempDate = request.getParameter("date");
 		if(tempDate != null)
 			date = new SimpleDate(tempDate);

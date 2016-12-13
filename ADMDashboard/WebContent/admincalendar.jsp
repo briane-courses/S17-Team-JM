@@ -131,9 +131,30 @@
       <a href="#!" onclick="signOut(); "class=" modal-action modal-close waves-effect waves-green btn-flat">Log out </a>
     </div>
   </div> 
+  
+   <div id='event_modal' class='modal modal-fixed-footer'>
+    <div class='modal-content'>
+    <div class='row'>
+    <div class='col'>
+      <h4 id='event_modal_header'>Event Title</h4>
+      <div class='divider'></div>
+      <br/>
+      <div id='event_modal_content'>Details</div>
+	  </div>
+	  </div>
+	<div class='row'>
+		<div class="input-field">
+			<input value="" id="event_modal_date" type="text" class="datepicker">
+			<label class="active" for="event_modal_date">Deadline</label>
+		</div>
+	</div>
+	<div class='row'>
+		<a class="waves-effect waves-light btn green">Save Changes</a>
+		<a class="waves-effect waves-light btn grey" onclick="$('#event_modal').closeModal();">Back</a>
+	</div>
+	</div>
+	</div>
   <!--  end of modal structure. --> 
- 
-<script src="js/calendar/usercalendar.js"></script>
 <script>
   $(document).ready(function() {
 	   $('.modal-trigger').leanModal();	

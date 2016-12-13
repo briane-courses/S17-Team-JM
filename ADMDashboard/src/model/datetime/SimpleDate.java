@@ -17,7 +17,7 @@ public class SimpleDate {
 	}
 	public SimpleDate(String date){
 		
-		String[] arrDate = date.substring(0,10).split("-");
+		String[] arrDate = date.length() >= 10 ? date.substring(0,10).split("-") : date.split("-");
 		year = Integer.parseInt(arrDate[0]); 
 		month = Integer.parseInt(arrDate[1]);
 		day = Integer.parseInt(arrDate[2]);
@@ -39,9 +39,10 @@ public class SimpleDate {
 		setMonth(month + amt);
 	}
 	public void setMonth(int month) {
-		if(month > 12)
-			setYear(getYear() + (month/12));
-		this.month = month % 12;
+		month = normalize(month);
+		if(month > 12 + 1)
+			setYear(getYear() + (month/(12+1)));
+		this.month = month % (12 + 1);
 	}
 	public void incDay(int amt){
 		setDay(day + amt); 
@@ -50,6 +51,7 @@ public class SimpleDate {
 		return day;
 	}
 	public void setDay(int day) {
+		day = normalize(day);
 		int totalDays = new GregorianCalendar(getYear(), getMonth(), 1).getActualMaximum(GregorianCalendar.DAY_OF_MONTH) + 1;
 		if(day > totalDays)
 			setMonth(getMonth() + (day / totalDays));
@@ -86,5 +88,9 @@ public class SimpleDate {
 	}
 	public boolean equals(SimpleDate date){
 		return date.getYear() == year && date.getMonth() == month && date.getDay() == day;
+	}
+	
+	private int normalize(int value){
+		return value == 0? 1 : Math.abs(value); 
 	}
 }

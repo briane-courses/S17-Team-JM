@@ -1,50 +1,45 @@
 
-var tempEvent = null;
+
+function updateEventEdit(id, start){
+	 $.ajax({
+           url: "PushAjaxCalendar",
+           type: "POST",
+           data: ({
+             user: 'admin',
+             type: 'editEvent',
+             id: id,
+             start: start,
+             date: $('#calendar').fullCalendar('getDate').format()
+           }),
+           success: function(data, textStatus) {
+               if (!data)
+               {
+                 console.log("NO DATA");
+                 return;
+               }
+               //$('#calendar').fullCalendar('updateEvent', event);
+               $('#calendar').fullCalendar('refetchEvents');
+               console.log("Success! Event: ["+id+"] moved successfully to ["+start+"]");
+             },
+             error: function() {
+               console.log("NO DATA");
+             },
+
+ 	        loading: function(bool) {
+ 	            if (bool) $('#loading').show();
+ 	            else $('#loading').hide();
+ 	        }
+             
+           });
+}
 
 $(document).ready(function() {
 		
-	function createEventEditBox(){
-		var editBox = "";
-	}
-	
-	function updateEventEdit(event){
-		 $.ajax({
-	            url: "PushAjaxCalendar",
-	            type: "POST",
-	            data: ({
-	              user: 'admin',
-	              type: 'editEvent',
-	              id: event.id,
-	              title: event.title,
-	              description: event.description,
-	              org: event.org,
-	              status: event.status,
-	              start: event.start.format(),
-	              date: event.start.format()
-	            }),
-	            success: function(data, textStatus) {
-	                if (!data)
-	                {
-	                  revertFunc();
-	                  console.log("NO DATA");
-	                  return;
-	                }
-	                $('#calendar').fullCalendar('updateEvent', event);
-	                $('#calendar').fullCalendar('refetchEvents');
-	                console.log("Success! Event: ["+event.id+"] ["+event.title+"] moved successfully.");
-	              },
-	              error: function() {
-	                revertFunc();
-	                console.log("NO DATA");
-	              },
-
-	  	        loading: function(bool) {
-	  	            if (bool) $('#loading').show();
-	  	            else $('#loading').hide();
-	  	        }
-	              
-	            });
-	}
+	$('.datepicker').pickadate({
+	    selectMonths: true, // Creates a dropdown to control month
+	    selectYears: 7, // Creates a dropdown of 15 years to control year
+	    format: 'yyyy-mm-dd'  
+	  });
 	
 	function updateEventMove(event, delta, revertFunc){
 		//alert(event.title + " was dropped on " + event.start.format() +" with id: "+ event.id);
@@ -58,7 +53,7 @@ $(document).ready(function() {
               id: event.id,
               title: event.title,
               start: event.start.format(),
-              date: event.start.format()
+              date: $('#calendar').fullCalendar('getDate').format()
             }),
             success: function(data, textStatus) {
                 if (!data)
@@ -121,11 +116,11 @@ $(document).ready(function() {
 	        		+ data.title
 	        		+ "</span>"
 	        		+ "<div class='divider'></div>"
-	        		+ 'Organization: ' + data.org
+	        		+ 'Organization:<br />' + '<span class="indent">'+ data.org + '</span>'
 	        		+ '<br/>'
-	        		+ 'Deadline: ' + data.start.format()
+	        		+ 'Deadline:<br />' + '<span class="indent">'+ data.start.format() + '</span>'
 	        		+ '<br/>'
-	        		+ 'Type: ' + data.description
+	        		+ 'Type:<br />' + '<span class="indent">'+ data.description + '</span>'
 	        		+ "</div>";
 
 	            $("body").append(tooltip);
@@ -167,6 +162,14 @@ $(document).ready(function() {
                 console.log("TEST: ["+event.id+"] ["+event.title+"] ");
 	            $(this).css('z-index', 8);
 	            $('.tooltiptopicevent').remove();
+	            $('#event_modal_header').text(event.title);
+	            $('#event_modal_content').html(
+	            		'Organization:<br />' + '<span class="indent">' + event.org + '</span>' +
+	            		'<br />'+
+	            		'Type:<br />' + '<span class="indent">' + event.description + '</span>');
+	            $('#event_modal_date').val(event.start.format());
+	            Materialize.updateTextFields();
+	            $('#event_modal').openModal('open');
 		    },
 	        eventDrop: function(event, delta, revertFunc) {
 	        	var day = moment(event.start.format()).day();

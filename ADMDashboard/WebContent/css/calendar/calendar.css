@@ -11,3 +11,9 @@ font-size:11px;
 .tooltipheader{
 font-size:14px;
 }
+
+#event_modal{
+width: 50% !important;
+height: 60% !important;
+	}
+	

@@ -244,9 +244,9 @@ public class CalendarEventService {
 		
 			query = "update "+Event.TABLE_NAME+
 					" set "+Event.COL_EVENTNAME+" = ?,"+
-					" "+Event.COL_POSTACTDEADLINE+" = ? "+
-					" "+Event.COL_EVENTDESC+" = ? "+
-					" "+Event.COL_POSTACTSTATUS+" = ? "+
+					" "+Event.COL_POSTACTDEADLINE+" = ?, "+
+					" "+Event.COL_EVENTDESC+" = ?, "+
+					" "+Event.COL_POSTACTSTATUS+" = ?, "+
 					" "+Event.COL_ORGCODE+" = ? "+
 					" where "+Event.COL_EVENTID+" = ?";
 		
