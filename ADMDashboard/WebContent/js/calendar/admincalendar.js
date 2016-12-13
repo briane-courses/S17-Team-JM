@@ -163,10 +163,18 @@ $(document).ready(function() {
 		            else $('#loading').hide();
 				}
 		    },
+		    eventClick: function(event, jsEvent, view){
+                console.log("TEST: ["+event.id+"] ["+event.title+"] ");
+	            $(this).css('z-index', 8);
+	            $('.tooltiptopicevent').remove();
+		    },
 	        eventDrop: function(event, delta, revertFunc) {
-
-		    	updateEventMove(event, delta, revertFunc);
-		    	
+	        	var day = moment(event.start.format()).day();
+	        	var isWeekend = (day == 6) || (day == 0); 
+	        	if(!isWeekend)
+	        		updateEventMove(event, delta, revertFunc);
+	        	else
+	                revertFunc();
 		        },
 
 	        loading: function(bool) {

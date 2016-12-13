@@ -26,24 +26,34 @@ public class SimpleDate {
 	public int getYear() {
 		return year;
 	}
+	public void incYear(int amt){
+		setYear(year + amt);
+	}
 	public void setYear(int year) {
 		this.year = year;
 	}
 	public int getMonth() {
 		return month;
 	}
+	public void incMonth(int amt){
+		setMonth(month + amt);
+	}
 	public void setMonth(int month) {
 		if(month > 12)
-			setYear(getYear() + 1);
+			setYear(getYear() + (month/12));
 		this.month = month % 12;
+	}
+	public void incDay(int amt){
+		setDay(day + amt); 
 	}
 	public int getDay() {
 		return day;
 	}
 	public void setDay(int day) {
-		if(day > new GregorianCalendar(getYear(), getMonth(), 1).getActualMaximum(GregorianCalendar.DAY_OF_MONTH) + 1)
-			setMonth(getMonth() + 1);
-		this.day = day % (new GregorianCalendar(getYear(), getMonth(), 1).getActualMaximum(GregorianCalendar.DAY_OF_MONTH) + 1);
+		int totalDays = new GregorianCalendar(getYear(), getMonth(), 1).getActualMaximum(GregorianCalendar.DAY_OF_MONTH) + 1;
+		if(day > totalDays)
+			setMonth(getMonth() + (day / totalDays));
+		this.day = day % totalDays;
 	}
 	
 	public Calendar toCalendar() {

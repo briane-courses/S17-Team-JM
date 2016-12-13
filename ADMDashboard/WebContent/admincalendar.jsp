@@ -16,17 +16,20 @@
   
 	<link href='css/calendar/fullcalendar.css' rel='stylesheet' />
 	<link href='css/calendar/fullcalendar.print.css' rel='stylesheet' media='print' />
-	<script src='js/calendar/moment.min.js'></script>
+	
+	
   	<script src="js/jquery-3.0.0.min.js"></script>
+  	<!--Import jQuery before materialize.js-->
+  	<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+  	<script src="js/materialize.js"></script>
+	
+	<script src='js/calendar/moment.min.js'></script>
   	<script src="js/calendar/jquery-migrate-3.0.0.js"></script>
   	<script src="js/calendar/jquery-ui.min.js"></script>
 	<script src='js/calendar/fullcalendar.min.js'></script>
 	<script src='js/calendar/admincalendar.js'></script>
 	
   <!--  Scripts-->
-  <!--Import jQuery before materialize.js-->
-  <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
-  <script src="js/materialize.js"></script>
   
   <style>
 
