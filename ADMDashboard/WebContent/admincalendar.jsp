@@ -145,7 +145,7 @@
 	<div class='row'>
 		<div class="input-field">
 			<input value="" id="event_modal_id" type="hidden">
-			<input value="" id="event_modal_date" type="text" class="datepicker">
+			<input value="" id="event_modal_date" type="date" class="datepicker">
 			<label class="active" for="event_modal_date">Deadline</label>
 		</div>
 	</div>

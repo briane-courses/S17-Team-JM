@@ -3,6 +3,12 @@
 function updateEventEdit(){
 	var id = $('#event_modal_id').val();
 	var start = $('#event_modal_date').val();
+	
+	var day = moment(start).day();
+	var isWeekend = (day == 6) || (day == 0); 
+	if(isWeekend){
+		 Materialize.toast('Deadline cannot be set on this day.', 2000);
+	} else
 	 $.ajax({
            url: "PushAjaxCalendar",
            type: "POST",
@@ -180,8 +186,10 @@ $(document).ready(function() {
 	        	var isWeekend = (day == 6) || (day == 0); 
 	        	if(!isWeekend)
 	        		updateEventMove(event, delta, revertFunc);
-	        	else
+	        	else{
 	                revertFunc();
+	       		 Materialize.toast('Deadline cannot be set on this day.', 2000);
+	        	}
 		        },
 
 	        loading: function(bool) {
