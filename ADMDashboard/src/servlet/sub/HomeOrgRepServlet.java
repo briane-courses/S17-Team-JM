@@ -11,10 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import model.Event;
 import model.EventType;
 import model.Org;
+import model.Requirement;
 import model.User;
 import service.EventService;
 import service.EventTypeService;
 import service.OrgService;
+import service.RequirementService;
 import service.UserService;
 import servlet.MasterServlet;
 
@@ -29,7 +31,7 @@ public class HomeOrgRepServlet {
 
 	private static void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		System.out.println("HOMEORGREP SERVLET");
+System.out.println("HOMEORGREP SERVLET");
 		
 		Org org = null;
 		User user = null;
@@ -60,7 +62,7 @@ public class HomeOrgRepServlet {
 		request.getSession().setAttribute(User.COL_EMAIL, user.getEmail());		// email
 		
 		//for overdue deadlines
-		ArrayList<Event> overdueDeadlines = EventService.getOverdueDeadlines("imes"); //replace with orgcode
+		ArrayList<Event> overdueDeadlines = EventService.getOverdueDeadlines(org.getOrgcode()); //replace with orgcode
 		request.getSession().setAttribute("overdueDeadlines", overdueDeadlines);
 		ArrayList<String> overdueList = EventService.convertDates( overdueDeadlines);
 		request.getSession().setAttribute("overdueList", overdueList);
@@ -69,7 +71,7 @@ public class HomeOrgRepServlet {
 		System.out.println(overdueDeadlines);
 		
 		// for due in 2 weeks 
-		ArrayList<Event> pendingPostActList2 = EventService.getUpcomingDeadlines("imes",7, 14); //replace with orgcode
+		ArrayList<Event> pendingPostActList2 = EventService.getUpcomingDeadlines(org.getOrgcode(),7, 14); //replace with orgcode
 		request.getSession().setAttribute("pendingPostActList2", pendingPostActList2);
 		ArrayList<String> due2DateList = EventService.convertDates( pendingPostActList2);
 		request.getSession().setAttribute("due2DateList", due2DateList);
@@ -77,7 +79,7 @@ public class HomeOrgRepServlet {
 			request.getSession().setAttribute("noPendingPostActList2", "No deadlines due in 2 weeks.");
 		
 		//for due in 1 week
-		ArrayList<Event> pendingPostActList1 = EventService.getUpcomingDeadlines("imes", 0, 8); //replace with orgcode
+		ArrayList<Event> pendingPostActList1 = EventService.getUpcomingDeadlines(org.getOrgcode(), 0, 8); //replace with orgcode
 		request.getSession().setAttribute("pendingPostActList1", pendingPostActList1);		
 		ArrayList<String> due1DateList = EventService.convertDates( pendingPostActList1);
 		request.getSession().setAttribute("due1DateList", due1DateList);
@@ -85,11 +87,12 @@ public class HomeOrgRepServlet {
 			request.getSession().setAttribute("noPendingPostActList1", "No deadlines due in 1 week.");
 		
 		//Other Deadlines
-		ArrayList<Event> otherDeadlines = EventService.getOtherDeadlines("imes"); //replace with orgcode
+		ArrayList<Event> otherDeadlines = EventService.getOtherDeadlines(org.getOrgcode()); //replace with orgcode
 		request.getSession().setAttribute("otherDeadlines", otherDeadlines);		
 		ArrayList<String> otherDueDateList = EventService.convertDates(otherDeadlines);
 		request.getSession().setAttribute("otherDueDateList", otherDueDateList);
 		
+		EventService.getAllPendingNotPassedEvents();
 		
 		// for accordion
 		ArrayList<EventType> eventTypeList = EventTypeService.getAllEventType();

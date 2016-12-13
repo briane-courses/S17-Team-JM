@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+
     pageEncoding="ISO-8859-1"%>
    <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
    
@@ -25,12 +26,13 @@
 	<script src="js/materialize.js"></script>
 	
 
+
 </head>
 
 <body>
 
-  <script>
 
+  <script>
 	    function signOut() {
 		    gapi.load('auth2', function() {
 	        gapi.auth2.init();
@@ -50,6 +52,7 @@
 	         $(document).ready(function() {
 	         $('select').material_select();
 	      });
+
 	       
 	         /*
 	    var search = function(e) {
@@ -84,7 +87,6 @@
 	    	
 	    	return true;
 	    }*/
-     
     	function viewEvents(obj) {
     		var id = obj.id;
     		console.log(id);
@@ -158,6 +160,7 @@
 
      
   </script>
+
 
   <script src="https://apis.google.com/js/platform.js?onload=onLoad" async defer></script>
   
@@ -292,6 +295,5 @@
     $('.modal-trigger').leanModal();
   });
 </script>
-
 </body>
 </html>
