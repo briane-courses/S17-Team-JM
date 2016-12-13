@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 
 import model.Org;
 import model.Status;
+import model.UserType;
 import model.calendar.CalendarEvent;
 import model.datetime.SimpleDate;
 import service.CalendarEventService;
@@ -46,17 +47,20 @@ public class AjaxCalendarPull{
 			date = new SimpleDate(tempDate);
 		switch(type){
 		case "admin":
+			if(request.getSession().getAttribute("ADMIN").equals(UserType.ADMIN.toString()))
 			events = CalendarEventService.getEventsByMonth(date);
 			break;
 		case "user":
 			orgCode = request.getParameter(Org.COL_ORGCODE);
 			if(orgCode != null && date != null)
+				if(request.getSession().getAttribute("ADMIN").equals(UserType.ORGREP.toString()))
 				events = CalendarEventService.getEventsByMonth(orgCode, date);
 			break;
 		case "rep":
 			orgCode = request.getParameter(Org.COL_ORGCODE);
 			if(orgCode != null && date != null)
-				events = CalendarEventService.getEventsByMonth(orgCode, date);
+				if(request.getSession().getAttribute("ADMIN").equals(UserType.ORGREP.toString()))
+					events = CalendarEventService.getEventsByMonth(orgCode, date);
 			break;
 		default:
 			System.out.println("Error: ajax type mismatch!");
