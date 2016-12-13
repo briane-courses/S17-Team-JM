@@ -49,12 +49,12 @@ public class AjaxCalendarPull{
 			events = CalendarEventService.getEventsByMonth(date);
 			break;
 		case "user":
-			orgCode = (String) SessionManager.getAttribute(request, Org.COL_ORGCODE);
+			orgCode = request.getParameter(Org.COL_ORGCODE);
 			if(orgCode != null && date != null)
 				events = CalendarEventService.getEventsByMonth(orgCode, date);
 			break;
 		case "rep":
-			orgCode = (String) SessionManager.getAttribute(request, Org.COL_ORGCODE);
+			orgCode = request.getParameter(Org.COL_ORGCODE);
 			if(orgCode != null && date != null)
 				events = CalendarEventService.getEventsByMonth(orgCode, date);
 			break;

@@ -37,7 +37,7 @@ public class LoginServlet {
 		
 		// match attributes to the db
 		User user = UserService.searchUser(email);
-		
+		request.getSession().setAttribute(user.getOrgcode(), User.COL_ORGCODE);
 		// if user exists, go to admin/orgrep servlet
 		if(user != null) {
 			
