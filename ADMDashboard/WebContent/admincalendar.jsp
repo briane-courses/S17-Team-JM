@@ -144,12 +144,13 @@
 	  </div>
 	<div class='row'>
 		<div class="input-field">
+			<input value="" id="event_modal_id" type="hidden">
 			<input value="" id="event_modal_date" type="text" class="datepicker">
 			<label class="active" for="event_modal_date">Deadline</label>
 		</div>
 	</div>
 	<div class='row'>
-		<a class="waves-effect waves-light btn green">Save Changes</a>
+		<a class="waves-effect waves-light btn green" onclick="updateEventEdit();">Save Changes</a>
 		<a class="waves-effect waves-light btn grey" onclick="$('#event_modal').closeModal();">Back</a>
 	</div>
 	</div>

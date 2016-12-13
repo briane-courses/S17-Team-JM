@@ -17,3 +17,6 @@ width: 50% !important;
 height: 60% !important;
 	}
 	
+#event_modal .indent{
+	margin-left:1em;
+}

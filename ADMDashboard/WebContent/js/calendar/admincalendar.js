@@ -1,6 +1,8 @@
 
 
-function updateEventEdit(id, start){
+function updateEventEdit(){
+	var id = $('#event_modal_id').val();
+	var start = $('#event_modal_date').val();
 	 $.ajax({
            url: "PushAjaxCalendar",
            type: "POST",
@@ -116,6 +118,7 @@ $(document).ready(function() {
 	        		+ data.title
 	        		+ "</span>"
 	        		+ "<div class='divider'></div>"
+	        		+ '<br/>'
 	        		+ 'Organization:<br />' + '<span class="indent">'+ data.org + '</span>'
 	        		+ '<br/>'
 	        		+ 'Deadline:<br />' + '<span class="indent">'+ data.start.format() + '</span>'
@@ -168,6 +171,7 @@ $(document).ready(function() {
 	            		'<br />'+
 	            		'Type:<br />' + '<span class="indent">' + event.description + '</span>');
 	            $('#event_modal_date').val(event.start.format());
+	            $('#event_modal_id').val(event.id);
 	            Materialize.updateTextFields();
 	            $('#event_modal').openModal('open');
 		    },
