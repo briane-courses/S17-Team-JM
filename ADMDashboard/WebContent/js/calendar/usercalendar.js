@@ -81,7 +81,7 @@ $(document).ready(function() {
 				right: 'month,basicWeek,listDay'
 			},
 			views: {
-				listDay: { buttonText: 'Day' }
+				listDay: { buttonText: 'day' }
 			},
 			defaultDate: moment(),
 			navLinks: true, // can click day/week names to navigate views
@@ -106,15 +106,18 @@ $(document).ready(function() {
 		    },
 	        eventMouseover: function (data, event, view) {
 	        	tooltip = 
-	        		  "<div class='tooltiptopicevent tooltipcontainer card-panel hoverable small'"
+	        		"<div class='tooltiptopicevent tooltipcontainer card-panel hoverable small'"
 	        		+ " style='background-color:"+data.color+"'>"
 	        		+ "<span class='tooltipheader card-title'>"
 	        		+ data.title
 	        		+ "</span>"
 	        		+ "<div class='divider'></div>"
-	        		+ 'Deadline: ' + data.start.format()
+	        		+ "<br/>"
+	        		+ 'Status:<br />' + '<span class="indent">'+ data.status + '</span>'
 	        		+ '<br/>'
-	        		+ 'Type: ' + data.description
+	        		+ 'Deadline:<br />' + '<span class="indent">'+ data.start.format() + '</span>'
+	        		+ '<br/>'
+	        		+ 'Type:<br />' + '<span class="indent">'+ data.description + '</span>'
 	        		+ "</div>";
 
 	            $("body").append(tooltip);

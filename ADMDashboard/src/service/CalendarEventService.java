@@ -284,11 +284,12 @@ public class CalendarEventService {
 				+ " from"
 				+ " " + CalendarEvent.TABLE_EVENT
 				+ " natural join " + CalendarEvent.TABLE_EVENTDATE
-				+ " where " 
-				+ " month("+CalendarEvent.COL_POSTACTDEADLINE+") = ? " 
+				+ " where not("+CalendarEvent.COL_POSTACTSTATUS+" = ?) " 
+				+ " and month("+CalendarEvent.COL_POSTACTDEADLINE+") = ? " 
 				+ " and year("+CalendarEvent.COL_POSTACTDEADLINE+") = ? " 
 				+ " ORDER BY "+CalendarEvent.COL_POSTACTDEADLINE+";";
-		
+
+		input.add(Status.DONE);
 		input.add(date.getMonth());
 		input.add(date.getYear());
 		
@@ -347,6 +348,66 @@ public class CalendarEventService {
 				+ " ORDER BY "+CalendarEvent.COL_POSTACTDEADLINE+";";
 		
 		input.add(status);
+		input.add(date.getMonth());
+		input.add(date.getYear());
+		
+		Query q = Query.getInstance();
+		ResultSet r = null;
+		
+		try {
+			r = q.runQuery(query, input);
+			while(r.next()) {
+				/*
+				event = CalendarEventFactory.getInstance().createEvent(
+						r.getInt(CalendarEvent.COL_EVENTID), 
+						r.getString(CalendarEvent.COL_EVENTNAME),
+						r.getDate(CalendarEvent.COL_DATE).toString(), 
+						r.getDate(CalendarEvent.COL_POSTACTDEADLINE).toString(), 
+						RandomHexGenerator.newHex());
+				*/
+				event = CalendarEventFactory.getInstance().createEvent(
+						r.getInt(CalendarEvent.COL_EVENTID), 
+						r.getString(CalendarEvent.COL_EVENTNAME),
+						r.getString(CalendarEvent.COL_ORGCODE),
+						r.getString(CalendarEvent.COL_EVENTDESC),
+						r.getDate(CalendarEvent.COL_POSTACTDEADLINE).toString(), 
+						null, 
+						r.getString(CalendarEvent.COL_POSTACTSTATUS),
+						"#4CAF50");
+				
+				result.add(event);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				q.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+	
+	public static ArrayList<CalendarEvent> getEventsByMonth(String orgcode, SimpleDate date){
+		//TODO: implement date
+		ArrayList<CalendarEvent> result = new ArrayList<>();
+		ArrayList<Object> input = new ArrayList<>();
+		CalendarEvent event = null;
+		
+		String query = "select *"
+				+ " from"
+				+ " " + CalendarEvent.TABLE_EVENT
+				+ " natural join " + CalendarEvent.TABLE_EVENTDATE
+				+ " where "+CalendarEvent.COL_ORGCODE+" = ? "
+				+ " and not ("+CalendarEvent.COL_POSTACTSTATUS+" = ?) " 
+				+ " and month("+CalendarEvent.COL_POSTACTDEADLINE+") = ? " 
+				+ " and year("+CalendarEvent.COL_POSTACTDEADLINE+") = ? " 
+				+ " ORDER BY "+CalendarEvent.COL_POSTACTDEADLINE+";";
+		
+		input.add(orgcode);
+		input.add(Status.DONE);
 		input.add(date.getMonth());
 		input.add(date.getYear());
 		

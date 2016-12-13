@@ -46,17 +46,17 @@ public class AjaxCalendarPull{
 			date = new SimpleDate(tempDate);
 		switch(type){
 		case "admin":
-			events = CalendarEventService.getEventsByMonth(Status.PENDING, date);
+			events = CalendarEventService.getEventsByMonth(date);
 			break;
 		case "user":
 			orgCode = (String) SessionManager.getAttribute(request, Org.COL_ORGCODE);
 			if(orgCode != null && date != null)
-				events = CalendarEventService.getEventsByMonth(orgCode, Status.PENDING, date);
+				events = CalendarEventService.getEventsByMonth(orgCode, date);
 			break;
 		case "rep":
 			orgCode = (String) SessionManager.getAttribute(request, Org.COL_ORGCODE);
 			if(orgCode != null && date != null)
-				events = CalendarEventService.getEventsByMonth(orgCode, Status.PENDING, date);
+				events = CalendarEventService.getEventsByMonth(orgCode, date);
 			break;
 		default:
 			System.out.println("Error: ajax type mismatch!");

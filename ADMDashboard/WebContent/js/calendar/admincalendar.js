@@ -46,7 +46,9 @@ $(document).ready(function() {
 	$('.datepicker').pickadate({
 	    selectMonths: true, // Creates a dropdown to control month
 	    selectYears: 7, // Creates a dropdown of 15 years to control year
-	    format: 'yyyy-mm-dd'  
+	    format: 'yyyy-mm-dd',
+	    container: 'body',
+	    clear: ''
 	  });
 	
 	function updateEventMove(event, delta, revertFunc){
@@ -103,7 +105,7 @@ $(document).ready(function() {
 				right: 'month,basicWeek,listDay'
 			},
 			views: {
-				listDay: { buttonText: 'Day' }
+				listDay: { buttonText: 'day' }
 			},
 			defaultDate: moment(),
 			navLinks: true, // can click day/week names to navigate views
@@ -124,6 +126,8 @@ $(document).ready(function() {
 	        		+ data.title
 	        		+ "</span>"
 	        		+ "<div class='divider'></div>"
+	        		+ "<br/>"
+	        		+ 'Status:<br />' + '<span class="indent">'+ data.status + '</span>'
 	        		+ '<br/>'
 	        		+ 'Organization:<br />' + '<span class="indent">'+ data.org + '</span>'
 	        		+ '<br/>'
