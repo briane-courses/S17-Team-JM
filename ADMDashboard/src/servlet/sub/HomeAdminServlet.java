@@ -65,7 +65,7 @@ public class HomeAdminServlet{
 		request.getSession().setAttribute("eventStrDates", eventStrDates);
 		ArrayList<Integer> deadlineType = EventService.setDeadlineType(eventList);
 		request.getSession().setAttribute("deadlineType", deadlineType);
-		request.getRequestDispatcher("./homepage_admin.jsp").forward(request, response);
+		request.getRequestDispatcher("/homepage_admin.jsp").forward(request, response);
 
 	}
 

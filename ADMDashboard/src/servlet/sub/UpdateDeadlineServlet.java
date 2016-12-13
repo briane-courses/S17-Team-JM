@@ -28,7 +28,7 @@ public class UpdateDeadlineServlet {
 		System.out.println("NEW DEADLINE: " + newDate);
 		EventService.updateDeadline(Integer.parseInt(eventId), newDate);
 
-		request.getRequestDispatcher("/HomeAdminServlet").forward(request, response);
+		request.getRequestDispatcher("/HomeAdminServlet").forward(request, response);;
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
@@ -40,7 +40,7 @@ public class UpdateDeadlineServlet {
 		System.out.println("NEW DEADLINE: " + newDate);
 		EventService.updateDeadline(Integer.parseInt(eventId), newDate);
 
-		request.getRequestDispatcher("/HomeAdminServlet").forward(request, response);
+		request.getRequestDispatcher("/HomeAdminServlet").forward(request, response);;
 	}
 
 	public static void process(HttpServletRequest request, HttpServletResponse response, int type) throws ServletException, IOException{
