@@ -111,8 +111,8 @@ public class EventService {
 
 		for(int i = 0; i < events.size(); i ++) {
 			year = events.get(i).getPostact_deadline().getYear();
-			month = events.get(i).getPostact_deadline().getMonth() + 1;
-			day = events.get(i).getPostact_deadline().getDay() + 1;
+			month = events.get(i).getPostact_deadline().getMonth();
+			day = events.get(i).getPostact_deadline().getDay();
 			dates.add(SimpleDate.toString(year, month, day));
 		}
 
