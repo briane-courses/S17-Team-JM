@@ -149,6 +149,18 @@
 			<label class="active" for="event_modal_date">Deadline</label>
 		</div>
 	</div>
+	
+	<div class='row'>
+		<div class="input-field">
+		<select value="" id="event_modal_status">
+      <option value="DONE" selected>Done</option>
+      <option value="PENDING">Pending</option>
+      <option value="NOT_PASSED">Not Passed</option>
+			<label for="event_modal_status">Set Status</label>
+    </select>
+    <label>Status</label>
+		</div>
+	</div>
 	<div class='row'>
 		<a class="waves-effect waves-light btn green" onclick="updateEventEdit();">Save Changes</a>
 		<a class="waves-effect waves-light btn grey" onclick="$('#event_modal').closeModal();">Back</a>

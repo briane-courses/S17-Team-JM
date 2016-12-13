@@ -3,6 +3,7 @@
 function updateEventEdit(){
 	var id = $('#event_modal_id').val();
 	var start = $('#event_modal_date').val();
+	var status = $('#event_modal_status').val();
 	
 	var day = moment(start).day();
 	var isWeekend = (day == 6) || (day == 0); 
@@ -17,6 +18,7 @@ function updateEventEdit(){
              type: 'editEvent',
              id: id,
              start: start,
+             status: status,
              date: $('#calendar').fullCalendar('getDate').format()
            }),
            success: function(data, textStatus) {
@@ -179,9 +181,12 @@ $(document).ready(function() {
 	            $('#event_modal_content').html(
 	            		'Organization:<br />' + '<span class="indent">' + event.org + '</span>' +
 	            		'<br />'+
-	            		'Type:<br />' + '<span class="indent">' + event.description + '</span>');
+	            		'Type:<br />' + '<span class="indent">' + event.description + '</span>'+
+	            		'<br />'+
+	            		'Status:<br />' + '<span class="indent">' + event.status + '</span>');
 	            $('#event_modal_date').val(event.start.format());
 	            $('#event_modal_id').val(event.id);
+	            $('#event_modal_status').val(event.status);
 	            Materialize.updateTextFields();
 	            $('#event_modal').openModal('open');
 		    },

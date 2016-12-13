@@ -36,20 +36,22 @@ public static final String URL = "/PushAjaxCalendar";
 		String title = null;
 		String tempDate = null;
 		String type = null;
+		String status = null;
 		SimpleDate date = null;
 		boolean validInt = false;
 		
 		eventID = request.getParameter("id");
 		title = request.getParameter("title");
 		tempDate = request.getParameter("start");
+		status = request.getParameter("status");
 		type = request.getParameter("type");
 		if(!tempDate.equals(""))
 			date = new SimpleDate(tempDate);
 		System.out.println(type);
 		if(title != null)
-			System.out.println("Recieved Event: ["+title+"] ["+eventID+"] ["+date.toString()+"] ");
+			System.out.println("Recieved Event: ["+title+"] ["+eventID+"] ["+date.toString()+"]");
 		else 
-			System.out.println("Recieved Event: ID ["+eventID+"] ["+date.toString()+"] ");
+			System.out.println("Recieved Event: ID ["+eventID+"] ["+date.toString()+"] ["+status+"]");
 		
 		if(eventID != null && date != null && tempDate != null && type != null)
 			switch(type){
@@ -61,10 +63,11 @@ public static final String URL = "/PushAjaxCalendar";
 				}
 				break;
 			case "editEvent": 
-				if(!eventID.equals("")){
+				if(!eventID.equals("") && status != null){
 				CalendarEvent tempEvent = CalendarEventService.getEvent(Integer.parseInt(eventID));
 				if(tempEvent != null){
 					tempEvent.setStart(date.toString());
+					tempEvent.setStatus(status);
 					CalendarEventService.updateEvent(tempEvent);
 					request.getRequestDispatcher(AjaxCalendarPull.URL).forward(request, response);
 				}

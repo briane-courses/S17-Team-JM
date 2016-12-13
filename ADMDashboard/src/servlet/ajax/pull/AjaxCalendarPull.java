@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,10 +12,12 @@ import com.google.gson.Gson;
 
 import model.Org;
 import model.Status;
+import model.User;
 import model.UserType;
 import model.calendar.CalendarEvent;
 import model.datetime.SimpleDate;
 import service.CalendarEventService;
+import service.UserService;
 import servlet.MasterServlet;
 import utils.session.SessionManager;
 
@@ -38,6 +41,14 @@ public class AjaxCalendarPull{
 		String orgCode = null;
 		String tempDate = null;
 		SimpleDate date = null;
+		Cookie[] cookies = request.getCookies();
+		User user = null;
+		
+		for(int i = 0; i < cookies.length; i ++) {
+			if(cookies[i].getName().equals(User.COL_IDNUMBER)) {
+				user = UserService.searchUser(Integer.parseInt(cookies[i].getValue()));
+			}
+		}
 		
 		// needs orgcode of logged in user to be stored at log in
 		type = request.getParameter("user");
@@ -45,21 +56,24 @@ public class AjaxCalendarPull{
 		tempDate = request.getParameter("date");
 		if(tempDate != null)
 			date = new SimpleDate(tempDate);
+		if(user == null)
+		System.out.println("Error: User is not logged in!");
+		else
 		switch(type){
 		case "admin":
-			if(request.getSession().getAttribute("ADMIN").equals(UserType.ADMIN.toString()))
+			if(user.getUserType().equals(UserType.ADMIN.toString()))
 			events = CalendarEventService.getEventsByMonth(date);
 			break;
 		case "user":
 			orgCode = request.getParameter(Org.COL_ORGCODE);
 			if(orgCode != null && date != null)
-				if(request.getSession().getAttribute("ADMIN").equals(UserType.ORGREP.toString()))
+				if(user.getUserType().equals(UserType.ORGREP.toString()))
 				events = CalendarEventService.getEventsByMonth(orgCode, date);
 			break;
 		case "rep":
 			orgCode = request.getParameter(Org.COL_ORGCODE);
 			if(orgCode != null && date != null)
-				if(request.getSession().getAttribute("ADMIN").equals(UserType.ORGREP.toString()))
+				if(user.getUserType().equals(UserType.ORGREP.toString()))
 					events = CalendarEventService.getEventsByMonth(orgCode, date);
 			break;
 		default:
