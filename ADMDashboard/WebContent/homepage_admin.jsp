@@ -57,7 +57,6 @@
 			$('select').material_select();
 		});
 		
-		
 		function viewEventDetails(obj) {
     		var id = obj.id;
     		console.log(id);
@@ -74,12 +73,44 @@
 				success: function(json) {
 					console.log("JSON SUCCESS " + idSplit[0]);
 					console.log(json);
-					/* var overdueEventsJson = json[0];
-					var overdueDatesJson = json[1];
-					var noOverdueStringJson = json[2]; */
+					document.getElementById("orgName").innerHTML = json[1];
+					var deadline = json[2].split("-");
+					document.getElementById("deadline").value = json[2] ;
 				}
 			});
 		}
+		
+		function saveDate(obj) 
+		{
+			console.log("CLICKED SAVE");
+			var id = obj.id; 
+			var newDate = document.getElementById("deadline").value;
+			console.log("NEWDATE" + newDate)
+			var action = "update";
+			$.ajax({
+				url: "UpdateDeadlineServlet",
+				method: "post",
+				data: {
+					eventID : id,
+					newDate : newDate,
+					action : action
+				},
+				 dataType: "json",
+				success: function(json) {
+					console.log("JSON SUCCESS " + id);
+					console.log("NEW DATE : " + document.getElementById(id + "-eventDeadline").value)
+				}
+			});
+			console.log("RELOAD THE FREAKING LIST");
+			location.reload();
+		};
+		
+		function loadTable()
+		{
+			
+		}
+		
+		
 	</script>
 
 	<script src="https://apis.google.com/js/platform.js?onload=onLoad"
@@ -112,8 +143,8 @@
 		<li>
 			<div class="userView">
 				<a href="#!user"><img class="circle" src="${logoURL}"></a> <a
-					href="#!name"><span class="white-text name">${orgcode}</span></a>
-				<a href="#!email"><span class="white-text email">${email}</span></a>
+					href="#!name"><span class="white-text name">${orgcode}</span></a> <a
+					href="#!email"><span class="white-text email">${email}</span></a>
 			</div>
 		</li>
 		<li><a href="homepage admin.html"><i class="material-icons">dashboard</i>Dashboard</a></li>
@@ -128,6 +159,7 @@
 	<main>
 	<div class="container">
 		<!-- START OF MAIN VIEW( Body) -->
+		<!-- 
 		<div class="row">
 			<form class="col s12">
 				<div class="row">
@@ -136,6 +168,17 @@
 							id="icon_prefix" type="text" class="validate"> <label
 							for="icon_prefix">Search</label>
 					</div>
+				</div>
+			</form>
+		</div>
+		 -->
+
+		<div class="col s4">
+			<form id="searchform" action="SearchEventServlet" method="POST">
+				<div class="input-field">
+					<input type="search" name="search" id="search" required> <label
+						for="search"><i class="material-icons">search</i></label> <i
+						class="material-icons">close</i>
 				</div>
 			</form>
 		</div>
@@ -155,34 +198,35 @@
 				<tbody>
 					<!-- loop START -->
 					<c:forEach items="${eventList}" var="o" varStatus="status">
-						<tr>
+						<tr id = "eventList">
 							<td>${o.orgcode}</td>
 							<td>${o.eventname}</td>
-							<td>${eventStrDates[status.index]}</td>
+							<td id = "${o.eventID}-eventDeadline">${eventStrDates[status.index]}</td>
 							<td>
-								<button id = "${o.eventID} , ${o.eventname}" onclick="viewEventDetails(this)" data-target="modal2"
+								<button id="${o.eventID} , ${o.eventname}"
+									onclick="viewEventDetails(this)" data-target="modal2"
 									class="btn modal-trigger btn-floating waves-effect waves-light tooltipped"
 									data-position="bottom" data-delay="50"
-									data-tooltip="Edit Event Deadline"
-									>
+									data-tooltip="Edit Event Deadline">
 									<i class="material-icons right">mode_edit</i>
 								</button>
 								<div id="modal2" class="modal">
 									<div class="modal-content">
-										<h4 id = "eventName">Event Name</h4>
-										<br> 
-										<h7 id = "orgName">Org Name</h7>
-										<br> 
-										<h7 id = "deadline">Deadline</h7>
+										<h4 id="eventName">Event Name</h4>
+										<br>
+										<h7 id="orgName">Org Name</h7>
+										<br>
+										<h7>Deadline: </h7>
 										<div class="row">
 											<div class="">
-												<input type="date" class="datepicker">
+												<input id="deadline" type="date" class="datepicker">
 											</div>
 										</div>
 									</div>
 									<div class="modal-footer">
 										<a href="#!"
-											class=" modal-action modal-close waves-effect waves-green btn-flat green-text text-darken-3">SAVE</a>
+											id = "${o.eventID}" class=" modal-action modal-close waves-effect waves-green btn-flat green-text text-darken-3"
+											onclick = "saveDate(this)">SAVE</a>
 										<a href="#!"
 											class=" modal-action modal-close waves-effect waves-green btn-flat red-text">CANCEL</a>
 									</div>
@@ -209,8 +253,7 @@
 
 					</c:forEach>
 					<!-- loop END -->
-					
-					</tr>
+
 				</tbody>
 			</table>
 		</div>
