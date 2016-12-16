@@ -6,7 +6,9 @@ function updateEventEdit(){
 	var status = $('#event_modal_status').val();
 	
 	var day = moment(start).day();
-	var isWeekend = (day == 6) || (day == 0); 
+	//var isWeekend = (day == 6) || (day == 0); 
+
+	var isWeekend = (day == 0); 
 	if(isWeekend){
 		 Materialize.toast('Deadline cannot be set on this day.', 2000);
 	} else
@@ -190,10 +192,12 @@ $(document).ready(function() {
 	            $('#event_modal_status').val(event.status);
 	            Materialize.updateTextFields();
 	            $('#event_modal').openModal('open');
+	            $('select').material_select();
 		    },
 	        eventDrop: function(event, delta, revertFunc) {
 	        	var day = moment(event.start.format()).day();
-	        	var isWeekend = (day == 6) || (day == 0); 
+	        	//var isWeekend = (day == 6) || (day == 0); 
+	        	var isWeekend = (day == 0); 
 	        	if(!isWeekend)
 	        		updateEventMove(event, delta, revertFunc);
 	        	else{

@@ -50,10 +50,9 @@ public class CalendarOrgRepServlet{
 		request.getSession().setAttribute(Org.COL_LOGOURL, logoURL);	// logo
 		request.getSession().setAttribute(Org.COL_ORGCODE, user.getOrgcode());	// orgcode
 		request.getSession().setAttribute(User.COL_EMAIL, user.getEmail());		// email
+		request.getSession().setAttribute(User.COL_USERTYPE, user.getUserType().toString());		// email
 		
-		if(user.getUserType().toString().equals(UserType.ADMIN + ""))
-			request.getRequestDispatcher("/admincalendar.jsp").forward(request, response);
-		else if(user.getUserType().toString().equals(UserType.ORGREP + ""))
+		if(user.getUserType().toString().equals(UserType.ADMIN + "") || user.getUserType().toString().equals(UserType.ORGREP + ""))
 			request.getRequestDispatcher("/calendar.jsp").forward(request, response);
 		else
 			System.out.println("FAIL");

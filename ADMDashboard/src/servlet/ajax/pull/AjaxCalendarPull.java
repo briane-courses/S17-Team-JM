@@ -37,38 +37,28 @@ public class AjaxCalendarPull{
 	private static void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		ArrayList<CalendarEvent> events = new ArrayList<>();
-		String type = null;
+		UserType type = null;
 		String orgCode = null;
 		String tempDate = null;
 		SimpleDate date = null;
-		Cookie[] cookies = request.getCookies();
-		User user = null;
 		
-		for(int i = 0; i < cookies.length; i ++) {
-			if(cookies[i].getName().equals(User.COL_IDNUMBER)) {
-				user = UserService.searchUser(Integer.parseInt(cookies[i].getValue()));
-			}
-		}
 		// needs orgcode of logged in user to be stored at log in
-		type = request.getParameter("user");
+		type = UserType.getUserType((String) request.getSession().getAttribute(User.COL_USERTYPE));
+		orgCode = (String) request.getSession().getAttribute(Org.COL_ORGCODE);
 		tempDate = request.getParameter("date");
 
 		System.out.println(type);
 		if(tempDate != null)
 			date = new SimpleDate(tempDate);
-		if(user == null)
+		if(type == null || orgCode == null)
 		System.out.println("Error: User is not logged in!");
 		else
 		switch(type){
-		case "admin":
-			if(user.getUserType() == UserType.ADMIN)
+		case ADMIN:
 			events = CalendarEventService.getEventsByMonth(date);
 			break;
-		case "user":
-			orgCode = user.getOrgcode();
+		case ORGREP:
 			System.out.println(orgCode);
-			if(orgCode != null && date != null)
-				if(user.getUserType() == UserType.ORGREP)
 				events = CalendarEventService.getEventsByMonth(orgCode, date);
 			break;
 		default:
