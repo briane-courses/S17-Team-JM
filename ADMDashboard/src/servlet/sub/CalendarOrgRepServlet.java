@@ -51,12 +51,12 @@ public class CalendarOrgRepServlet{
 		request.getSession().setAttribute(Org.COL_ORGCODE, user.getOrgcode());	// orgcode
 		request.getSession().setAttribute(User.COL_EMAIL, user.getEmail());		// email
 		
-		if(user.getUserType().equals(UserType.ADMIN.toString()))
+		if(user.getUserType().toString().equals(UserType.ADMIN + ""))
 			request.getRequestDispatcher("/admincalendar.jsp").forward(request, response);
-		else if(user.getUserType().equals(UserType.ORGREP.toString()))
+		else if(user.getUserType().toString().equals(UserType.ORGREP + ""))
 			request.getRequestDispatcher("/calendar.jsp").forward(request, response);
 		else
-			request.getRequestDispatcher(StartServlet.URL).forward(request, response);
+			System.out.println("FAIL");
 	}
 	
 	public static void process(HttpServletRequest request, HttpServletResponse response, int type) throws ServletException, IOException{

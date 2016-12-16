@@ -76,6 +76,7 @@ $(document).ready(function() {
                 }
                 //$('#calendar').fullCalendar('updateEvent', event);
                 $('#calendar').fullCalendar('refetchEvents');
+                $('#event_modal').closeModal();
                 console.log("Success! Event: ["+event.id+"] ["+event.title+"] moved successfully.");
               },
               error: function() {

@@ -61,7 +61,16 @@ public class SearchOrgServlet{
 		// for organization list
 		ArrayList<Org> orgList = OrgService.searchOrgs(searchString);
 		System.out.println("orgList = " + orgList.size());
-		request.getSession().setAttribute("orgList", orgList);
+		
+		// if no org found
+		if(orgList.size() == 0) {
+			String noOrgFound = "0 results";
+			request.getSession().setAttribute("noOrgFound", noOrgFound);
+			request.getSession().setAttribute("orgList", null);
+		} else {
+			request.getSession().setAttribute("noOrgFound", "");
+			request.getSession().setAttribute("orgList", orgList);
+		}
 		
 		// send request to jsp
 		request.getRequestDispatcher("/orglist_admin.jsp").forward(request, response);

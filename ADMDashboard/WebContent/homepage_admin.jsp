@@ -26,7 +26,7 @@
 <script src="https://apis.google.com/js/platform.js" async defer>
 	
 </script>
-
+<script src="js/jquery.autocomplete.js"></script>
 
 </head>
 
@@ -36,17 +36,19 @@
 	<!--Import jQuery before materialize.js-->
 	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 	<script src="js/materialize.js"></script>
+	<form id="logoutform" action="LogoutServlet" method="POST"></form>
 	<script>
-		function signOut() {
-			gapi.load('auth2', function() {
-				gapi.auth2.init();
-			});
-			var auth2 = gapi.auth2.getAuthInstance();
-			auth2.signOut().then(function() {
-				console.log('User signed out.');
-				window.location.href = "index.html";
-			});
-		}
+	function signOut() {
+		gapi.load('auth2', function() {
+			gapi.auth2.init();
+		});
+		var auth2 = gapi.auth2.getAuthInstance();
+		auth2.signOut().then(function() {
+			console.log('User signed out.');
+
+			$("#logoutform").submit();
+		});
+	}
 
 		function onLoad() {
 			gapi.load('auth2', function() {
@@ -55,6 +57,15 @@
 		}
 		$(document).ready(function() {
 			$('select').material_select();
+			$(".home").click(function() {
+				$("#dashboard").submit();
+			});
+			$(".home2").click(function() {
+				$("#calendar").submit();
+			});
+			$(".home3").click(function() {
+				$("#orglist").submit();
+			});
 		});
 		
 		function viewEventDetails(obj) {
@@ -71,7 +82,7 @@
 				},
 				 dataType: "json",
 				success: function(json) {
-					console.log("JSON SUCCESS " + idSplit[0]);
+					console.log("JSON viewEventDetails SUCCESS " + idSplit[0]);
 					console.log(json);
 					document.getElementById("orgName").innerHTML = json[1];
 					var deadline = json[2].split("-");
@@ -83,7 +94,8 @@
 		function saveDate(obj) 
 		{
 			console.log("CLICKED SAVE");
-			var id = obj.id; 
+			var idSave = obj.id; 
+			console.log(idSave);
 			var newDate = document.getElementById("deadline").value;
 			console.log("NEWDATE" + newDate)
 			var action = "update";
@@ -91,44 +103,41 @@
 				url: "UpdateDeadlineServlet",
 				method: "post",
 				data: {
-					eventID : id,
+					eventID : idSave,
 					newDate : newDate,
 					action : action
 				},
 				 dataType: "json",
 				success: function(json) {
-					console.log("JSON SUCCESS " + id);
-					console.log("NEW DATE : " + document.getElementById(id + "-eventDeadline").value)
+					console.log("JSON saveDate SUCCESS " + idSave);
+					console.log("NEW DATE : " + document.getElementById(idSave + "-eventDeadline").value)
 				}
 			});
 			console.log("RELOAD THE FREAKING LIST");
-			//location.reload();
-			document.location.href = "/HomeAdminServlet";
-	
+			location.reload();
 		};
+		
+		function loadTable()
+		{
+			
+		}
 		
 		
 	</script>
 
 	<script src="https://apis.google.com/js/platform.js?onload=onLoad"
 		async defer></script>
-	<header> <!-- START OF NAVBAR --> <!--<div class="navbar-fixed">
- <nav class = "green">
-    <div class="nav-wrapper">
-   
-      <ul id="nav-mobile" class="right hide-on-med-and-down">
-        <li> <a href="#" onclick="signOut();"><i class="material-icons">settings</i>Settings/Sign Out</a></li>
-		  </ul>
-    </div>
-  </nav>
-</div> --> <nav class="top-nav">
-	<div class="container">
-		<div class="nav-wrapper">
-			<a class="page-title">Post-Acts Deadlines</a>
-		</div>
-	</div>
-	</nav>
-
+	<header> <!-- START OF NAVBAR -->  
+	
+	<form id="dashboard" action="HomeAdminServlet" method="post">
+		<input name="course" type="hidden" />
+	</form>
+	<form id="calendar" action="CalendarOrgRepServlet" method="post">
+		<input name="course" type="hidden" />
+	</form>
+	<form id="orglist" action="OrglistAdminServlet" method="post">
+		<input name="course" type="hidden" />
+	</form>
 	<div class="container">
 		<a class="button-collapse top-nav full hide-on-large-only" href="#"
 			data-activates="slide-out"> <i class="material-icons medium">menu</i>
@@ -139,37 +148,37 @@
 		style="width: 300px; transfor: translateX(-100%);">
 		<li>
 			<div class="userView">
-				<a href="#!user"><img class="circle" src="${logoURL}"></a> <a
+				<img class="background" src="images/office.jpg"> <a
+					href="#!user"><img class="circle" src="${logoURL}"></a> <a
 					href="#!name"><span class="white-text name">${orgcode}</span></a> <a
 					href="#!email"><span class="white-text email">${email}</span></a>
 			</div>
 		</li>
-		<li><a href="homepage admin.html"><i class="material-icons">dashboard</i>Dashboard</a></li>
+		<li class = "active">
+				<a href="#" class="home"><i class="material-icons left">dashboard</i>Dashboard</a>
+			</li>
 		<li><div class="divider"></div></li>
-		<li><a href="calendar.html"><i class="material-icons">today</i>Calendar
-				of special deadlines</a></li>
-		<li><a href="organizations.html"><i class="material-icons">view_list</i>List
-				of Organizations</a></li>
+		<li>
+				<a href="#" class="home2"><i class="material-icons left">today</i>Calendar of
+					special deadlines</a>
+			</li>
+		<li>
+				<a href="#" class="home3"><i class="material-icons left">view_list</i>List of
+					Organizations</a>
+			</li>
+		<li><a href="#modal1" class="modal-trigger"><i
+				class="material-icons left">settings</i>Sign Out</a></li>
 	</ul>
 
 	<!-- END OF NAVBAR --> </header>
-	<main>
-	<div class="container">
-		<!-- START OF MAIN VIEW( Body) -->
-		<!-- 
-		<div class="row">
-			<form class="col s12">
-				<div class="row">
-					<div class="input-field col s6 l3 offset-s6">
-						<i class="material-icons prefix">search</i> <input
-							id="icon_prefix" type="text" class="validate"> <label
-							for="icon_prefix">Search</label>
-					</div>
-				</div>
-			</form>
-		</div>
-		 -->
+	<div class="row">
+		<div class="col s3"></div>
 
+		<div class="col s9">
+	
+		<!-- START OF MAIN VIEW( Body) -->
+		
+		
 		<div class="col s4">
 			<form id="searchform" action="SearchEventServlet" method="POST">
 				<div class="input-field">
@@ -195,10 +204,10 @@
 				<tbody>
 					<!-- loop START -->
 					<c:forEach items="${eventList}" var="o" varStatus="status">
-						<tr>
+						<tr id="eventList">
 							<td>${o.orgcode}</td>
 							<td>${o.eventname}</td>
-							<td id = "${o.eventID}-eventDeadline">${eventStrDates[status.index]}</td>
+							<td id="${o.eventID}-eventDeadline">${eventStrDates[status.index]}</td>
 							<td>
 								<button id="${o.eventID} , ${o.eventname}"
 									onclick="viewEventDetails(this)" data-target="modal2"
@@ -221,10 +230,9 @@
 										</div>
 									</div>
 									<div class="modal-footer">
-										<a href="#!"
-											id = "${o.eventID}" class=" modal-action modal-close waves-effect waves-green btn-flat green-text text-darken-3"
-											onclick = "saveDate(this)">SAVE</a>
-										<a href="#!"
+										<a href="#!" id="${o.eventID}"
+											class=" modal-action modal-close waves-effect waves-green btn-flat green-text text-darken-3"
+											onclick="saveDate(this)">SAVE</a> <a href="#!"
 											class=" modal-action modal-close waves-effect waves-green btn-flat red-text">CANCEL</a>
 									</div>
 								</div>
@@ -251,15 +259,26 @@
 					</c:forEach>
 					<!-- loop END -->
 
-					</tr>
 				</tbody>
 			</table>
+			<label id="noEventFound">${noEventFound }</label>
 		</div>
 		<!-- END OF TABLE -->
 
 		<!-- END OF MAIN VIEW (Body) -->
 	</div>
-	</main>
+	<div id="modal1" class="modal">
+		<div class="modal-content">
+			<p>Are you sure you want to sign out?</p>
+		</div>
+		<div class="modal-footer">
+			<a href="#!" onclick="signOut(); "
+				class=" modal-action modal-close waves-effect waves-green btn-flat">Log
+				out </a>
+		</div>
+	</div>
+	</div>
+	
 	<script>
 		// Initialize collapse button
 		$(".button-collapse").sideNav();

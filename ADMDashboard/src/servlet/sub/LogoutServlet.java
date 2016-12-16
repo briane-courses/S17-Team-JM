@@ -44,10 +44,12 @@ public class LogoutServlet {
 		// go back to login page
 		if (cookies == null) {
 			System.out.println("returning... if");
+			request.getSession().invalidate();
 			request.getRequestDispatcher("StartServlet").forward(request, response);
 			return;
 		} else {
 			System.out.println("returning...");
+			request.getSession().invalidate();
 			request.getRequestDispatcher("login.jsp").forward(request, response);
 			return;
 		}

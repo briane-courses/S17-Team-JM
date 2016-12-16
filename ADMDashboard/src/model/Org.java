@@ -37,7 +37,7 @@ public class Org implements Serializable{
 	}
 
 	public String getOrgcode() {
-		return orgcode;
+		return orgcode.toUpperCase();
 	}
 
 	public void setOrgcode(String orgcode) {

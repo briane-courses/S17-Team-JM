@@ -36,12 +36,13 @@ public class LoginServlet {
 		String logoURL = request.getParameter("logoURL");
 		
 		// match attributes to the db
+		System.out.println(email);
 		User user = UserService.searchUser(email);
-		request.getSession().setAttribute(user.getOrgcode(), User.COL_ORGCODE);
-		request.getSession().setAttribute(user.getUserType().toString(), "ADMIN");
+		
 		// if user exists, go to admin/orgrep servlet
 		if(user != null) {
-			
+			request.getSession().setAttribute(user.getOrgcode(), User.COL_ORGCODE);
+			request.getSession().setAttribute(user.getUserType().toString(), "ADMIN");
 			// CREATE COOKIE
 			Cookie userIDcookie = new Cookie(User.COL_IDNUMBER, user.getUserID() + "");
 			Cookie logoURLcookie = new Cookie("logoURL", logoURL);
@@ -53,7 +54,7 @@ public class LoginServlet {
 			if(user.getUserType().toString().equals(UserType.ORGREP + "")) {
 				request.getRequestDispatcher("/HomeOrgRepServlet").forward(request, response);
 			} else if(user.getUserType().toString().equals(UserType.ADMIN + "")) {
-				request.getRequestDispatcher("/OrglistAdminServlet").forward(request, response); 
+				request.getRequestDispatcher("/HomeAdminServlet").forward(request, response); 
 			}
 			
 		} else {
