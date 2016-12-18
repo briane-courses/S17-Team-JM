@@ -69,10 +69,19 @@ $(document).ready(function() {
 	
 	
 		$('#calendar').fullCalendar({
+			default: true,
+			businessHours: {
+				// days of week. an array of zero-based day of week integers (0=Sunday)
+				dow: [ 1, 2, 3, 4, 5, 6] // Monday - Saturday
+			},
+	
 			header: {
 				left: 'prev,next today',
 				center: 'title',
-				right: 'month,agendaWeek,agendaDay,listWeek'
+				right: 'month,basicWeek,listDay'
+			},
+			views: {
+				listDay: { buttonText: 'day' }
 			},
 			defaultDate: moment(),
 			navLinks: true, // can click day/week names to navigate views
@@ -84,75 +93,51 @@ $(document).ready(function() {
 		        type: 'POST',
 		        data: function() { // a function that returns an object
 		        	return {
-		                type: 'user',
+		                user: 'user',
 		                date: $('#calendar').fullCalendar('getDate').format()
 		        };},
 		        error: function() {
 		            alert('there was an error while fetching events!');
 		        },
 		        loading: function(bool) {
-					$('#loading').toggle(bool);
+	  	            if (bool) $('#loading').show();
+	  	            else $('#loading').hide();
 				}
-		    }
-			
-			/*
-			events: [
-				{
-					title: 'All Day Event',
-					start: '2016-09-01'
-				},
-				{
-					title: 'Long Event',
-					start: '2016-09-07',
-					end: '2016-09-10'
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: '2016-09-09T16:00:00'
-				},
-				{
-					id: 999,
-					title: 'Repeating Event',
-					start: '2016-09-16T16:00:00'
-				},
-				{
-					title: 'Conference',
-					start: '2016-09-11',
-					end: '2016-09-13'
-				},
-				{
-					title: 'Meeting',
-					start: '2016-09-12T10:30:00',
-					end: '2016-09-12T12:30:00'
-				},
-				{
-					title: 'Lunch',
-					start: '2016-09-12T12:00:00'
-				},
-				{
-					title: 'Meeting',
-					start: '2016-09-12T14:30:00'
-				},
-				{
-					title: 'Happy Hour',
-					start: '2016-09-12T17:30:00'
-				},
-				{
-					title: 'Dinner',
-					start: '2016-09-12T20:00:00'
-				},
-				{
-					title: 'Birthday Party',
-					start: '2016-09-13T07:00:00'
-				},
-				{
-					title: 'Click for Google',
-					url: 'http://google.com/',
-					start: '2016-09-28'
-				}
-			]
-			*/
+		    },
+	        eventMouseover: function (data, event, view) {
+	        	tooltip = 
+	        		"<div class='tooltiptopicevent tooltipcontainer card-panel hoverable small'"
+	        		+ " style='background-color:"+data.color+"'>"
+	        		+ "<span class='tooltipheader card-title'>"
+	        		+ data.title
+	        		+ "</span>"
+	        		+ "<div class='divider'></div>"
+	        		+ "<br/>"
+	        		+ 'Status:<br />' + '<span class="indent">'+ data.status + '</span>'
+	        		+ '<br/>'
+	        		+ 'Deadline:<br />' + '<span class="indent">'+ data.start.format() + '</span>'
+	        		+ '<br/>'
+	        		+ 'Type:<br />' + '<span class="indent">'+ data.description + '</span>'
+	        		+ "</div>";
+
+	            $("body").append(tooltip);
+	            $(this).mouseover(function (e) {
+	                $(this).css('z-index', 10000);
+	                $('.tooltiptopicevent').fadeIn('500');
+	                $('.tooltiptopicevent').fadeTo('10', 1.9);
+	            }).mousemove(function (e) {
+	                $('.tooltiptopicevent').css('top', e.pageY + 10);
+	                $('.tooltiptopicevent').css('left', e.pageX + 20);
+	            });
+
+
+	        },
+	        eventMouseout: function (data, event, view) {
+	            $(this).css('z-index', 8);
+
+	            $('.tooltiptopicevent').remove();
+
+	        }
 		});
 		
 	});

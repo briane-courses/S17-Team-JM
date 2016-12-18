@@ -6942,6 +6942,7 @@ input[type=range]:focus::-ms-fill-upper {
 .side-nav .userView .circle {
   height: 64px;
   width: 64px;
+  
 }
 
 .side-nav .userView .name,
@@ -8478,4 +8479,106 @@ button.picker__today:focus, button.picker__clear:focus, button.picker__close:foc
 
 .other-week{
   color: green;
+}
+
+.side-nav-active{
+	background-color : red;
+}
+
+/* ========================================================================
+    USER DEFINED
+   ======================================================================== */
+
+/* TOP NAV */
+nav a {
+    -webkit-font-smoothing: antialiased;
+    color: #fff;
+    -webkit-tap-highlight-color: transparent;
+}
+nav.top-nav {
+    height: 122px;
+    box-shadow: none;
+}
+
+@media only screen and (max-width: 992px) {
+    nav .nav-wrapper a.page-title {
+        font-size:36px;
+        text-align: center;
+    }
+}
+
+nav.top-nav a.page-title{
+    line-height: 122px;
+    font-size: 48px;
+}
+
+a.button-collapse.top-nav {
+    position: absolute;
+    text-align: center;
+    height: 48px;
+    width: 48px;
+    left: 7.5%;
+    top: 20px;
+    float: none;
+    margin-left: 1.5rem;
+    color: white;
+    font-size: 36px;
+    z-index: 2;
+}
+
+a.button-collapse.top-nav.full {
+    line-height: 122px;
+}
+/* END OF TOP NAV */
+
+/* SIDE NAV*/
+
+ul.side-nav.fixed {
+    overflow: hidden;
+}
+
+ul:not(browser-default){
+    padding-left: 0px;
+    list-style-type: none;
+}
+
+/* END OF SIDE NAV */
+
+/* logo */
+
+
+ul .brand-logo {
+  position: absolute;
+  color: #fff;
+  display: inline-block;
+  font-size: 2.1rem;
+  padding: 0;
+  white-space: nowrap;
+}
+
+ul .brand-logo.center {
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+
+/* logo end*/
+header, main, footer {
+    padding-left: 300px
+}
+
+header {
+    background-color: green;
+}
+
+.side-nav{
+    background-color: #f0f4c3 ;
+}
+
+ul li ol li {
+  list-style-type: decimal;
+}
+
+body {
+	background-color : #f9fbe7;
 }
