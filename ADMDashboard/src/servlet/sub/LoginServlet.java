@@ -32,11 +32,13 @@ public class LoginServlet {
 		System.out.println("LOGINSERVLET POST");
 		
 		// retrieve attributes from index.jsp
-		String email = request.getParameter(User.COL_EMAIL);
+		String email = request.getParameter("email");
 		String logoURL = request.getParameter("logoURL");
 		
 		// match attributes to the db
 		User user = UserService.searchUser(email);
+		System.out.println(email);
+		System.out.println(user);
 		
 		// if user exists, go to admin/orgrep servlet
 		if(user != null) {
@@ -52,7 +54,7 @@ public class LoginServlet {
 			if(user.getUserType().toString().equals(UserType.ORGREP + "")) {
 				request.getRequestDispatcher("/HomeOrgRepServlet").forward(request, response);
 			} else if(user.getUserType().toString().equals(UserType.ADMIN + "")) {
-				request.getRequestDispatcher("/OrglistAdminServlet").forward(request, response); 
+				request.getRequestDispatcher("/HomeAdminServlet").forward(request, response); 
 			}
 			
 		} else {

@@ -30,7 +30,7 @@ public class Query {
 	private static Query instance = null;
 	
 	public static final String[] ACCESS1 = {"sofengg","sofenggADM!"};
-	public static final String[] ACCESS2 = {"root","micohalvarez"};
+	public static final String[] ACCESS2 = {"root","root"};
 	
 	private static final String USER = ACCESS2[0];
 	private static final String PASS = ACCESS2[1];

@@ -2,9 +2,6 @@ package service;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -414,6 +411,74 @@ public class EventService {
 			}
 		}
 		return events;
+	}
+	
+	public static Event searchEventDetails(int eventID) {
+		System.out.println("[METHOD] searchEvents " + eventID);
+
+		Event event = new Event();
+		ArrayList<Object> input = new ArrayList<Object>();
+		Event result = null;
+
+		String query = "SELECT *"
+				+ " FROM " + Event.TABLE_NAME 
+				+ " WHERE  " + Event.COL_EVENTID + " = ? ";
+		
+		input.add(eventID);
+
+		Query q = Query.getInstance();
+		ResultSet r = null;
+
+		try {
+			r = q.runQuery(query, input);
+
+			while(r.next()) {
+				result = new Event();
+
+				result.setEventID(r.getInt(Event.COL_EVENTID));
+				result.setOrgcode(r.getString(Event.COL_ORGCODE));
+				result.setEventname(r.getString(Event.COL_EVENTNAME));
+				result.setPostact_status(DatatypeConverter.toStatus(r.getString(Event.COL_POSTACTSTATUS)));
+				result.setPostact_deadline(DatatypeConverter.toCalendar(r.getDate(Event.COL_POSTACTDEADLINE)));
+				event = result;
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				q.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return event;
+	}
+	
+	public static void markAsDone(int eventID) {
+		System.out.println("[METHOD] markAsDone " + eventID);
+		
+		ArrayList<Object> input = new ArrayList<Object>();
+		
+		String query = "DELETE FROM " + Event.TABLE_NAME 
+				+ " WHERE  " + Event.COL_EVENTID + " = ? ";
+		
+		input.add(eventID);
+
+		Query q = Query.getInstance();
+		
+		try {
+			q.runInsertUpdateDelete(query, input);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				q.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }
