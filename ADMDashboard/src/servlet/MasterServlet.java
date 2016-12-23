@@ -10,10 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import servlet.sub.AjaxUserCalendarServlet;
 import servlet.sub.CalendarOrgRepServlet;
+import servlet.sub.EventDetailsServlet;
 import servlet.sub.HomeAdminServlet;
 import servlet.sub.HomeOrgRepServlet;
 import servlet.sub.LoginServlet;
 import servlet.sub.LogoutServlet;
+import servlet.sub.MarkAsDoneServlet;
 import servlet.sub.OrglistAdminServlet;
 import servlet.sub.RequirementsServlet;
 import servlet.sub.SearchEventServlet;
@@ -24,10 +26,12 @@ import servlet.sub.ViewEventsServlet;
 @WebServlet(urlPatterns = {
 		AjaxUserCalendarServlet.URL,
 		CalendarOrgRepServlet.URL,
+		EventDetailsServlet.URL,
 		HomeAdminServlet.URL,
 		HomeOrgRepServlet.URL,
 		LoginServlet.URL,
 		LogoutServlet.URL,
+		MarkAsDoneServlet.URL,
 		OrglistAdminServlet.URL,
 		RequirementsServlet.URL,
 		SearchEventServlet.URL,
@@ -75,11 +79,17 @@ public class MasterServlet extends HttpServlet {
 				case HomeOrgRepServlet.URL:
 					HomeOrgRepServlet.process(request, response, type);
 					break;
+				case EventDetailsServlet.URL:
+					EventDetailsServlet.process(request, response, type);
+					break;
 				case LoginServlet.URL:
 					LoginServlet.process(request, response, type);
 					break;
 				case LogoutServlet.URL:
 					LogoutServlet.process(request, response, type);
+					break;
+				case MarkAsDoneServlet.URL:
+					MarkAsDoneServlet.process(request, response, type);
 					break;
 				case OrglistAdminServlet.URL:
 					OrglistAdminServlet.process(request, response, type);
