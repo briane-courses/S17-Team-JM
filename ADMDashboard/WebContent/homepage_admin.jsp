@@ -26,7 +26,6 @@
 <script src="https://apis.google.com/js/platform.js" async defer>
 	
 </script>
-<script src="js/jquery.autocomplete.js"></script>
 
 </head>
 
@@ -34,7 +33,8 @@
 
 	<!--  Scripts-->
 	<!--Import jQuery before materialize.js-->
-	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="js/jquery-3.0.0.min.js"></script>
+	<script src="js/jquery.autocomplete.js"></script>
 	<script src="js/materialize.js"></script>
 	<form id="logoutform" action="LogoutServlet" method="POST"></form>
 	<script>
@@ -68,8 +68,10 @@
 			});
 		});
 		
+		var id;
+		
 		function viewEventDetails(obj) {
-    		var id = obj.id;
+    		id = obj.id;
     		console.log(id);
     		var idSplit = id.split(" , ");
     		document.getElementById("eventName").innerHTML = idSplit[1] ;
@@ -117,9 +119,23 @@
 			location.reload();
 		};
 		
-		function loadTable()
+		function markasdone()
 		{
+			console.log(id);
+			var idSplit = id.split(" , ");
 			
+			$.ajax({
+				url: "MarkAsDoneServlet",
+				method: "post",
+				data: {
+					eventID : idSplit[0]
+				},
+				success: function(result) {
+					console.log(result);
+				}
+			});
+			console.log("RELOAD THE FREAKING LIST");
+			location.reload();
 		}
 		
 		
@@ -230,13 +246,34 @@
 										</div>
 									</div>
 									<div class="modal-footer">
-										<a href="#!" id="${o.eventID}"
-											class=" modal-action modal-close waves-effect waves-green btn-flat green-text text-darken-3"
-											onclick="saveDate(this)">SAVE</a> <a href="#!"
-											class=" modal-action modal-close waves-effect waves-green btn-flat red-text">CANCEL</a>
-									</div>
+										<a data-target="modal3" id="${o.eventID}" class="modal-trigger modal-close waves-effect waves-green btn-flat green-text text-darken-3" onclick="saveDate(this)">SAVE</a> 
+										<a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat red-text">CANCEL</a>
+										<a data-target="modal4" class="modal-trigger modal-close waves-effect waves-green btn-flat blue-text left">MARK AS DONE</a>
+              						</div>
 								</div>
-							</td>
+							<!-- SAVE NEW DEADLINE CONFIRMATION MODAL -->
+				            <div id="modal3" class="modal">
+				              <div class="modal-content">
+				                		<h3>Are you sure you want to mark event as done?</h3>
+				              </div>
+				              <div class="modal-footer">
+				                		<a class=" modal-action modal-close waves-effect waves-green btn-flat green-text text-darken-3">YES</a>
+							            <a class=" modal-action modal-close waves-effect waves-green btn-flat red-text">NO</a>
+				              </div>
+				            </div>
+				            <!-- END SAVE NEW DEADLINE CONFIRMATION MODAL -->
+				            <!-- MARK AS DONE CONFIRMATION MODAL -->
+				            <div id="modal4" class="modal">
+				              <div class="modal-content">
+				                		<h3>Are you sure you want to mark event as done?</h3>
+				              </div>
+				              <div class="modal-footer">
+				                		<a class=" modal-action modal-close waves-effect waves-green btn-flat green-text text-darken-3" onclick = "markasdone()">YES</a>
+							            <a class=" modal-action modal-close waves-effect waves-green btn-flat red-text">NO</a>
+				              </div>
+				            </div>
+				            <!-- END MARK AS DONE CONFIRMATION MODAL -->
+				              </td>
 							<c:choose>
 								<c:when test="${deadlineType[status.index] == '1' }">
 									<td><i class="small material-icons"

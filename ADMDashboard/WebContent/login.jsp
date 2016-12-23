@@ -84,6 +84,10 @@
                 <div class="intro-heading">ADM Dashboard</div>
               	<button class="g-signin2 login-button" data-onsuccess="onSignIn"></button>
             </div>
+            <form id="loginform" action="LoginServlet" method="POST">
+				<input type="hidden" name="email" id="email" />
+				<input type="hidden" name="logoURL" id="logoURL" />
+			</form>
         </div>
     </header>
 
@@ -406,10 +410,7 @@
         </div>
     </section>
     
-<form id="loginform" action="LoginServlet" method="POST">
-			<input type="hidden" name="email" id="email" />
-			<input type="hidden" name="logoURL" id="logoURL" />
-		</form>
+	
     <footer>
         <div class="container">
             <div class="row">
@@ -439,7 +440,7 @@
     </footer>
 	<script src="https://apis.google.com/js/plus.js?onload=appStart"></script>
     <!-- jQuery -->
-    <script src="login_files/vendor/jquery/jquery.min.js"></script>
+	<script src = "js/jquery-3.0.0.min.js"></script>
 
     <!-- Tether -->
     <script src="login_files/vendor/tether/tether.min.js"></script>
@@ -463,6 +464,35 @@
 	<script src="./login_files/js/jquery.quicksand.js"></script> 
 
 	<script src="./login_files/js/googleSignIn.js"></script> 
+	
+	
+	<script>
+	
+	$(document).ready(function() {
+		var auth2 = gapi.auth2.getAuthInstance();
+	});
+	
+	var onSignIn = function(googleUser) {
+		var profile = googleUser.getBasicProfile();
+		 console.log('nakapasok po.checking...');
+	    console.log("ID: " + profile.getId()); // Don't send this directly to your server!
+	    console.log('Full Name: ' + profile.getName());
+	    console.log('Given Name: ' + profile.getGivenName());
+	    console.log('Family Name: ' + profile.getFamilyName());
+	    console.log("Image URL: " + profile.getImageUrl());
+	    console.log("Email: " + profile.getEmail());
+	    console.log('nakapasok po. working na.');
+	    // The ID token you need to pass to your backend:
+	    var id_token = googleUser.getAuthResponse().id_token;
+	    console.log("ID Token: " + id_token);
+		
+		$("#email").val(profile.getEmail());
+		$("#logoURL").val(profile.getImageUrl());
+		
+		$("#loginform").submit();
+	}
+	
+	</script>
 </body>
 
 </html>
