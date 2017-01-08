@@ -96,8 +96,8 @@
 		function saveDate(obj) 
 		{
 			console.log("CLICKED SAVE");
-			var idSave = obj.id; 
-			console.log(idSave);
+			var idSave = id.split(" , "); 
+			console.log(idSave[0]);
 			var newDate = document.getElementById("deadline").value;
 			console.log("NEWDATE" + newDate)
 			var action = "update";
@@ -105,13 +105,13 @@
 				url: "UpdateDeadlineServlet",
 				method: "post",
 				data: {
-					eventID : idSave,
+					eventID : idSave[0],
 					newDate : newDate,
 					action : action
 				},
 				 dataType: "json",
 				success: function(json) {
-					console.log("JSON saveDate SUCCESS " + idSave);
+					console.log("JSON saveDate SUCCESS " + idSave[0]);
 					console.log("NEW DATE : " + document.getElementById(idSave + "-eventDeadline").value)
 				}
 			});
