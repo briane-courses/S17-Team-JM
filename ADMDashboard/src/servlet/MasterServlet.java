@@ -21,6 +21,7 @@ import servlet.sub.RequirementsServlet;
 import servlet.sub.SearchEventServlet;
 import servlet.sub.SearchOrgServlet;
 import servlet.sub.StartServlet;
+import servlet.sub.UpdateDeadlineServlet;
 import servlet.sub.ViewEventsServlet;
 
 @WebServlet(urlPatterns = {
@@ -37,6 +38,7 @@ import servlet.sub.ViewEventsServlet;
 		SearchEventServlet.URL,
 		SearchOrgServlet.URL,
 		StartServlet.URL,
+        UpdateDeadlineServlet.URL,
 		ViewEventsServlet.URL
 		})
 		
@@ -105,6 +107,9 @@ public class MasterServlet extends HttpServlet {
 					break;
 				case SearchOrgServlet.URL:
 					SearchOrgServlet.process(request, response, type);
+					break;
+                case UpdateDeadlineServlet.URL:
+					UpdateDeadlineServlet.process(request, response, type);
 					break;
 				case ViewEventsServlet.URL:
 					ViewEventsServlet.process(request, response, type);
